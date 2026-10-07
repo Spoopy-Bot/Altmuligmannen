@@ -1,0 +1,149 @@
+@import '@fontsource-variable/inter';
+@import '@fontsource/poppins/latin-700.css';
+@import '@fontsource/poppins/latin-800.css';
+@import 'tailwindcss';
+
+@theme {
+  --font-sans: 'Inter Variable', ui-sans-serif, system-ui, sans-serif;
+  --font-display: 'Poppins', 'Inter Variable', ui-sans-serif, sans-serif;
+
+  /* Merkefarger hentet fra app-ikonet */
+  --color-navy-950: #0c1c2b;
+  --color-navy-900: #112739;
+  --color-navy: #17334c;
+  --color-navy-700: #234a6b;
+  --color-navy-600: #2f5d86;
+  --color-navy-200: #c7d4e1;
+  --color-navy-100: #e1e9f1;
+  --color-navy-50: #f0f4f8;
+
+  --color-amber: #fdaf1c;
+  --color-amber-600: #e5980a;
+  --color-amber-200: #fedd9c;
+  --color-amber-100: #ffefcc;
+  --color-amber-50: #fff8e8;
+  --color-amber-ink: #5c3b00;
+
+  --color-cream: #fbf6e8;
+  --color-cream-200: #f4ecd8;
+  --color-cream-300: #e9dec4;
+
+  --color-ink: #13212f;
+  --color-ink-2: #45525f;
+  --color-ink-3: #5d6874;
+  --color-line: #e4dac3;
+  --color-line-strong: #cdbf9f;
+
+  --color-ok: #1d6e46;
+  --color-ok-50: #e5f2ea;
+  --color-feil: #ae2a1f;
+  --color-feil-50: #fbe9e6;
+
+  --radius-ikon: 28%;
+  --shadow-kort: 0 1px 2px rgb(19 33 47 / 0.06), 0 4px 14px -6px rgb(19 33 47 / 0.12);
+  --shadow-loft: 0 2px 4px rgb(19 33 47 / 0.08), 0 16px 32px -12px rgb(19 33 47 / 0.28);
+
+  --ease-ut: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    @apply bg-cream font-sans text-ink antialiased;
+    font-feature-settings: 'cv11', 'ss01';
+  }
+
+  h1,
+  h2,
+  h3 {
+    @apply font-display text-balance;
+    letter-spacing: -0.02em;
+  }
+
+  ::selection {
+    background: var(--color-amber-200);
+    color: var(--color-navy-950);
+  }
+
+  :focus-visible {
+    outline: 3px solid var(--color-navy-600);
+    outline-offset: 2px;
+    border-radius: 6px;
+  }
+
+  [data-mork] :focus-visible {
+    outline-color: var(--color-amber);
+  }
+
+  input,
+  textarea,
+  select {
+    caret-color: var(--color-navy);
+  }
+
+  a {
+    text-underline-offset: 3px;
+  }
+
+  * {
+    scrollbar-color: var(--color-line-strong) transparent;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+@utility tall {
+  font-variant-numeric: tabular-nums;
+}
+
+@keyframes inn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+}
+
+@keyframes stempel {
+  0% {
+    opacity: 0;
+    transform: scale(1.25) rotate(-6deg);
+  }
+  60% {
+    opacity: 1;
+    transform: scale(0.97) rotate(-2deg);
+  }
+  100% {
+    transform: scale(1) rotate(-2deg);
+  }
+}
+
+@keyframes skimmer {
+  to {
+    background-position: -200% 0;
+  }
+}
+
+@utility animer-inn {
+  animation: inn 260ms var(--ease-ut) both;
+}
+
+@utility animer-stempel {
+  animation: stempel 520ms var(--ease-ut) both;
+}
+
+@utility skjelett {
+  background: linear-gradient(90deg, var(--color-cream-200) 0%, var(--color-cream-300) 50%, var(--color-cream-200) 100%);
+  background-size: 200% 100%;
+  animation: skimmer 1.4s linear infinite;
+}

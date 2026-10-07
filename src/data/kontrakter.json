@@ -1,0 +1,8 @@
+[
+  { "id": "k-101", "oppdragId": "o-101", "aktorId": "a-kai", "mottakerId": "m-emma", "opprettet": "2026-08-28T19:02:00", "pris": 2400, "arbeid": "Montering av to garderobeskap med skyvedører, inkludert veggfeste og justering.", "status": "fullfort" },
+  { "id": "k-102", "oppdragId": "o-102", "aktorId": "a-fatima", "mottakerId": "m-emma", "opprettet": "2026-09-24T11:40:00", "pris": 6800, "arbeid": "Sparkling av småhull, to strøk på vegger og ett strøk i tak. Kunden har kjøpt maling.", "status": "aktiv" },
+  { "id": "k-105", "oppdragId": "o-105", "aktorId": "a-kai", "mottakerId": "m-thomas", "opprettet": "2026-09-05T13:15:00", "pris": 1500, "arbeid": "Bytte fem dørhåndtak og justere to dører som subber.", "status": "fullfort" },
+  { "id": "k-108", "oppdragId": "o-108", "aktorId": "a-marte", "mottakerId": "m-solveig", "opprettet": "2026-09-27T12:20:00", "pris": 2200, "arbeid": "Fjerne gamle lister, tette med fugeskum og montere nye innvendige lister rundt soveromsvindu.", "status": "aktiv" },
+  { "id": "k-110", "oppdragId": "o-110", "aktorId": "a-runa", "mottakerId": "m-arne", "opprettet": "2026-09-28T10:40:00", "pris": 2600, "arbeid": "Vask av 14 vinduer inne og ute, inkludert karmer.", "status": "aktiv" },
+  { "id": "k-113", "oppdragId": "o-113", "aktorId": "a-kai", "mottakerId": "m-thomas", "opprettet": "2026-09-30T18:10:00", "pris": 1400, "arbeid": "Fjerne gamle tetningslister og montere nye på ytterdør.", "status": "aktiv" }
+]

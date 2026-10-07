@@ -1,0 +1,636 @@
+[
+  {
+    "id": "a-kai",
+    "navn": "Kai Fredriksen",
+    "tittel": "Selvstendig altmuligmann",
+    "bio": "Jeg har snekret, skrudd og malt i Fredrikstad-området i over ti år. Jeg liker jobber der folk har prøvd selv og står fast – da forklarer jeg gjerne hva jeg gjør, så du vet hva du betaler for. Rydder alltid etter meg.",
+    "kategorier": [
+      "reparasjon",
+      "montering",
+      "maling",
+      "hage"
+    ],
+    "ferdigheter": [
+      "Dører og lister",
+      "Møbelmontering",
+      "Innvendig maling",
+      "Hekk og beskjæring",
+      "Gardinstenger og lamper",
+      "Tetningslister"
+    ],
+    "erfaringAar": 12,
+    "timepris": 590,
+    "sted": {
+      "by": "Fredrikstad",
+      "omrade": "Gressvik",
+      "lat": 59.2225,
+      "lng": 10.899
+    },
+    "radiusKm": 20,
+    "tilgjengelighet": "Hverdager etter kl. 15 og lørdager",
+    "ledigDenneUken": true,
+    "svartid": "Svarer vanligvis innen 1 time",
+    "fullforteJobber": 47,
+    "verifisert": {
+      "id": true,
+      "forsikring": true
+    },
+    "tidligereJobber": [
+      {
+        "tittel": "Montert garderobeskap og skyvedører",
+        "kategori": "montering",
+        "ar": 2026
+      },
+      {
+        "tittel": "Byttet dørhåndtak og justert seks dører",
+        "kategori": "reparasjon",
+        "ar": 2026
+      },
+      {
+        "tittel": "Malt stue og gang, inkludert listverk",
+        "kategori": "maling",
+        "ar": 2025
+      },
+      {
+        "tittel": "Klippet 40 meter tujahekk",
+        "kategori": "hage",
+        "ar": 2025
+      }
+    ],
+    "farge": 0
+  },
+  {
+    "id": "a-ingrid",
+    "navn": "Ingrid Solberg",
+    "tittel": "Driftsleder, rørlegger",
+    "firma": "Elvebredden Rør AS",
+    "bio": "Driftsleder i et rørleggerfirma med seks ansatte. Jeg tar selv de fleste småoppdragene i Sarpsborg og Fredrikstad, og sender en av våre svenner når jobben er større. Alt arbeid dokumenteres og meldes etter forskriftene.",
+    "kategorier": [
+      "ror"
+    ],
+    "ferdigheter": [
+      "Lekkasjer",
+      "Bytte kran og blandebatteri",
+      "Tette avløp",
+      "Toalett og sluk",
+      "Varmtvannsbereder",
+      "Våtromsdokumentasjon"
+    ],
+    "erfaringAar": 18,
+    "timepris": 890,
+    "sted": {
+      "by": "Sarpsborg",
+      "omrade": "Sentrum",
+      "lat": 59.285,
+      "lng": 11.105
+    },
+    "radiusKm": 35,
+    "tilgjengelighet": "Hverdager 07–16, akutt også kveld",
+    "ledigDenneUken": true,
+    "svartid": "Svarer vanligvis innen 2 timer",
+    "fullforteJobber": 212,
+    "verifisert": {
+      "id": true,
+      "forsikring": true,
+      "fagbrev": "Fagbrev i rørleggerfaget"
+    },
+    "tidligereJobber": [
+      {
+        "tittel": "Utbedret lekkasje under kjøkkenbenk",
+        "kategori": "ror",
+        "ar": 2026
+      },
+      {
+        "tittel": "Byttet varmtvannsbereder, 200 liter",
+        "kategori": "ror",
+        "ar": 2026
+      },
+      {
+        "tittel": "Nytt blandebatteri og vannlås på bad",
+        "kategori": "ror",
+        "ar": 2025
+      }
+    ],
+    "farge": 1
+  },
+  {
+    "id": "a-sindre",
+    "navn": "Sindre Mathisen",
+    "tittel": "Malermester",
+    "firma": "Mathisen Farge & Flate",
+    "bio": "Malermester fra Moss. Jeg er nøye med underarbeidet – sparkling, sliping og dekking – fordi det er det som gjør at malingen holder. Gir alltid fast pris etter befaring.",
+    "kategorier": [
+      "maling"
+    ],
+    "ferdigheter": [
+      "Innvendig maling",
+      "Utvendig maling",
+      "Sparkling",
+      "Tapetsering",
+      "Beising av gjerde og terrasse"
+    ],
+    "erfaringAar": 15,
+    "timepris": 720,
+    "sted": {
+      "by": "Moss",
+      "omrade": "Sentrum",
+      "lat": 59.436,
+      "lng": 10.662
+    },
+    "radiusKm": 30,
+    "tilgjengelighet": "Hverdager 07–17",
+    "ledigDenneUken": false,
+    "svartid": "Svarer vanligvis samme dag",
+    "fullforteJobber": 138,
+    "verifisert": {
+      "id": true,
+      "forsikring": true,
+      "fagbrev": "Mesterbrev i malerfaget"
+    },
+    "tidligereJobber": [
+      {
+        "tittel": "Malt enebolig utvendig, to strøk",
+        "kategori": "maling",
+        "ar": 2026
+      },
+      {
+        "tittel": "Sparklet og malt barnerom",
+        "kategori": "maling",
+        "ar": 2026
+      }
+    ],
+    "farge": 2
+  },
+  {
+    "id": "a-leila",
+    "navn": "Leila Haddad",
+    "tittel": "Montering og flyttehjelp",
+    "bio": "Jeg har varebil og verktøy, og hjelper med alt fra å skru sammen flatpakkede møbler til å bære tunge ting opp trapper. Rask, presis og alltid avtalt tid.",
+    "kategorier": [
+      "montering",
+      "flytting"
+    ],
+    "ferdigheter": [
+      "Flatpakkede møbler",
+      "Kjøkkenmontering",
+      "Bære tunge møbler",
+      "Varebil",
+      "Bortkjøring til gjenvinning"
+    ],
+    "erfaringAar": 6,
+    "timepris": 520,
+    "sted": {
+      "by": "Sarpsborg",
+      "omrade": "Greåker",
+      "lat": 59.271,
+      "lng": 11.04
+    },
+    "radiusKm": 30,
+    "tilgjengelighet": "Alle dager, også kveld",
+    "ledigDenneUken": true,
+    "svartid": "Svarer vanligvis innen 30 min",
+    "fullforteJobber": 89,
+    "verifisert": {
+      "id": true,
+      "forsikring": true
+    },
+    "tidligereJobber": [
+      {
+        "tittel": "Montert komplett kjøkken fra flatpakke",
+        "kategori": "montering",
+        "ar": 2026
+      },
+      {
+        "tittel": "Flyttet piano til 2. etasje (med hjelper)",
+        "kategori": "flytting",
+        "ar": 2025
+      }
+    ],
+    "farge": 3
+  },
+  {
+    "id": "a-jonas",
+    "navn": "Jonas Berntsen",
+    "tittel": "Hage og uteområder",
+    "bio": "Utdannet anleggsgartner. Jeg tar hekk, plen, beskjæring av frukttrær og høstrydding. Tar med hageavfallet selv, så du slipper turen til gjenvinningsstasjonen.",
+    "kategorier": [
+      "hage",
+      "flytting"
+    ],
+    "ferdigheter": [
+      "Hekkeklipp",
+      "Beskjæring av frukttrær",
+      "Plenstell",
+      "Høstrydding",
+      "Bortkjøring av hageavfall",
+      "Tilhenger for bortkjøring"
+    ],
+    "erfaringAar": 9,
+    "timepris": 560,
+    "sted": {
+      "by": "Råde",
+      "omrade": "Sentrum",
+      "lat": 59.35,
+      "lng": 10.87
+    },
+    "radiusKm": 25,
+    "tilgjengelighet": "Hverdager og lørdager",
+    "ledigDenneUken": true,
+    "svartid": "Svarer vanligvis innen 3 timer",
+    "fullforteJobber": 64,
+    "verifisert": {
+      "id": true,
+      "forsikring": true,
+      "fagbrev": "Fagbrev som anleggsgartner"
+    },
+    "tidligereJobber": [
+      {
+        "tittel": "Beskåret fem epletrær",
+        "kategori": "hage",
+        "ar": 2026
+      },
+      {
+        "tittel": "Høstrydding av hage, 800 m²",
+        "kategori": "hage",
+        "ar": 2025
+      }
+    ],
+    "farge": 4
+  },
+  {
+    "id": "a-marte",
+    "navn": "Marte Kvisler",
+    "tittel": "Tømrer og småreparasjoner",
+    "bio": "Tømrer med egen bil og verksted i Halden. Jeg fikser det som har blitt stående: dører som ikke lukker, lister som har løsnet, trekk rundt vinduer. Små jobber er velkomne.",
+    "kategorier": [
+      "reparasjon",
+      "montering"
+    ],
+    "ferdigheter": [
+      "Dører og vinduer",
+      "Listverk",
+      "Tetting av trekk",
+      "Hyller og oppheng",
+      "Små snekkerjobber"
+    ],
+    "erfaringAar": 11,
+    "timepris": 640,
+    "sted": {
+      "by": "Halden",
+      "omrade": "Sentrum",
+      "lat": 59.125,
+      "lng": 11.382
+    },
+    "radiusKm": 25,
+    "tilgjengelighet": "Hverdager 08–16",
+    "ledigDenneUken": false,
+    "svartid": "Svarer vanligvis innen 4 timer",
+    "fullforteJobber": 102,
+    "verifisert": {
+      "id": true,
+      "forsikring": true,
+      "fagbrev": "Fagbrev i tømrerfaget"
+    },
+    "tidligereJobber": [
+      {
+        "tittel": "Byttet terskel og justert ytterdør",
+        "kategori": "reparasjon",
+        "ar": 2026
+      },
+      {
+        "tittel": "Satt opp vegghyller i hele stua",
+        "kategori": "montering",
+        "ar": 2025
+      }
+    ],
+    "farge": 5
+  },
+  {
+    "id": "a-aleksander",
+    "navn": "Aleksander Nygård",
+    "tittel": "Student, hjelper med montering og bæring",
+    "bio": "Student ved høgskolen i Fredrikstad. Jeg er sterk, ryddig og god med skrutrekker. Passer for deg som trenger en ekstra hånd til montering, bæring eller hagearbeid til en hyggelig pris.",
+    "kategorier": [
+      "montering",
+      "flytting",
+      "hage"
+    ],
+    "ferdigheter": [
+      "Flatpakkede møbler",
+      "Bære og flytte",
+      "Plenklipp",
+      "Løvrydding"
+    ],
+    "erfaringAar": 2,
+    "timepris": 380,
+    "sted": {
+      "by": "Fredrikstad",
+      "omrade": "Sentrum",
+      "lat": 59.217,
+      "lng": 10.935
+    },
+    "radiusKm": 15,
+    "tilgjengelighet": "Kvelder og helger",
+    "ledigDenneUken": true,
+    "svartid": "Svarer vanligvis innen 1 time",
+    "fullforteJobber": 14,
+    "verifisert": {
+      "id": true,
+      "forsikring": false
+    },
+    "tidligereJobber": [
+      {
+        "tittel": "Montert to senger og en kommode",
+        "kategori": "montering",
+        "ar": 2026
+      },
+      {
+        "tittel": "Raket løv i borettslag",
+        "kategori": "hage",
+        "ar": 2025
+      }
+    ],
+    "farge": 6
+  },
+  {
+    "id": "a-runa",
+    "navn": "Runa Tveter",
+    "tittel": "Vask og rengjøring",
+    "bio": "Jeg driver enkeltpersonforetak innen rengjøring i Moss og Rygge. Vindusvask, flyttevask og storrengjøring – med egne miljøvennlige midler.",
+    "kategorier": [
+      "vask"
+    ],
+    "ferdigheter": [
+      "Vindusvask",
+      "Flyttevask",
+      "Storrengjøring",
+      "Miljøvennlige midler"
+    ],
+    "erfaringAar": 7,
+    "timepris": 480,
+    "sted": {
+      "by": "Moss",
+      "omrade": "Rygge",
+      "lat": 59.382,
+      "lng": 10.715
+    },
+    "radiusKm": 25,
+    "tilgjengelighet": "Hverdager 08–15",
+    "ledigDenneUken": true,
+    "svartid": "Svarer vanligvis innen 2 timer",
+    "fullforteJobber": 156,
+    "verifisert": {
+      "id": true,
+      "forsikring": true
+    },
+    "tidligereJobber": [
+      {
+        "tittel": "Flyttevask av leilighet, 85 m²",
+        "kategori": "vask",
+        "ar": 2026
+      },
+      {
+        "tittel": "Vindusvask av enebolig inne og ute",
+        "kategori": "vask",
+        "ar": 2026
+      }
+    ],
+    "farge": 7
+  },
+  {
+    "id": "a-henrik",
+    "navn": "Henrik Aas",
+    "tittel": "Pensjonert snekker",
+    "bio": "Snekker i 35 år, nå pensjonist med god tid. Jeg tar gjerne småjobber i Indre Østfold – helst for folk som setter pris på at ting gjøres skikkelig, og at det er tid til en kaffe.",
+    "kategorier": [
+      "reparasjon",
+      "maling",
+      "montering"
+    ],
+    "ferdigheter": [
+      "Snekring",
+      "Dører og vinduer",
+      "Listverk",
+      "Maling av vinduskarmer",
+      "Møbelreparasjon"
+    ],
+    "erfaringAar": 35,
+    "timepris": 550,
+    "sted": {
+      "by": "Indre Østfold",
+      "omrade": "Askim",
+      "lat": 59.585,
+      "lng": 11.16
+    },
+    "radiusKm": 30,
+    "tilgjengelighet": "Hverdager, fleksibelt",
+    "ledigDenneUken": true,
+    "svartid": "Svarer vanligvis samme dag",
+    "fullforteJobber": 73,
+    "verifisert": {
+      "id": true,
+      "forsikring": true,
+      "fagbrev": "Fagbrev i tømrerfaget"
+    },
+    "tidligereJobber": [
+      {
+        "tittel": "Restaurert gammel kjøkkendør",
+        "kategori": "reparasjon",
+        "ar": 2026
+      },
+      {
+        "tittel": "Malt vinduskarmer på hytte",
+        "kategori": "maling",
+        "ar": 2025
+      }
+    ],
+    "farge": 8
+  },
+  {
+    "id": "a-fatima",
+    "navn": "Fatima Rahimi",
+    "tittel": "Maler og småreparasjoner",
+    "bio": "Jeg maler innvendig og fikser småting underveis – sparkler hull, bytter lister og fuger. Bor på Kråkerøy og jobber helst i Fredrikstad og Hvaler.",
+    "kategorier": [
+      "maling",
+      "reparasjon"
+    ],
+    "ferdigheter": [
+      "Innvendig maling",
+      "Sparkling",
+      "Listverk",
+      "Fuging",
+      "Fargeråd"
+    ],
+    "erfaringAar": 8,
+    "timepris": 610,
+    "sted": {
+      "by": "Fredrikstad",
+      "omrade": "Kråkerøy",
+      "lat": 59.199,
+      "lng": 10.96
+    },
+    "radiusKm": 20,
+    "tilgjengelighet": "Hverdager 08–16",
+    "ledigDenneUken": false,
+    "svartid": "Svarer vanligvis innen 2 timer",
+    "fullforteJobber": 58,
+    "verifisert": {
+      "id": true,
+      "forsikring": true
+    },
+    "tidligereJobber": [
+      {
+        "tittel": "Malt soverom og gang",
+        "kategori": "maling",
+        "ar": 2026
+      },
+      {
+        "tittel": "Fuget og byttet lister på bad",
+        "kategori": "reparasjon",
+        "ar": 2025
+      }
+    ],
+    "farge": 9
+  },
+  {
+    "id": "a-bjorn",
+    "navn": "Bjørn Halvorsen",
+    "tittel": "Rørlegger, enkeltpersonforetak",
+    "bio": "Selvstendig rørlegger i Moss og Råde. Tar småjobber som lekkasjer, kraner og tette avløp, og gir pris før jeg starter.",
+    "kategorier": [
+      "ror"
+    ],
+    "ferdigheter": [
+      "Lekkasjer",
+      "Bytte kran",
+      "Tette avløp",
+      "Toalett",
+      "Vannlås og servant"
+    ],
+    "erfaringAar": 14,
+    "timepris": 820,
+    "sted": {
+      "by": "Moss",
+      "omrade": "Rygge",
+      "lat": 59.379,
+      "lng": 10.723
+    },
+    "radiusKm": 40,
+    "tilgjengelighet": "Hverdager 07–18",
+    "ledigDenneUken": true,
+    "svartid": "Svarer vanligvis innen 2 timer",
+    "fullforteJobber": 131,
+    "verifisert": {
+      "id": true,
+      "forsikring": true,
+      "fagbrev": "Fagbrev i rørleggerfaget"
+    },
+    "tidligereJobber": [
+      {
+        "tittel": "Byttet blandebatteri på kjøkken",
+        "kategori": "ror",
+        "ar": 2026
+      },
+      {
+        "tittel": "Åpnet tett avløp i dusj",
+        "kategori": "ror",
+        "ar": 2026
+      }
+    ],
+    "farge": 3
+  },
+  {
+    "id": "a-emil",
+    "navn": "Emil Strand",
+    "tittel": "Rørleggersvenn",
+    "bio": "Ferdig utdannet rørleggersvenn som tar kveldsoppdrag i Fredrikstad. Rask med enkle jobber som drypp, vannlås og bytte av kran.",
+    "kategorier": [
+      "ror"
+    ],
+    "ferdigheter": [
+      "Drypp og lekkasjer",
+      "Bytte kran",
+      "Vannlås",
+      "Sluk"
+    ],
+    "erfaringAar": 4,
+    "timepris": 690,
+    "sted": {
+      "by": "Fredrikstad",
+      "omrade": "Sentrum",
+      "lat": 59.214,
+      "lng": 10.94
+    },
+    "radiusKm": 25,
+    "tilgjengelighet": "Kvelder og lørdager",
+    "ledigDenneUken": true,
+    "svartid": "Svarer vanligvis innen 1 time",
+    "fullforteJobber": 38,
+    "verifisert": {
+      "id": true,
+      "forsikring": true,
+      "fagbrev": "Svennebrev i rørleggerfaget"
+    },
+    "tidligereJobber": [
+      {
+        "tittel": "Byttet kjøkkenkran",
+        "kategori": "ror",
+        "ar": 2026
+      },
+      {
+        "tittel": "Tettet lekkasje ved vannlås",
+        "kategori": "ror",
+        "ar": 2025
+      }
+    ],
+    "farge": 5
+  },
+  {
+    "id": "a-sara",
+    "navn": "Sara Lie",
+    "tittel": "Vask og flyttehjelp",
+    "bio": "Driver et lite firma med vask og flyttehjelp i Sarpsborg og Fredrikstad. Vi er alltid to på jobb.",
+    "firma": "Lie Rent & Flytt",
+    "kategorier": [
+      "vask",
+      "flytting"
+    ],
+    "ferdigheter": [
+      "Flyttevask",
+      "Vindusvask",
+      "Bære og flytte",
+      "Varebil"
+    ],
+    "erfaringAar": 5,
+    "timepris": 540,
+    "sted": {
+      "by": "Sarpsborg",
+      "omrade": "Sentrum",
+      "lat": 59.287,
+      "lng": 11.115
+    },
+    "radiusKm": 35,
+    "tilgjengelighet": "Alle hverdager",
+    "ledigDenneUken": false,
+    "svartid": "Svarer vanligvis innen 3 timer",
+    "fullforteJobber": 77,
+    "verifisert": {
+      "id": true,
+      "forsikring": true
+    },
+    "tidligereJobber": [
+      {
+        "tittel": "Flyttevask av rekkehus",
+        "kategori": "vask",
+        "ar": 2026
+      },
+      {
+        "tittel": "Flyttet treroms leilighet",
+        "kategori": "flytting",
+        "ar": 2025
+      }
+    ],
+    "farge": 6
+  }
+]

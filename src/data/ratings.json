@@ -1,0 +1,231 @@
+[
+  {
+    "id": "r-1",
+    "oppdragId": "o-101",
+    "oppdragTittel": "Montere garderobeskap med skyvedører",
+    "fra": "m-emma",
+    "til": "a-kai",
+    "stjerner": 5,
+    "kommentar": "Kom presis, forklarte hva han gjorde og ryddet etter seg. Skapene står støtt og dørene går lett.",
+    "dato": "2026-09-02T20:12:00"
+  },
+  {
+    "id": "r-2",
+    "oppdragId": "o-101",
+    "oppdragTittel": "Montere garderobeskap med skyvedører",
+    "fra": "a-kai",
+    "til": "m-emma",
+    "stjerner": 5,
+    "kommentar": "Tydelig beskrivelse av jobben og alt klart da jeg kom. Hyggelig kunde.",
+    "dato": "2026-09-02T21:00:00"
+  },
+  {
+    "id": "r-3",
+    "oppdragId": "o-105",
+    "oppdragTittel": "Bytte dørhåndtak og justere dører",
+    "fra": "m-thomas",
+    "til": "a-kai",
+    "stjerner": 5,
+    "kommentar": "Effektiv og hyggelig. Dørene glir som nye.",
+    "dato": "2026-09-09T18:35:00"
+  },
+  {
+    "id": "r-4",
+    "oppdragId": "o-105",
+    "oppdragTittel": "Bytte dørhåndtak og justere dører",
+    "fra": "a-kai",
+    "til": "m-thomas",
+    "stjerner": 5,
+    "kommentar": "Rask betaling og god kommunikasjon.",
+    "dato": "2026-09-09T19:10:00"
+  },
+  {
+    "id": "r-5",
+    "oppdragTittel": "Klippe tujahekk",
+    "fra": "m-kari",
+    "til": "a-kai",
+    "stjerner": 4,
+    "kommentar": "Fint resultat. Tok litt lengre tid enn avtalt, men han sa ifra underveis.",
+    "dato": "2025-08-14T17:00:00"
+  },
+  {
+    "id": "r-6",
+    "oppdragTittel": "Utbedre lekkasje under kjøkkenbenk",
+    "fra": "m-kari",
+    "til": "a-ingrid",
+    "stjerner": 5,
+    "kommentar": "Fant lekkasjen på ti minutter og forklarte hva som hadde skjedd. Fikk dokumentasjon på e-post.",
+    "dato": "2026-06-11T10:30:00"
+  },
+  {
+    "id": "r-7",
+    "oppdragTittel": "Bytte varmtvannsbereder",
+    "fra": "m-ole",
+    "til": "a-ingrid",
+    "stjerner": 5,
+    "kommentar": "Profesjonelt fra start til slutt. Fast pris som holdt.",
+    "dato": "2026-04-22T14:00:00"
+  },
+  {
+    "id": "r-8",
+    "oppdragTittel": "Nytt blandebatteri på bad",
+    "fra": "m-arne",
+    "til": "a-ingrid",
+    "stjerner": 4,
+    "kommentar": "Godt arbeid. Måtte vente to dager på deler, men fikk beskjed med en gang.",
+    "dato": "2025-12-03T09:00:00"
+  },
+  {
+    "id": "r-9",
+    "oppdragTittel": "Male enebolig utvendig",
+    "fra": "m-arne",
+    "til": "a-sindre",
+    "stjerner": 5,
+    "kommentar": "Grundig underarbeid og pent resultat. Anbefales.",
+    "dato": "2026-07-01T16:00:00"
+  },
+  {
+    "id": "r-10",
+    "oppdragTittel": "Sparkle og male barnerom",
+    "fra": "m-kari",
+    "til": "a-sindre",
+    "stjerner": 5,
+    "kommentar": "Helt jevne vegger nå. Dekket alt nøye til.",
+    "dato": "2026-03-18T12:00:00"
+  },
+  {
+    "id": "r-11",
+    "oppdragTittel": "Montere kjøkken",
+    "fra": "m-thomas",
+    "til": "a-leila",
+    "stjerner": 5,
+    "kommentar": "Monterte hele kjøkkenet på én dag. Utrolig effektiv.",
+    "dato": "2026-05-09T18:00:00"
+  },
+  {
+    "id": "r-12",
+    "oppdragTittel": "Flytte piano",
+    "fra": "m-solveig",
+    "til": "a-leila",
+    "stjerner": 4,
+    "kommentar": "Trygt og forsiktig. Kom en halvtime for sent.",
+    "dato": "2025-10-20T15:00:00"
+  },
+  {
+    "id": "r-13",
+    "oppdragTittel": "Beskjære epletrær",
+    "fra": "m-ole",
+    "til": "a-jonas",
+    "stjerner": 5,
+    "kommentar": "Kunnskapsrik og tok med alt avfallet.",
+    "dato": "2026-03-02T13:00:00"
+  },
+  {
+    "id": "r-14",
+    "oppdragTittel": "Høstrydding av hage",
+    "fra": "m-emma",
+    "til": "a-jonas",
+    "stjerner": 4,
+    "kommentar": "Fin jobb. Litt dyrere enn jeg trodde, men verdt det.",
+    "dato": "2025-10-28T16:00:00"
+  },
+  {
+    "id": "r-15",
+    "oppdragTittel": "Bytte terskel på ytterdør",
+    "fra": "m-solveig",
+    "til": "a-marte",
+    "stjerner": 5,
+    "kommentar": "Nøyaktig og ryddig. Døra lukker perfekt nå.",
+    "dato": "2026-02-14T11:00:00"
+  },
+  {
+    "id": "r-16",
+    "oppdragTittel": "Montere senger",
+    "fra": "m-kari",
+    "til": "a-aleksander",
+    "stjerner": 5,
+    "kommentar": "Blid og rask! Perfekt for enkle jobber.",
+    "dato": "2026-08-20T19:00:00"
+  },
+  {
+    "id": "r-17",
+    "oppdragTittel": "Rake løv i borettslag",
+    "fra": "m-ole",
+    "til": "a-aleksander",
+    "stjerner": 4,
+    "kommentar": "Gjorde en grei jobb til en god pris.",
+    "dato": "2025-10-15T15:00:00"
+  },
+  {
+    "id": "r-18",
+    "oppdragTittel": "Flyttevask",
+    "fra": "m-arne",
+    "til": "a-runa",
+    "stjerner": 5,
+    "kommentar": "Leiligheten ble godkjent ved overtakelse uten anmerkninger.",
+    "dato": "2026-06-30T12:00:00"
+  },
+  {
+    "id": "r-19",
+    "oppdragTittel": "Restaurere kjøkkendør",
+    "fra": "m-solveig",
+    "til": "a-henrik",
+    "stjerner": 5,
+    "kommentar": "Ekte håndverk. Han tok seg tid til å forklare alt.",
+    "dato": "2026-05-25T14:00:00"
+  },
+  {
+    "id": "r-20",
+    "oppdragTittel": "Fuge og bytte lister på bad",
+    "fra": "m-ole",
+    "til": "a-fatima",
+    "stjerner": 5,
+    "kommentar": "Veldig pent og ryddig arbeid.",
+    "dato": "2026-01-12T10:00:00"
+  },
+  {
+    "id": "r-21",
+    "oppdragTittel": "Male stue",
+    "fra": "m-kari",
+    "til": "a-fatima",
+    "stjerner": 4,
+    "kommentar": "Godt resultat, og nyttige fargeråd.",
+    "dato": "2025-11-05T13:00:00"
+  },
+  {
+    "id": "r-22",
+    "oppdragTittel": "Bytte blandebatteri",
+    "fra": "m-kari",
+    "til": "a-bjorn",
+    "stjerner": 5,
+    "kommentar": "Kom samme dag og fikset alt på en time.",
+    "dato": "2026-05-14T12:00:00"
+  },
+  {
+    "id": "r-23",
+    "oppdragTittel": "Tett avløp i dusj",
+    "fra": "m-arne",
+    "til": "a-bjorn",
+    "stjerner": 4,
+    "kommentar": "Effektiv, men litt kort i svarene.",
+    "dato": "2026-02-02T09:00:00"
+  },
+  {
+    "id": "r-24",
+    "oppdragTittel": "Bytte kjøkkenkran",
+    "fra": "m-ole",
+    "til": "a-emil",
+    "stjerner": 5,
+    "kommentar": "Hyggelig og flink. Forklarte hvordan jeg unngår drypp.",
+    "dato": "2026-08-03T18:00:00"
+  },
+  {
+    "id": "r-25",
+    "oppdragTittel": "Flyttevask av rekkehus",
+    "fra": "m-solveig",
+    "til": "a-sara",
+    "stjerner": 5,
+    "kommentar": "Skinnende rent. Utleier var fornøyd.",
+    "dato": "2026-06-01T15:00:00"
+  }
+]

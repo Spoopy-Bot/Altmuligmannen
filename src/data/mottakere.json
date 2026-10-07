@@ -1,0 +1,44 @@
+[
+  {
+    "id": "m-emma",
+    "navn": "Emma Haugen",
+    "sted": { "by": "Fredrikstad", "omrade": "Gressvik", "lat": 59.2190, "lng": 10.8900 },
+    "medlemSiden": "2026-03-14",
+    "farge": 2
+  },
+  {
+    "id": "m-thomas",
+    "navn": "Thomas Bakke",
+    "sted": { "by": "Sarpsborg", "omrade": "Greåker", "lat": 59.2690, "lng": 11.0320 },
+    "medlemSiden": "2025-11-02",
+    "farge": 4
+  },
+  {
+    "id": "m-solveig",
+    "navn": "Solveig Lund",
+    "sted": { "by": "Halden", "omrade": "Sentrum", "lat": 59.1210, "lng": 11.3920 },
+    "medlemSiden": "2026-01-20",
+    "farge": 7
+  },
+  {
+    "id": "m-arne",
+    "navn": "Arne Pettersen",
+    "sted": { "by": "Moss", "omrade": "Sentrum", "lat": 59.4320, "lng": 10.6600 },
+    "medlemSiden": "2025-09-08",
+    "farge": 1
+  },
+  {
+    "id": "m-kari",
+    "navn": "Kari Strand",
+    "sted": { "by": "Fredrikstad", "omrade": "Sentrum", "lat": 59.2160, "lng": 10.9310 },
+    "medlemSiden": "2025-06-30",
+    "farge": 5
+  },
+  {
+    "id": "m-ole",
+    "navn": "Ole Vik",
+    "sted": { "by": "Hvaler", "omrade": "Skjærhalden", "lat": 59.0300, "lng": 11.0350 },
+    "medlemSiden": "2025-08-11",
+    "farge": 3
+  }
+]

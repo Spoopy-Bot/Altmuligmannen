@@ -1,0 +1,12 @@
+[
+  { "id": "msg-1", "oppdragId": "o-101", "fra": "m-emma", "tekst": "Hei! Passer det at du kommer onsdag etter kl. 15?", "tid": "2026-08-28T19:05:00" },
+  { "id": "msg-2", "oppdragId": "o-101", "fra": "a-kai", "tekst": "Onsdag kl. 15.30 passer fint. Jeg tar med festemateriell til veggen.", "tid": "2026-08-28T19:20:00" },
+  { "id": "msg-3", "oppdragId": "o-102", "fra": "a-fatima", "tekst": "Hei Emma, takk for oppdraget! Er malingen du har kjøpt vegg- eller takmaling?", "tid": "2026-09-24T11:45:00" },
+  { "id": "msg-4", "oppdragId": "o-102", "fra": "m-emma", "tekst": "Jeg har begge deler, står i boden. Grå til veggene og hvit til taket.", "tid": "2026-09-24T12:10:00" },
+  { "id": "msg-5", "oppdragId": "o-102", "fra": "a-fatima", "tekst": "Perfekt. Da starter jeg torsdag kl. 08. Rommet bør være tømt for småting.", "tid": "2026-09-24T12:30:00" },
+  { "id": "msg-6", "oppdragId": "o-102", "fra": "a-fatima", "tekst": "Første strøk er på veggene nå. Taket tar jeg i morgen tidlig.", "tid": "2026-10-01T15:40:00" },
+  { "id": "msg-7", "oppdragId": "o-113", "fra": "m-thomas", "tekst": "Hei Kai, døra er den mot vest. Kan du ta med lister, eller skal jeg kjøpe?", "tid": "2026-09-30T18:15:00" },
+  { "id": "msg-8", "oppdragId": "o-113", "fra": "a-kai", "tekst": "Jeg tar med lister, det er inkludert i prisen. Passer mandag kl. 16?", "tid": "2026-09-30T18:40:00" },
+  { "id": "msg-9", "oppdragId": "o-110", "fra": "a-runa", "tekst": "Ferdig med alle vinduene! Har lagt igjen en lapp om et vindu med sprukket list.", "tid": "2026-10-02T13:32:00" },
+  { "id": "msg-10", "oppdragId": "o-108", "fra": "a-marte", "tekst": "Hei Solveig, jeg kan komme tirsdag morgen. Passer det?", "tid": "2026-09-27T12:25:00" }
+]
