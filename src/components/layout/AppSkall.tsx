@@ -6,7 +6,7 @@ import wordmark from '../../assets/wordmark-lys.png'
 import { uleste } from '../../lib/utvalg'
 import { useDemo } from '../../store/context'
 import { DemoPanel } from './DemoPanel'
-import { HJEM, NAV } from './navigasjon'
+import { NAV } from './navigasjon'
 
 function Varselbjelle() {
   const { state, megId } = useDemo()
@@ -55,7 +55,7 @@ export function AppSkall() {
       </a>
       <header data-mork className="sticky top-0 z-40 bg-navy text-cream shadow-[0_1px_0_rgb(0_0_0/0.2)]">
         <div className="mx-auto flex h-16 max-w-6xl items-center gap-4 px-4 sm:px-6">
-          <Link to={HJEM[rolle]} className="flex shrink-0 items-center gap-2.5 rounded-lg" aria-label="Altmuligmannen, til forsiden">
+          <Link to="/" className="flex shrink-0 items-center gap-2.5 rounded-lg" aria-label="Altmuligmannen, til startsiden">
             <img src={ikon} alt="" className="size-9 rounded-[22%] ring-1 ring-white/10" />
             <img src={wordmark} alt="" className="h-7 w-auto" />
           </Link>
