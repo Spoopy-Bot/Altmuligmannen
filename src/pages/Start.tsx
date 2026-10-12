@@ -35,7 +35,6 @@ export function Start() {
             <h1 className="mt-8 max-w-xl text-[2.125rem] leading-[1.08] font-extrabold tracking-[-0.03em] sm:text-5xl">
               Hjelp i hjemmet. Trygt betalt.
             </h1>
-            <p className="mt-4 max-w-lg text-lg text-navy-200">Folk i nærområdet ditt i Østfold.</p>
           </div>
 
           <div className="flex flex-col gap-3" role="group" aria-label="Velg hvordan du vil bruke Altmuligmannen">
