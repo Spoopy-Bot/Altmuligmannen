@@ -4,6 +4,7 @@ import { Link, useParams } from 'react-router'
 import { EscrowMerke } from '../../components/domain/EscrowSegl'
 import { Avatar } from '../../components/ui/Avatar'
 import { dato, klokkeslett } from '../../lib/format'
+import { hurtigsvar } from '../../lib/samtale'
 import { finnPerson } from '../../lib/utvalg'
 import { useDemo } from '../../store/context'
 import { IkkeFunnet } from './IkkeFunnet'
@@ -103,6 +104,21 @@ export function Samtale() {
           settFeil(undefined)
         }}
       >
+        {!skriver[oppdrag.id] && (
+          <ul className="mb-2.5 flex gap-2 overflow-x-auto pb-0.5" aria-label="Hurtigsvar">
+            {hurtigsvar(oppdrag, oppdrag.mottakerId === megId, meldinger).map((forslag) => (
+              <li key={forslag} className="shrink-0">
+                <button
+                  type="button"
+                  onClick={() => sendMelding(oppdrag.id, forslag)}
+                  className="rounded-full bg-white px-3.5 py-1.5 text-sm font-medium text-navy ring-1 ring-navy-200 transition-colors hover:bg-navy-50"
+                >
+                  {forslag}
+                </button>
+              </li>
+            ))}
+          </ul>
+        )}
         <label htmlFor="ny-melding" className="sr-only">
           Melding til {motpart.navn}
         </label>

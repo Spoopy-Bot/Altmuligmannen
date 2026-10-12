@@ -1,6 +1,8 @@
 import { useCallback, useEffect, useMemo, useReducer, useRef, useState, type ReactNode } from 'react'
 import { LagringsFeil } from '../components/layout/LagringsFeil'
 import { nyId } from '../lib/id'
+import { lagSvar } from '../lib/samtale'
+import { finnAktor, finnMottaker } from '../lib/utvalg'
 import type { DemoState } from '../types'
 import { DemoContext, type DemoApi } from './context'
 import { reducer } from './reducer'
@@ -24,23 +26,13 @@ function last(): Lastet {
   }
 }
 
-const AUTOSVAR_MOTTAKER = [
-  'Takk! Det høres bra ut.',
-  'Supert, da gjør vi det sånn.',
-  'Flott, jeg er hjemme da. Bare ring på.',
-]
-const AUTOSVAR_AKTOR = [
-  'Takk for beskjed! Det ordner jeg.',
-  'Notert. Jeg sier ifra hvis noe endrer seg.',
-  'Det passer fint. Vi sees da!',
-]
-
 export function DemoProvider({ children }: { children: ReactNode }) {
   const [start] = useState(last)
   const [lasteFeil, settLasteFeil] = useState(start.feil)
   const [state, dispatch] = useReducer(reducer, start.state)
   const [skriver, settSkriver] = useState<Record<string, boolean>>({})
   const tidtakere = useRef<number[]>([])
+  const ventende = useRef<Record<string, number[]>>({})
 
   useEffect(() => {
     try {
@@ -68,15 +60,37 @@ export function DemoProvider({ children }: { children: ReactNode }) {
       const oppdrag = state.oppdrag.find((o) => o.id === oppdragId)
       if (!oppdrag?.aktorId) return
       dispatch({ type: 'send-melding', oppdragId, fra: megId, tekst })
-      const motpart = megId === oppdrag.mottakerId ? oppdrag.aktorId : oppdrag.mottakerId
-      const svar = motpart === oppdrag.mottakerId ? AUTOSVAR_MOTTAKER : AUTOSVAR_AKTOR
-      const antall = state.meldinger.filter((m) => m.oppdragId === oppdragId).length
+      const motpartId = megId === oppdrag.mottakerId ? oppdrag.aktorId : oppdrag.mottakerId
+      const aktor = finnAktor(state, oppdrag.aktorId)
+      const mottaker = finnMottaker(state, oppdrag.mottakerId)
+      if (!aktor || !mottaker) return
+
+      // Ubesvarte meldinger fra meg slås sammen, så motparten svarer på alt jeg har skrevet.
+      const trad = state.meldinger.filter((m) => m.oppdragId === oppdragId)
+      const sisteSvar = trad.map((m) => m.fra).lastIndexOf(motpartId)
+      const ubesvarte = [...trad.slice(sisteSvar + 1).filter((m) => m.fra === megId).map((m) => m.tekst), tekst]
+      const bobler = lagSvar({
+        oppdrag,
+        kontrakt: state.kontrakter.find((k) => k.oppdragId === oppdragId),
+        aktor,
+        mottaker,
+        svarerErAktor: motpartId === oppdrag.aktorId,
+        historikk: trad.slice(0, sisteSvar + 1),
+        tekst: ubesvarte.join('. '),
+      })
+
+      ventende.current[oppdragId]?.forEach((t) => window.clearTimeout(t))
       settSkriver((s) => ({ ...s, [oppdragId]: true }))
-      const t = window.setTimeout(() => {
-        dispatch({ type: 'send-melding', oppdragId, fra: motpart, tekst: svar[antall % svar.length] })
-        settSkriver((s) => ({ ...s, [oppdragId]: false }))
-      }, 1800)
-      tidtakere.current.push(t)
+      let forsinkelse = 0
+      ventende.current[oppdragId] = bobler.map((boble, i) => {
+        forsinkelse += boble.ventMs
+        const t = window.setTimeout(() => {
+          dispatch({ type: 'send-melding', oppdragId, fra: motpartId, tekst: boble.tekst })
+          if (i === bobler.length - 1) settSkriver((s) => ({ ...s, [oppdragId]: false }))
+        }, forsinkelse)
+        tidtakere.current.push(t)
+        return t
+      })
     },
     [megId, state.oppdrag, state.meldinger],
   )
