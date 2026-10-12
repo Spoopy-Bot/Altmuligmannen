@@ -63,7 +63,7 @@ export function Hendelseslogg({ oppdrag }: { oppdrag: Oppdrag }) {
             <Strek />
             <span
               className={`relative z-10 mt-0.5 grid size-6 shrink-0 place-items-center rounded-lg ${
-                avslatt ? 'bg-cream-200 text-ink-3 ring-1 ring-line-strong' : 'bg-navy text-cream'
+                avslatt ? 'bg-cream-200 text-ink-3 ring-1 ring-line-strong' : 'bg-navy text-white'
               }`}
               aria-hidden
             >

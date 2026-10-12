@@ -1,7 +1,6 @@
 import { House } from 'lucide-react'
-import { useMemo } from 'react'
-import { initialer } from '../../lib/format'
-import type { Aktor, Sted } from '../../types'
+import { useMemo, type ReactNode } from 'react'
+import type { Sted } from '../../types'
 
 const B = 400
 const H = 548
@@ -13,6 +12,26 @@ const PX_PER_KM = B / ((LNG1 - LNG0) * 57)
 
 function xy(lng: number, lat: number): [number, number] {
   return [((lng - LNG0) / (LNG1 - LNG0)) * B, ((LAT1 - lat) / (LAT1 - LAT0)) * H]
+}
+
+function lngLat(x: number, y: number): Punkt {
+  return { lng: LNG0 + (x / B) * (LNG1 - LNG0), lat: LAT1 - (y / H) * (LAT1 - LAT0) }
+}
+
+export type Punkt = Pick<Sted, 'lat' | 'lng'>
+
+/** Søkeområdet brukeren har tegnet i kartet. */
+export interface Omrade extends Punkt {
+  radiusKm: number
+}
+
+const KM_LAT = 1 / 111
+const KM_LNG = 1 / 57
+const PILER: Record<string, [number, number]> = {
+  ArrowUp: [0, 1],
+  ArrowDown: [0, -1],
+  ArrowLeft: [-1, 0],
+  ArrowRight: [1, 0],
 }
 
 const sti = (pkt: [number, number][], lukk = true) =>
@@ -39,17 +58,28 @@ const BYER: [string, number, number][] = [
   ['Askim', 11.16, 59.58], ['Mysen', 11.33, 59.57], ['Råde', 10.87, 59.35], ['Hvaler', 11.03, 59.03],
 ]
 
+/** En markør i kartet: en aktør eller et oppdrag. */
+export interface KartPin {
+  id: string
+  /** Skjermlesertekst. */
+  navn: string
+  sted: Punkt
+  innhold: ReactNode
+  /** Tegnes som tjenesteområde når pinnen er valgt. */
+  radiusKm?: number
+}
+
 interface Pin {
-  aktor: Aktor
+  pin: KartPin
   x: number
   y: number
 }
 
 /** Skyver pinner fra hverandre så de ikke overlapper der mange bor tett. */
-function sprePinner(aktorer: Aktor[]): Pin[] {
-  const pinner = aktorer.map((a) => {
-    const [x, y] = xy(a.sted.lng, a.sted.lat)
-    return { aktor: a, x, y }
+function sprePinner(kartpinner: KartPin[]): Pin[] {
+  const pinner = kartpinner.map((pin) => {
+    const [x, y] = xy(pin.sted.lng, pin.sted.lat)
+    return { pin, x, y }
   })
   const min = 34
   for (let runde = 0; runde < 40; runde++) {
@@ -74,20 +104,30 @@ function sprePinner(aktorer: Aktor[]): Pin[] {
 }
 
 export function MockKart({
-  aktorer,
+  pinner: kartpinner,
+  pinEtikett,
   valgtId,
   onVelg,
-  oppdragSted,
+  hjem: hjemSted,
+  omrade,
+  onFlyttOmrade,
 }: {
-  aktorer: Aktor[]
+  pinner: KartPin[]
+  /** Navn på pinnene i tegnforklaringen. */
+  pinEtikett: string
   valgtId?: string
   onVelg: (id: string) => void
-  oppdragSted?: Sted
+  /** Huset i kartet: kundens oppdrag eller aktørens base. */
+  hjem?: { sted: Punkt; etikett: string; radiusKm?: number }
+  omrade?: Omrade
+  onFlyttOmrade?: (p: Punkt) => void
 }) {
-  const pinner = useMemo(() => sprePinner(aktorer), [aktorer])
-  const valgt = pinner.find((p) => p.aktor.id === valgtId)
-  const hjem = oppdragSted ? xy(oppdragSted.lng, oppdragSted.lat) : undefined
+  const pinner = useMemo(() => sprePinner(kartpinner), [kartpinner])
+  const valgt = pinner.find((p) => p.pin.id === valgtId)
+  const hjem = hjemSted ? xy(hjemSted.sted.lng, hjemSted.sted.lat) : undefined
+  const tjenesteomrade = valgt?.pin.radiusKm ? { x: valgt.x, y: valgt.y, r: valgt.pin.radiusKm } : hjem && hjemSted?.radiusKm ? { x: hjem[0], y: hjem[1], r: hjemSted.radiusKm } : undefined
   const pct = (x: number, y: number) => ({ left: `${(x / B) * 100}%`, top: `${(y / H) * 100}%` })
+  const sentrum = omrade ? xy(omrade.lng, omrade.lat) : undefined
 
   return (
     <figure className="overflow-hidden rounded-2xl bg-[#dfe7ec] ring-1 ring-line">
@@ -114,11 +154,21 @@ export function MockKart({
               </text>
             )
           })}
-          {valgt && (
+          {omrade && sentrum && (
             <circle
-              cx={valgt.x}
-              cy={valgt.y}
-              r={valgt.aktor.radiusKm * PX_PER_KM}
+              cx={sentrum[0]}
+              cy={sentrum[1]}
+              r={omrade.radiusKm * PX_PER_KM}
+              fill="rgb(253 175 28 / 0.16)"
+              stroke="#e5980a"
+              strokeWidth="2"
+            />
+          )}
+          {tjenesteomrade && (
+            <circle
+              cx={tjenesteomrade.x}
+              cy={tjenesteomrade.y}
+              r={tjenesteomrade.r * PX_PER_KM}
               fill="rgb(23 51 76 / 0.06)"
               stroke="#17334c"
               strokeOpacity="0.35"
@@ -130,48 +180,83 @@ export function MockKart({
           )}
         </svg>
 
+        {onFlyttOmrade && (
+          <button
+            type="button"
+            aria-label="Flytt søkeområdet. Trykk i kartet eller bruk piltastene."
+            className="absolute inset-0 cursor-crosshair rounded-none"
+            onClick={(e) => {
+              // Tastaturklikk har ingen posisjon; da brukes piltastene i stedet.
+              if (e.detail === 0) return
+              const r = e.currentTarget.getBoundingClientRect()
+              onFlyttOmrade(lngLat(((e.clientX - r.left) / r.width) * B, ((e.clientY - r.top) / r.height) * H))
+            }}
+            onKeyDown={(e) => {
+              const pil = PILER[e.key]
+              if (!pil || !omrade) return
+              e.preventDefault()
+              onFlyttOmrade({ lat: omrade.lat + pil[1] * KM_LAT, lng: omrade.lng + pil[0] * KM_LNG })
+            }}
+          />
+        )}
+
+        {sentrum && (
+          <span
+            className="pointer-events-none absolute z-20 size-3.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-amber-600 ring-3 ring-white"
+            style={pct(sentrum[0], sentrum[1])}
+            aria-hidden
+          />
+        )}
+
         {hjem && (
           <span
             className="absolute z-20 grid size-8 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-[var(--radius-ikon)] bg-amber text-navy-950 shadow-loft ring-2 ring-white"
             style={pct(hjem[0], hjem[1])}
-            title="Ditt oppdrag"
+            title={hjemSted?.etikett}
           >
             <House size={16} strokeWidth={2.4} aria-hidden />
-            <span className="sr-only">Ditt oppdrag</span>
+            <span className="sr-only">{hjemSted?.etikett}</span>
           </span>
         )}
 
         {pinner.map((p) => {
-          const erValgt = p.aktor.id === valgtId
+          const erValgt = p.pin.id === valgtId
           return (
             <button
-              key={p.aktor.id}
+              key={p.pin.id}
               type="button"
-              onClick={() => onVelg(p.aktor.id)}
+              onClick={() => onVelg(p.pin.id)}
               aria-pressed={erValgt}
-              aria-label={`${p.aktor.navn}, ${p.aktor.sted.omrade === 'Sentrum' ? p.aktor.sted.by : p.aktor.sted.omrade}`}
+              aria-label={p.pin.navn}
               className={`absolute grid -translate-x-1/2 -translate-y-1/2 place-items-center rounded-[var(--radius-ikon)] font-display font-bold shadow-kort ring-2 ring-white transition-[transform,background-color] duration-150 hover:scale-110 ${
                 erValgt ? 'z-30 size-10 bg-navy text-sm text-amber' : 'z-10 size-8 bg-white text-[0.6875rem] text-navy'
               }`}
               style={pct(p.x, p.y)}
             >
-              {initialer(p.aktor.navn)}
+              {p.pin.innhold}
             </button>
           )
         })}
       </div>
       <figcaption className="flex flex-wrap items-center gap-x-4 gap-y-1 border-t border-line bg-white px-4 py-2.5 text-xs text-ink-3">
         <span className="inline-flex items-center gap-1.5">
-          <span className="size-3 rounded-[28%] bg-white ring-1 ring-navy" aria-hidden /> Aktør
+          <span className="size-3 rounded-[28%] bg-white ring-1 ring-navy" aria-hidden /> {pinEtikett}
         </span>
-        {hjem && (
+        {hjemSted && (
           <span className="inline-flex items-center gap-1.5">
-            <span className="size-3 rounded-[28%] bg-amber" aria-hidden /> Ditt oppdrag
+            <span className="size-3 rounded-[28%] bg-amber" aria-hidden /> {hjemSted.etikett}
           </span>
         )}
-        <span className="inline-flex items-center gap-1.5">
-          <span className="h-0 w-4 border-t border-dashed border-navy" aria-hidden /> Område
-        </span>
+        {tjenesteomrade && (
+          <span className="inline-flex items-center gap-1.5">
+            <span className="h-0 w-4 border-t border-dashed border-navy" aria-hidden /> Tjenesteområde
+          </span>
+        )}
+        {omrade && (
+          <span className="inline-flex items-center gap-1.5">
+            <span className="size-3 rounded-full bg-amber/30 ring-2 ring-amber-600" aria-hidden /> Ditt søk
+          </span>
+        )}
         <span className="ml-auto">Illustrasjon</span>
       </figcaption>
     </figure>

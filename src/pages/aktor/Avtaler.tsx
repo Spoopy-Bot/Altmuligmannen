@@ -31,7 +31,7 @@ export function Avtaler() {
           </dt>
           <dd className="tall mt-1 font-display text-2xl font-extrabold text-navy">{kr(reservert)}</dd>
         </div>
-        <div data-mork className="rounded-2xl bg-navy p-4 text-cream">
+        <div data-mork className="rounded-2xl bg-navy p-4 text-white">
           <dt className="flex items-center gap-1.5 text-sm font-semibold text-navy-200">
             <Segl status="frigitt" storrelse={18} /> Utbetalt
           </dt>

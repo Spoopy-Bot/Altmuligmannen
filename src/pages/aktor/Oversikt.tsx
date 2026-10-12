@@ -37,7 +37,7 @@ export function Oversikt() {
             aria-pressed={aktiv === k.id}
             onClick={() => settAktiv(k.id)}
             className={`flex h-10 items-center justify-center gap-1.5 rounded-lg text-sm font-semibold ${
-              aktiv === k.id ? 'bg-navy text-cream' : 'text-ink-2'
+              aktiv === k.id ? 'bg-navy text-white' : 'text-ink-2'
             }`}
           >
             {k.tittel}

@@ -9,9 +9,9 @@ import { useDemo } from '../../store/context'
 import type { Varsel, VarselType } from '../../types'
 
 const IKON: Record<Exclude<VarselType, 'betaling'>, { ikon: LucideIcon; farge: string }> = {
-  'nytt-oppdrag': { ikon: BriefcaseBusiness, farge: 'bg-navy text-cream' },
-  forespørsel: { ikon: BriefcaseBusiness, farge: 'bg-navy text-cream' },
-  tilbud: { ikon: FileSignature, farge: 'bg-navy text-cream' },
+  'nytt-oppdrag': { ikon: BriefcaseBusiness, farge: 'bg-navy text-white' },
+  forespørsel: { ikon: BriefcaseBusiness, farge: 'bg-navy text-white' },
+  tilbud: { ikon: FileSignature, farge: 'bg-navy text-white' },
   melding: { ikon: MessageCircle, farge: 'bg-navy-100 text-navy' },
   oppdatering: { ikon: RefreshCw, farge: 'bg-navy-100 text-navy' },
   vurdering: { ikon: Star, farge: 'bg-navy-100 text-navy' },

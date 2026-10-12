@@ -16,7 +16,7 @@ function Varselbjelle() {
       to="/varsler"
       aria-label={antall ? `Varsler, ${antall} uleste` : 'Varsler'}
       className={({ isActive }) =>
-        `relative grid size-10 place-items-center rounded-xl text-cream ring-1 transition-colors hover:bg-white/14 ${
+        `relative grid size-10 place-items-center rounded-xl text-white ring-1 transition-colors hover:bg-white/14 ${
           isActive ? 'bg-white/14 ring-white/30' : 'ring-white/15'
         }`
       }
@@ -53,7 +53,7 @@ export function AppSkall() {
       >
         Hopp til innhold
       </a>
-      <header data-mork className="sticky top-0 z-40 bg-navy text-cream shadow-[0_1px_0_rgb(0_0_0/0.2)]">
+      <header data-mork className="sticky top-0 z-40 bg-navy text-white shadow-[0_1px_0_rgb(0_0_0/0.2)]">
         <div className="mx-auto flex h-16 max-w-6xl items-center gap-4 px-4 sm:px-6">
           <Link to="/" className="flex shrink-0 items-center gap-2.5 rounded-lg" aria-label="Altmuligmannen, til startsiden">
             <img src={ikon} alt="" className="size-9 rounded-[22%] ring-1 ring-white/10" />
@@ -69,8 +69,8 @@ export function AppSkall() {
                     className={({ isActive }) =>
                       `relative flex h-10 items-center gap-2 rounded-lg px-3 text-sm font-semibold transition-colors ${
                         isActive
-                            ? 'bg-white/12 text-cream'
-                            : 'text-navy-200 hover:bg-white/8 hover:text-cream'
+                            ? 'bg-white/12 text-white'
+                            : 'text-navy-200 hover:bg-white/8 hover:text-white'
                       }`
                     }
                   >
@@ -112,7 +112,7 @@ export function AppSkall() {
                   <>
                     <span
                       className={`grid h-8 w-12 place-items-center rounded-xl transition-colors ${
-                        p.fremhevet ? 'bg-navy text-cream' : isActive ? 'bg-navy-100' : ''
+                        p.fremhevet ? 'bg-navy text-white' : isActive ? 'bg-navy-100' : ''
                       }`}
                     >
                       <p.ikon size={20} strokeWidth={isActive ? 2.2 : 1.8} aria-hidden />

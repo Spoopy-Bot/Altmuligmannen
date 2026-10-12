@@ -1,16 +1,103 @@
-import { Check, Presentation, RotateCcw, X } from 'lucide-react'
+import { Check, ChevronRight, Presentation, RotateCcw, X } from 'lucide-react'
 import { useEffect, useRef, useState } from 'react'
-import { useNavigate } from 'react-router'
+import { Link, useNavigate } from 'react-router'
 import { useDemo } from '../../store/context'
+import { desimal, kr } from '../../lib/format'
+import { ratingFor } from '../../lib/matching'
 import { finnPerson } from '../../lib/utvalg'
 import type { Rolle } from '../../types'
 import { Avatar } from '../ui/Avatar'
 import { Knapp } from '../ui/Knapp'
+import { Merke } from '../ui/Merke'
+import { Stjerner } from '../ui/Stjerner'
 import { DEMO_PERSONER, HJEM } from './navigasjon'
 
 const ROLLE_TEKST: Record<Rolle, { tittel: string; under: string }> = {
   mottaker: { tittel: 'Trenger hjelp', under: 'Mottaker' },
   aktor: { tittel: 'Tilbyr hjelp', under: 'Aktør' },
+}
+
+/** Snittvurdering og siste vurderinger for en aktør. */
+function MinVurdering({ id }: { id: string }) {
+  const { state } = useDemo()
+  const rating = ratingFor(id, state.ratings)
+  const siste = state.ratings.filter((r) => r.til === id).slice(0, 3)
+  return (
+    <section aria-labelledby="min-vurdering" className="mb-4">
+      <h2 id="min-vurdering" className="mb-2 text-sm font-semibold text-ink-3">
+        Din vurdering
+      </h2>
+      {rating.antall === 0 ? (
+        <p className="text-sm text-ink-3">Ingen vurderinger ennå.</p>
+      ) : (
+        <>
+          <div className="flex items-center gap-3 rounded-xl bg-white p-3 ring-1 ring-line">
+            <span className="tall font-display text-3xl font-extrabold text-navy">{desimal(rating.snitt)}</span>
+            <span className="flex flex-col gap-0.5">
+              <Stjerner verdi={rating.snitt} />
+              <span className="text-xs text-ink-3">
+                Snitt av {rating.antall} {rating.antall === 1 ? 'vurdering' : 'vurderinger'}
+              </span>
+            </span>
+          </div>
+          <ul className="mt-2 flex flex-col gap-2">
+            {siste.map((r) => (
+              <li key={r.id} className="rounded-xl p-3 ring-1 ring-line">
+                <div className="flex items-center justify-between gap-2">
+                  <Stjerner verdi={r.stjerner} storrelse={13} />
+                  <span className="truncate text-xs text-ink-3">{finnPerson(state, r.fra).navn}</span>
+                </div>
+                {r.kommentar && <p className="mt-1.5 text-sm text-ink">«{r.kommentar}»</p>}
+              </li>
+            ))}
+          </ul>
+        </>
+      )}
+    </section>
+  )
+}
+
+/** Mottakerens kontrakter, nyeste først. */
+function MineKontrakter({ id, lukk }: { id: string; lukk: () => void }) {
+  const { state } = useDemo()
+  const mine = state.kontrakter.filter((k) => k.mottakerId === id)
+  return (
+    <section aria-labelledby="mine-kontrakter" className="mb-4">
+      <div className="mb-2 flex items-baseline justify-between">
+        <h2 id="mine-kontrakter" className="text-sm font-semibold text-ink-3">
+          Dine kontrakter
+        </h2>
+        {mine.length > 4 && (
+          <Link to="/mine-oppdrag" onClick={lukk} className="text-sm font-semibold text-navy hover:underline">
+            Se alle
+          </Link>
+        )}
+      </div>
+      {mine.length === 0 ? (
+        <p className="text-sm text-ink-3">Ingen kontrakter ennå.</p>
+      ) : (
+        <ul className="divide-y divide-line overflow-hidden rounded-xl ring-1 ring-line">
+          {mine.slice(0, 4).map((k) => {
+            const oppdrag = state.oppdrag.find((o) => o.id === k.oppdragId)
+            return (
+              <li key={k.id}>
+                <Link to={`/kontrakter/${k.id}`} onClick={lukk} className="flex items-center gap-2 px-3 py-2.5 transition-colors hover:bg-cream">
+                  <span className="min-w-0 flex-1">
+                    <span className="block truncate text-sm font-semibold text-navy">{oppdrag?.tittel ?? 'Kontrakt'}</span>
+                    <span className="block truncate text-xs text-ink-3">
+                      {finnPerson(state, k.aktorId).navn} · {kr(k.pris)}
+                    </span>
+                  </span>
+                  {k.status === 'fullfort' ? <Merke tone="ok">Fullført</Merke> : <Merke tone="amber">Aktiv</Merke>}
+                  <ChevronRight size={16} className="text-ink-3" aria-hidden />
+                </Link>
+              </li>
+            )
+          })}
+        </ul>
+      )}
+    </section>
+  )
 }
 
 export function DemoPanel() {
@@ -66,6 +153,7 @@ export function DemoPanel() {
         type="button"
         aria-expanded={apen}
         aria-controls="demo-panel"
+        aria-label={`Profil: ${meg.navn}`}
         onClick={() => {
           settApen((a) => !a)
           settBekreft(false)
@@ -74,10 +162,10 @@ export function DemoPanel() {
       >
         <Avatar navn={meg.navn} farge={meg.farge} storrelse="xs" />
         <span className="hidden leading-tight sm:block">
-          <span className="block text-sm font-semibold text-cream">{meg.navn.split(' ')[0]}</span>
+          <span className="block text-sm font-semibold text-white">{meg.navn.split(' ')[0]}</span>
           <span className="block text-[0.6875rem] text-navy-200">{ROLLE_TEKST[rolle].under}</span>
         </span>
-        <span className="rounded-md bg-cream px-1.5 py-0.5 text-[0.6875rem] font-bold text-navy">Demo</span>
+        <span className="rounded-md bg-white px-1.5 py-0.5 text-[0.6875rem] font-bold text-navy">Demo</span>
       </button>
 
       {apen && (
@@ -85,25 +173,32 @@ export function DemoPanel() {
           ref={panel}
           id="demo-panel"
           role="dialog"
-          aria-label="Demomodus"
-          className="animer-inn fixed inset-x-3 top-[4.25rem] z-50 rounded-2xl bg-white p-5 text-ink shadow-loft ring-1 ring-line sm:absolute sm:inset-x-auto sm:top-12 sm:right-0 sm:w-[23rem]"
+          aria-label="Profil"
+          className="animer-inn fixed inset-x-3 top-[4.25rem] z-50 max-h-[calc(100dvh-5rem)] overflow-y-auto rounded-2xl bg-white p-5 text-ink shadow-loft ring-1 ring-line sm:absolute sm:inset-x-auto sm:top-12 sm:right-0 sm:w-[23rem]"
         >
-          <div className="mb-4 flex items-start justify-between gap-3">
-            <div>
-              <p className="flex items-center gap-2 font-display text-lg font-bold text-navy">
-                <Presentation size={18} aria-hidden /> Demomodus
-              </p>
-              <p className="mt-0.5 text-sm text-ink-3">Bytt rolle og person.</p>
+          <div className="mb-4 flex items-center justify-between gap-3">
+            <div className="flex items-center gap-3">
+              <Avatar navn={meg.navn} farge={meg.farge} storrelse="md" />
+              <div>
+                <p className="font-display text-lg font-bold text-navy">{meg.navn}</p>
+                <p className="text-sm text-ink-3">{ROLLE_TEKST[rolle].under}</p>
+              </div>
             </div>
             <button
               type="button"
               onClick={() => settApen(false)}
               className="grid size-9 shrink-0 place-items-center rounded-lg text-ink-3 hover:bg-cream-200 hover:text-ink"
-              aria-label="Lukk demomodus"
+              aria-label="Lukk profil"
             >
               <X size={18} aria-hidden />
             </button>
           </div>
+
+          {rolle === 'mottaker' ? <MineKontrakter id={megId} lukk={() => settApen(false)} /> : <MinVurdering id={megId} />}
+
+          <p className="mb-3 flex items-center gap-2 border-t border-line pt-4 font-display font-bold text-navy">
+            <Presentation size={17} aria-hidden /> Demomodus
+          </p>
 
           {(['mottaker', 'aktor'] as Rolle[]).map((r) => (
             <fieldset key={r} className="mb-4">
@@ -121,7 +216,7 @@ export function DemoPanel() {
                       aria-pressed={valgt}
                       onClick={() => velgPerson(r, id)}
                       className={`flex items-center gap-2.5 rounded-xl p-2 text-left text-sm font-semibold ring-1 transition-colors ${
-                        valgt ? 'bg-navy text-cream ring-navy' : 'bg-white text-ink ring-line hover:bg-cream'
+                        valgt ? 'bg-navy text-white ring-navy' : 'bg-white text-ink ring-line hover:bg-cream'
                       }`}
                     >
                       <Avatar navn={p.navn} farge={p.farge} storrelse="sm" />

@@ -82,7 +82,7 @@ export function AktorProfil() {
               ['Fullførte jobber', String(aktor.fullforteJobber)],
               ['Dekker', `${aktor.radiusKm} km`],
             ].map(([k, v]) => (
-              <div key={k} className="bg-cream px-4 py-3">
+              <div key={k} className="bg-white px-4 py-3">
                 <dt className="text-xs text-ink-3">{k}</dt>
                 <dd className="tall font-display text-lg font-bold text-navy">{v}</dd>
               </div>
@@ -181,7 +181,7 @@ function Foresporsel({ aktor }: { aktor: Aktor }) {
 
   if (aktuelle.length === 0) {
     return (
-      <div data-mork className="rounded-3xl bg-navy p-6 text-cream">
+      <div data-mork className="rounded-3xl bg-navy p-6 text-white">
         <p className="font-display text-xl font-bold">Trenger du hjelp av {fornavn(aktor.navn)}?</p>
         <KnappLenke to="/hjelp/ny" variant="aksent" bred className="mt-4" ikon={<PlusCircle size={18} aria-hidden />}>
           Beskriv problemet
@@ -193,9 +193,9 @@ function Foresporsel({ aktor }: { aktor: Aktor }) {
   const sendt = valgt?.status === 'forespurt' && valgt.aktorId === aktor.id
 
   return (
-    <div data-mork className="rounded-3xl bg-navy p-5 text-cream sm:p-6">
+    <div data-mork className="rounded-3xl bg-navy p-5 text-white sm:p-6">
       <p className="font-display text-xl font-bold">Send forespørsel</p>
-      <div className="mt-4 [&_label]:text-cream">
+      <div className="mt-4 [&_label]:text-white">
         <Velger etikett="Oppdrag" value={valgtId} onChange={(e) => settValgtId(e.target.value)}>
           {aktuelle.map((o) => (
             <option key={o.id} value={o.id}>

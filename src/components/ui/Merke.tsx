@@ -3,7 +3,7 @@ import type { ReactNode } from 'react'
 export type Tone = 'navy' | 'amber' | 'ok' | 'feil' | 'noytral' | 'lys'
 
 const toner: Record<Tone, string> = {
-  navy: 'bg-navy text-cream',
+  navy: 'bg-navy text-white',
   amber: 'bg-amber-100 text-amber-ink ring-1 ring-inset ring-amber/60',
   ok: 'bg-ok-50 text-ok ring-1 ring-inset ring-ok/25',
   feil: 'bg-feil-50 text-feil ring-1 ring-inset ring-feil/25',

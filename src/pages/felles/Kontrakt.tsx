@@ -71,7 +71,7 @@ export function Kontrakt() {
             </ul>
           </section>
 
-          <dl className="grid gap-3 rounded-2xl bg-cream p-4 text-sm sm:grid-cols-2">
+          <dl className="grid gap-3 rounded-2xl bg-white p-4 text-sm ring-1 ring-line sm:grid-cols-2">
             {[
               [mottaker?.navn, oppdrag.betaling.reservert],
               [aktor?.navn, kontrakt.opprettet],

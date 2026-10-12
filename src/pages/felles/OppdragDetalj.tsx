@@ -116,7 +116,7 @@ function Panel({ children, tone = 'hvit' }: { children: ReactNode; tone?: 'hvit'
     <section
       aria-label="Neste steg"
       data-mork={tone === 'navy' || undefined}
-      className={`rounded-2xl p-5 ${tone === 'navy' ? 'bg-navy text-cream' : 'bg-white ring-1 ring-line'}`}
+      className={`rounded-2xl p-5 ${tone === 'navy' ? 'bg-navy text-white' : 'bg-white ring-1 ring-line'}`}
     >
       {children}
     </section>

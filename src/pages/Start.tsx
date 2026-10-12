@@ -24,7 +24,7 @@ export function Start() {
 
   return (
     <div className="min-h-dvh bg-cream">
-      <section data-mork className="relative overflow-hidden bg-navy text-cream">
+      <section data-mork className="relative overflow-hidden bg-navy text-white">
         <div className="pointer-events-none absolute -right-24 -bottom-40 size-[34rem] rounded-[var(--radius-ikon)] bg-navy-700/40 rotate-12" aria-hidden />
         <div className="relative mx-auto grid max-w-6xl gap-10 px-4 pt-8 pb-14 sm:px-6 sm:pt-12 md:grid-cols-[1.15fr_1fr] md:items-center md:pb-20">
           <div>
@@ -63,7 +63,7 @@ export function Start() {
           {STEG.map((s) => (
             <li key={s.tittel} className="relative flex items-center gap-4 sm:flex-col sm:text-center">
               {s.ikon ? (
-                <span className="grid size-12 shrink-0 place-items-center rounded-[var(--radius-ikon)] bg-navy text-cream ring-4 ring-cream" aria-hidden>
+                <span className="grid size-12 shrink-0 place-items-center rounded-[var(--radius-ikon)] bg-navy text-white ring-4 ring-cream" aria-hidden>
                   <s.ikon size={22} strokeWidth={1.9} />
                 </span>
               ) : (
@@ -100,7 +100,7 @@ function RolleDor({
       className={`group flex items-center gap-4 rounded-2xl p-5 text-left transition-[transform,background-color,box-shadow] duration-200 ease-out hover:-translate-y-0.5 sm:p-6 ${
         hoved
           ? 'bg-amber text-navy-950 shadow-loft hover:bg-amber-600'
-          : 'bg-white/6 text-cream ring-1 ring-white/20 hover:bg-white/10'
+          : 'bg-white/6 text-white ring-1 ring-white/20 hover:bg-white/10'
       }`}
     >
       <span className="min-w-0 flex-1">
@@ -109,7 +109,7 @@ function RolleDor({
       </span>
       <span
         className={`grid size-11 shrink-0 place-items-center rounded-xl transition-transform duration-200 group-hover:translate-x-0.5 ${
-          hoved ? 'bg-navy text-amber' : 'bg-white/10 text-cream'
+          hoved ? 'bg-navy text-amber' : 'bg-white/10 text-white'
         }`}
         aria-hidden
       >

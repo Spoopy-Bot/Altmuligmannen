@@ -63,7 +63,7 @@ export function Samtale() {
               <div className={`animer-inn flex max-w-[82%] flex-col ${min ? 'items-end self-end' : 'items-start self-start'}`}>
                 <p
                   className={`rounded-2xl px-3.5 py-2.5 text-[0.9375rem] leading-snug ${
-                    min ? 'rounded-br-md bg-navy text-cream' : 'rounded-bl-md bg-white text-ink ring-1 ring-line sm:bg-cream'
+                    min ? 'rounded-br-md bg-navy text-white' : 'rounded-bl-md bg-white text-ink ring-1 ring-line sm:bg-white'
                   }`}
                 >
                   <span className="sr-only">{min ? 'Du' : motpart.navn}: </span>
@@ -77,7 +77,7 @@ export function Samtale() {
           )
         })}
         {skriver[oppdrag.id] && (
-          <li className="self-start rounded-2xl rounded-bl-md bg-white px-4 py-3 ring-1 ring-line sm:bg-cream">
+          <li className="self-start rounded-2xl rounded-bl-md bg-white px-4 py-3 ring-1 ring-line sm:bg-white">
             <span className="sr-only">{motpart.navn} skriver …</span>
             <span className="flex gap-1" aria-hidden>
               {[0, 1, 2].map((d) => (
@@ -145,7 +145,7 @@ export function Samtale() {
           />
           <button
             type="submit"
-            className="grid size-12 shrink-0 place-items-center rounded-xl bg-navy text-cream transition-colors hover:bg-navy-700"
+            className="grid size-12 shrink-0 place-items-center rounded-xl bg-navy text-white transition-colors hover:bg-navy-700"
             aria-label="Send melding"
           >
             <SendHorizontal size={20} aria-hidden />

@@ -501,7 +501,7 @@ function BildeOpplasting({
             <button
               type="button"
               onClick={() => onEndre(bilder.filter((_, j) => j !== i))}
-              className="absolute -top-2 -right-2 grid size-7 place-items-center rounded-full bg-navy text-cream shadow-kort hover:bg-navy-700"
+              className="absolute -top-2 -right-2 grid size-7 place-items-center rounded-full bg-navy text-white shadow-kort hover:bg-navy-700"
               aria-label={`Fjern bilde ${i + 1}`}
             >
               <X size={14} aria-hidden />
