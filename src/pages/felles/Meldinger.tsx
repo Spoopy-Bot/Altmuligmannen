@@ -6,7 +6,7 @@ import { SkjelettListe } from '../../components/ui/Skjelett'
 import { TomTilstand } from '../../components/ui/TomTilstand'
 import { useSimulertLasting } from '../../hooks/useSimulertLasting'
 import { relativTid } from '../../lib/format'
-import { finnPerson } from '../../lib/utvalg'
+import { erSkjult, finnPerson } from '../../lib/utvalg'
 import { useDemo } from '../../store/context'
 
 export function Meldinger() {
@@ -14,7 +14,7 @@ export function Meldinger() {
   const laster = useSimulertLasting()
 
   const trader = state.oppdrag
-    .filter((o) => o.aktorId && (o.mottakerId === megId || o.aktorId === megId))
+    .filter((o) => o.aktorId && (o.mottakerId === megId || o.aktorId === megId) && !erSkjult(o, megId))
     .map((o) => {
       const meldinger = state.meldinger.filter((m) => m.oppdragId === o.id)
       const siste = meldinger[meldinger.length - 1]

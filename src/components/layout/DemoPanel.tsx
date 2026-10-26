@@ -4,7 +4,7 @@ import { Link, useNavigate } from 'react-router'
 import { useDemo } from '../../store/context'
 import { desimal, kr } from '../../lib/format'
 import { ratingFor } from '../../lib/matching'
-import { finnPerson } from '../../lib/utvalg'
+import { erSkjult, finnPerson } from '../../lib/utvalg'
 import type { Rolle } from '../../types'
 import { Avatar } from '../ui/Avatar'
 import { Knapp } from '../ui/Knapp'
@@ -60,7 +60,9 @@ function MinVurdering({ id }: { id: string }) {
 /** Mottakerens kontrakter, nyeste først. */
 function MineKontrakter({ id, lukk }: { id: string; lukk: () => void }) {
   const { state } = useDemo()
-  const mine = state.kontrakter.filter((k) => k.mottakerId === id)
+  const mine = state.kontrakter.filter(
+    (k) => k.mottakerId === id && !state.oppdrag.some((o) => o.id === k.oppdragId && erSkjult(o, id)),
+  )
   return (
     <section aria-labelledby="mine-kontrakter" className="mb-4">
       <div className="mb-2 flex items-baseline justify-between">

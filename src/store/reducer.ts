@@ -18,6 +18,7 @@ export type Handling =
   | { type: 'opprett-oppdrag'; id: string; mottakerId: string; data: NyttOppdrag; vippsRef: string }
   | { type: 'rediger-oppdrag'; oppdragId: string; endring: OppdragEndring }
   | { type: 'slett-oppdrag'; oppdragId: string }
+  | { type: 'skjul-oppdrag'; oppdragId: string; personId: string }
   | { type: 'sett-varselinnstilling'; id: string; push?: boolean; varselType?: VarselType; pa?: boolean }
   | { type: 'test-varsel'; til: string }
   | { type: 'send-foresporsel'; oppdragId: string; aktorId: string }
@@ -173,6 +174,18 @@ export function reducer(state: DemoState, h: Handling): DemoState {
           ...tilAktor,
           ...varsler,
         ],
+      }
+    }
+
+    case 'skjul-oppdrag': {
+      const o = finn(h.oppdragId)
+      if (!o || o.status !== 'godkjent') return state
+      if (h.personId !== o.mottakerId && h.personId !== o.aktorId) return state
+      const peker = (lenke: string) => lenke.includes(o.id) || (!!o.kontraktId && lenke.includes(o.kontraktId))
+      return {
+        ...state,
+        oppdrag: state.oppdrag.map((x) => (x.id === o.id ? { ...x, skjultFor: [...new Set([...(x.skjultFor ?? []), h.personId])] } : x)),
+        varsler: state.varsler.filter((v) => !(v.til === h.personId && peker(v.lenke))),
       }
     }
 

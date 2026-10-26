@@ -5,7 +5,7 @@ import { EscrowMerke } from '../../components/domain/EscrowSegl'
 import { Avatar } from '../../components/ui/Avatar'
 import { dato, klokkeslett } from '../../lib/format'
 import { hurtigsvar } from '../../lib/samtale'
-import { finnPerson } from '../../lib/utvalg'
+import { finnOppdrag, finnPerson } from '../../lib/utvalg'
 import { useDemo } from '../../store/context'
 import { IkkeFunnet } from './IkkeFunnet'
 
@@ -17,7 +17,7 @@ export function Samtale() {
   const [tekst, settTekst] = useState('')
   const [feil, settFeil] = useState<string>()
   const bunn = useRef<HTMLDivElement>(null)
-  const oppdrag = state.oppdrag.find((o) => o.id === id)
+  const oppdrag = finnOppdrag(state, id, megId)
   const meldinger = state.meldinger.filter((m) => m.oppdragId === id)
   const lenke = `/meldinger/${id}`
   const harUlest = state.varsler.some((v) => v.til === megId && !v.lest && v.lenke === lenke)

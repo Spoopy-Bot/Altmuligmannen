@@ -7,7 +7,7 @@ import { SkjelettListe } from '../../components/ui/Skjelett'
 import { TomTilstand } from '../../components/ui/TomTilstand'
 import { useSimulertLasting } from '../../hooks/useSimulertLasting'
 import { dato, kr } from '../../lib/format'
-import { finnMottaker } from '../../lib/utvalg'
+import { erSkjult, finnMottaker } from '../../lib/utvalg'
 import { useDemo } from '../../store/context'
 
 export function Avtaler() {
@@ -16,7 +16,7 @@ export function Avtaler() {
   const mine = state.kontrakter
     .filter((k) => k.aktorId === state.aktivAktorId)
     .map((k) => ({ kontrakt: k, oppdrag: state.oppdrag.find((o) => o.id === k.oppdragId) }))
-    .filter((x) => x.oppdrag)
+    .filter((x) => x.oppdrag && !erSkjult(x.oppdrag, state.aktivAktorId))
   const reservert = mine.filter((x) => x.oppdrag!.betaling.status === 'reservert').reduce((s, x) => s + x.kontrakt.pris, 0)
   const utbetalt = mine.filter((x) => x.oppdrag!.betaling.status === 'frigitt').reduce((s, x) => s + x.kontrakt.pris, 0)
 

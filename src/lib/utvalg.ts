@@ -31,8 +31,17 @@ export function harVurdert(state: DemoState, oppdragId: string, fra: string): bo
   return state.ratings.some((r) => r.oppdragId === oppdragId && r.fra === fra)
 }
 
+/** Har personen slettet den fullførte jobben fra sin side? */
+export const erSkjult = (o: Oppdrag, personId: string) => !!o.skjultFor?.includes(personId)
+
+/** Oppdraget, med mindre personen har slettet det fra sin side. */
+export function finnOppdrag(state: DemoState, id: string | undefined, personId: string): Oppdrag | undefined {
+  const o = state.oppdrag.find((x) => x.id === id)
+  return o && !erSkjult(o, personId) ? o : undefined
+}
+
 export function oppdragForAktor(state: DemoState, aktorId: string): Oppdrag[] {
-  return state.oppdrag.filter((o) => o.aktorId === aktorId)
+  return state.oppdrag.filter((o) => o.aktorId === aktorId && !erSkjult(o, aktorId))
 }
 
 export const STATUS_TEKST: Record<OppdragStatus, string> = {

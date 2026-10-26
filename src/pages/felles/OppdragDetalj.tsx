@@ -1,9 +1,10 @@
-import { CheckCircle2, FileSignature, MapPin, MessageCircle, Pencil, Play, Repeat, Search, ThumbsUp, Trash2, X } from 'lucide-react'
+import { CheckCircle2, FileSignature, MapPin, TriangleAlert, MessageCircle, Pencil, Play, Repeat, Search, ThumbsUp, Trash2, X } from 'lucide-react'
 import { useState, type ReactNode } from 'react'
 import { Link, useNavigate, useParams } from 'react-router'
 import { EscrowSegl } from '../../components/domain/EscrowSegl'
 import { Hendelseslogg } from '../../components/domain/Hendelseslogg'
 import { KategoriIkon } from '../../components/domain/KategoriIkon'
+import { KontraktPdfKnapp } from '../../components/domain/KontraktPdfKnapp'
 import { LeveringSkjema } from '../../components/domain/LeveringSkjema'
 import { StatusMerke } from '../../components/domain/StatusMerke'
 import { VurderingSkjema } from '../../components/domain/VurderingSkjema'
@@ -17,7 +18,7 @@ import { stedNavn } from '../../data/steder'
 import { desimal, fornavn, km, kr } from '../../lib/format'
 import { avstandKm } from '../../lib/geo'
 import { ratingFor } from '../../lib/matching'
-import { finnAktor, finnMottaker, HASTEGRAD_TEKST } from '../../lib/utvalg'
+import { finnAktor, finnMottaker, finnOppdrag, HASTEGRAD_TEKST } from '../../lib/utvalg'
 import { useDemo } from '../../store/context'
 import type { Oppdrag } from '../../types'
 import { IkkeFunnet } from './IkkeFunnet'
@@ -25,7 +26,7 @@ import { IkkeFunnet } from './IkkeFunnet'
 export function OppdragDetalj() {
   const { id } = useParams()
   const { state, megId } = useDemo()
-  const oppdrag = state.oppdrag.find((o) => o.id === id)
+  const oppdrag = finnOppdrag(state, id, megId)
   const rolle = state.rolle ?? 'mottaker'
 
   if (!oppdrag) return <IkkeFunnet hva="Oppdraget" />
@@ -214,6 +215,44 @@ function Handlinger({ oppdrag }: { oppdrag: Oppdrag }) {
         </div>
       )
     ) : null
+  const kontraktData = state.kontrakter.find((k) => k.id === oppdrag.kontraktId)
+  const slettFullfort =
+    oppdrag.status === 'godkjent' ? (
+      slettBekreft ? (
+        <div className="mt-4 flex flex-col gap-3 border-t border-line pt-4" role="alert">
+          <p className="flex gap-2 rounded-xl bg-amber-50 p-3 text-sm text-amber-ink ring-1 ring-amber/50">
+            <TriangleAlert size={18} className="mt-0.5 shrink-0" aria-hidden />
+            <span>
+              <strong>Last ned kontrakten før du sletter.</strong> Du mister tilgang til jobben, kontrakten og chatten. {rolle === 'aktor' ? 'Kunden' : 'Aktøren'} beholder sin kopi.
+            </span>
+          </p>
+          {kontraktData && <KontraktPdfKnapp kontrakt={kontraktData} />}
+          <Knapp
+            variant="fare"
+            bred
+            laster={laster === 'skjul'}
+            ikon={<Trash2 size={18} aria-hidden />}
+            onClick={() =>
+              utfor('skjul', () => {
+                dispatch({ type: 'skjul-oppdrag', oppdragId: oppdrag.id, personId: megId })
+                navigate(rolle === 'aktor' ? '/aktor/oversikt' : '/mine-oppdrag')
+              })
+            }
+          >
+            Slett fra min side
+          </Knapp>
+          <Knapp variant="tekst" bred onClick={() => settSlettBekreft(false)}>
+            Avbryt
+          </Knapp>
+        </div>
+      ) : (
+        <div className="mt-4 border-t border-line pt-4">
+          <Knapp variant="fare" storrelse="sm" bred ikon={<Trash2 size={16} aria-hidden />} onClick={() => settSlettBekreft(true)}>
+            Slett fra min side
+          </Knapp>
+        </div>
+      )
+    ) : null
   const kontrakt = oppdrag.kontraktId && (
     <KnappLenke to={`/kontrakter/${oppdrag.kontraktId}`} variant="tekst" bred ikon={<FileSignature size={18} aria-hidden />}>
       Se kontrakt
@@ -302,6 +341,7 @@ function Handlinger({ oppdrag }: { oppdrag: Oppdrag }) {
               aktor && <VurderingSkjema oppdragId={oppdrag.id} til={aktor.id} tilNavn={aktor.navn} />
             )}
             <div className="mt-3">{kontrakt}</div>
+            {slettFullfort}
             {demoBytte}
           </Panel>
         )
@@ -402,6 +442,7 @@ function Handlinger({ oppdrag }: { oppdrag: Oppdrag }) {
             mottaker && <VurderingSkjema oppdragId={oppdrag.id} til={mottaker.id} tilNavn={mottaker.navn} />
           )}
           <div className="mt-3">{kontrakt}</div>
+          {slettFullfort}
           {demoBytte}
         </Panel>
       )

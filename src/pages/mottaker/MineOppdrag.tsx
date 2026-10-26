@@ -9,7 +9,7 @@ import { SkjelettListe } from '../../components/ui/Skjelett'
 import { TomTilstand } from '../../components/ui/TomTilstand'
 import { useSimulertLasting } from '../../hooks/useSimulertLasting'
 import { fornavn } from '../../lib/format'
-import { finnAktor, finnMottaker, harVurdert } from '../../lib/utvalg'
+import { erSkjult, finnAktor, finnMottaker, harVurdert } from '../../lib/utvalg'
 import { useDemo } from '../../store/context'
 import type { DemoState, Oppdrag } from '../../types'
 
@@ -27,7 +27,7 @@ export function MineOppdrag() {
   const fane = (['fullforte', 'vurderinger'] as const).find((f) => f === sok.get('fane')) ?? 'aktive'
   const settFane = (f: string) => settSok(f === 'aktive' ? {} : { fane: f }, { replace: true })
   const meg = finnMottaker(state, state.aktivMottakerId)
-  const mine = state.oppdrag.filter((o) => o.mottakerId === state.aktivMottakerId)
+  const mine = state.oppdrag.filter((o) => o.mottakerId === state.aktivMottakerId && !erSkjult(o, state.aktivMottakerId))
   const aktive = mine.filter((o) => o.status !== 'godkjent')
   const fullforte = mine.filter((o) => o.status === 'godkjent')
   const liste = fane === 'aktive' ? aktive : fullforte

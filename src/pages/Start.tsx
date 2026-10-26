@@ -32,16 +32,16 @@ export function Start() {
   }
 
   return (
-    <div className="min-h-dvh bg-cream">
-      <section data-mork className="relative overflow-hidden bg-navy pt-[var(--sikker-topp,0px)] text-white">
+    <div className="flex h-dvh flex-col overflow-hidden bg-cream">
+      <section data-mork className="relative min-h-0 flex-1 overflow-hidden bg-navy pt-[var(--sikker-topp,0px)] text-white">
         <div className="pointer-events-none absolute -right-24 -bottom-40 size-[34rem] rounded-[var(--radius-ikon)] bg-navy-700/40 rotate-12" aria-hidden />
-        <div className="relative mx-auto grid max-w-6xl gap-10 px-4 pt-8 pb-14 sm:px-6 sm:pt-12 md:grid-cols-[1.15fr_1fr] md:items-center md:pb-20">
+        <div className="relative mx-auto flex h-full max-w-6xl flex-col justify-center gap-6 px-4 py-4 sm:px-6">
           <div>
             <div className="flex items-center gap-4">
-              <img src={ikon} alt="" className="size-16 rounded-[22%] shadow-loft sm:size-20" />
-              <img src={wordmark} alt="Altmuligmannen" className="h-12 w-auto sm:h-16" />
+              <img src={ikon} alt="" className="size-14 rounded-[22%] shadow-loft sm:size-20" />
+              <img src={wordmark} alt="Altmuligmannen" className="h-10 w-auto sm:h-16" />
             </div>
-            <h1 className="mt-8 max-w-xl text-[2.125rem] leading-[1.08] font-extrabold tracking-[-0.03em] sm:text-5xl">
+            <h1 className="mt-6 max-w-xl text-[2rem] leading-[1.08] font-extrabold tracking-[-0.03em] sm:text-5xl">
               Hjelp i hjemmet. Trygt betalt.
             </h1>
           </div>
@@ -75,29 +75,31 @@ export function Start() {
         </div>
       </section>
 
-      <section aria-labelledby="slik-tittel" className="mx-auto max-w-6xl px-4 py-14 sm:px-6 md:py-20">
-        <h2 id="slik-tittel" className="text-2xl font-extrabold text-navy sm:text-3xl">
-          Slik holdes pengene trygge
-        </h2>
-        <ol className="relative mt-10 grid gap-8 sm:grid-cols-4 sm:gap-4">
-          <span className="absolute top-6 bottom-6 left-6 w-0.5 bg-navy sm:top-6 sm:right-[12.5%] sm:bottom-auto sm:left-[12.5%] sm:h-0.5 sm:w-auto" aria-hidden />
-          {STEG.map((s) => (
-            <li key={s.tittel} className="relative flex items-center gap-4 sm:flex-col sm:text-center">
-              {s.ikon ? (
-                <span className="grid size-12 shrink-0 place-items-center rounded-[var(--radius-ikon)] bg-navy text-white ring-4 ring-cream" aria-hidden>
-                  <s.ikon size={22} strokeWidth={1.9} />
-                </span>
-              ) : (
-                <span className="animer-stempel rounded-[var(--radius-ikon)] ring-4 ring-cream">
-                  <Segl storrelse={48} />
-                </span>
-              )}
-              <h3 className="font-display text-base font-bold text-navy">{s.tittel}</h3>
-            </li>
-          ))}
-        </ol>
-        <p className="mt-12 text-sm text-ink-3">Prototype · alle personer og data er fiktive</p>
-      </section>
+      <footer aria-labelledby="slik-tittel" className="shrink-0 px-4 pt-5 pb-[calc(var(--sikker-bunn,0px)+0.75rem)] sm:px-6">
+        <div className="mx-auto max-w-6xl">
+          <h2 id="slik-tittel" className="text-lg font-extrabold text-navy sm:text-2xl">
+            Slik holdes pengene trygge
+          </h2>
+          <ol className="relative mt-4 grid grid-cols-4 gap-2">
+            <span className="absolute top-5 right-[12.5%] left-[12.5%] h-0.5 bg-navy" aria-hidden />
+            {STEG.map((s) => (
+              <li key={s.tittel} className="relative flex flex-col items-center gap-2 text-center">
+                {s.ikon ? (
+                  <span className="grid size-10 shrink-0 place-items-center rounded-[var(--radius-ikon)] bg-navy text-white ring-4 ring-cream" aria-hidden>
+                    <s.ikon size={19} strokeWidth={1.9} />
+                  </span>
+                ) : (
+                  <span className="animer-stempel rounded-[var(--radius-ikon)] ring-4 ring-cream">
+                    <Segl storrelse={40} />
+                  </span>
+                )}
+                <h3 className="font-display text-xs leading-tight font-bold text-navy sm:text-base">{s.tittel}</h3>
+              </li>
+            ))}
+          </ol>
+          <p className="mt-3 text-center text-xs text-ink-3">Prototype · alle personer og data er fiktive</p>
+        </div>
+      </footer>
     </div>
   )
 }

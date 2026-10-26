@@ -113,6 +113,8 @@ export interface Oppdrag {
   kontraktId?: string
   betaling: Betaling
   levering?: Levering
+  /** Personer som har slettet den fullførte jobben fra sin side. Motparten beholder sin kopi. */
+  skjultFor?: string[]
   hendelser: Hendelse[]
 }
 

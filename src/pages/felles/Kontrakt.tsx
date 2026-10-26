@@ -7,7 +7,7 @@ import { Sidehode } from '../../components/ui/Sidehode'
 import { stedNavn } from '../../data/steder'
 import { datoMedAr, klokkeslett, kr } from '../../lib/format'
 import { kontraktNr } from '../../lib/kontraktPdf'
-import { finnAktor, finnMottaker } from '../../lib/utvalg'
+import { finnAktor, finnMottaker, finnOppdrag } from '../../lib/utvalg'
 import { useDemo } from '../../store/context'
 import { IkkeFunnet } from './IkkeFunnet'
 
@@ -15,7 +15,7 @@ export function Kontrakt() {
   const { id } = useParams()
   const { state, megId } = useDemo()
   const kontrakt = state.kontrakter.find((k) => k.id === id)
-  const oppdrag = state.oppdrag.find((o) => o.id === kontrakt?.oppdragId)
+  const oppdrag = finnOppdrag(state, kontrakt?.oppdragId, megId)
   if (!kontrakt || !oppdrag || (megId !== kontrakt.aktorId && megId !== kontrakt.mottakerId)) return <IkkeFunnet hva="Kontrakten" />
 
   const aktor = finnAktor(state, kontrakt.aktorId)
