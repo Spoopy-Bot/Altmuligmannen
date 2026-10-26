@@ -21,7 +21,8 @@ export function Start() {
   const navigate = useNavigate()
 
   function velg(rolle: Rolle) {
-    dispatch({ type: 'sett-rolle', rolle })
+    // Aktørdøren går alltid til Kai, også etter at ungdomsinngangen er brukt.
+    dispatch(rolle === 'aktor' ? { type: 'sett-persona', rolle, id: 'a-kai' } : { type: 'sett-rolle', rolle })
     navigate(rolle === 'mottaker' ? '/hjelp/ny' : '/aktor/jobber')
   }
 
