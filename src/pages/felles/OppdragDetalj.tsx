@@ -1,4 +1,4 @@
-import { CheckCircle2, FileSignature, MapPin, MessageCircle, Play, Repeat, Search, ThumbsUp, X } from 'lucide-react'
+import { CheckCircle2, FileSignature, MapPin, MessageCircle, Pencil, Play, Repeat, Search, ThumbsUp, Trash2, X } from 'lucide-react'
 import { useState, type ReactNode } from 'react'
 import { Link, useNavigate, useParams } from 'react-router'
 import { EscrowSegl } from '../../components/domain/EscrowSegl'
@@ -148,6 +148,7 @@ function Handlinger({ oppdrag }: { oppdrag: Oppdrag }) {
   const navigate = useNavigate()
   const [laster, settLaster] = useState<string | null>(null)
   const [bekreft, settBekreft] = useState(false)
+  const [slettBekreft, settSlettBekreft] = useState(false)
   const rolle = state.rolle ?? 'mottaker'
   const aktor = finnAktor(state, oppdrag.aktorId)
   const mottaker = finnMottaker(state, oppdrag.mottakerId)
@@ -179,6 +180,40 @@ function Handlinger({ oppdrag }: { oppdrag: Oppdrag }) {
       Melding
     </KnappLenke>
   )
+  const redigerSlett =
+    rolle === 'mottaker' && (oppdrag.status === 'apen' || oppdrag.status === 'forespurt') ? (
+      slettBekreft ? (
+        <div className="mt-4 flex flex-col gap-2 border-t border-line pt-4" role="alert">
+          <p className="text-sm text-ink-2">Slette oppdraget? Vipps-reservasjonen på {kr(oppdrag.betaling.belop)} frigjøres.</p>
+          <Knapp
+            variant="fare"
+            bred
+            laster={laster === 'slett'}
+            ikon={<Trash2 size={18} aria-hidden />}
+            onClick={() =>
+              utfor('slett', () => {
+                dispatch({ type: 'slett-oppdrag', oppdragId: oppdrag.id })
+                navigate('/mine-oppdrag')
+              })
+            }
+          >
+            Ja, slett
+          </Knapp>
+          <Knapp variant="tekst" bred onClick={() => settSlettBekreft(false)}>
+            Avbryt
+          </Knapp>
+        </div>
+      ) : (
+        <div className="mt-4 flex gap-2 border-t border-line pt-4">
+          <KnappLenke to={`/oppdrag/${oppdrag.id}/rediger`} variant="sekundar" storrelse="sm" className="flex-1" ikon={<Pencil size={16} aria-hidden />}>
+            Rediger
+          </KnappLenke>
+          <Knapp variant="fare" storrelse="sm" className="flex-1" ikon={<Trash2 size={16} aria-hidden />} onClick={() => settSlettBekreft(true)}>
+            Slett
+          </Knapp>
+        </div>
+      )
+    ) : null
   const kontrakt = oppdrag.kontraktId && (
     <KnappLenke to={`/kontrakter/${oppdrag.kontraktId}`} variant="tekst" bred ikon={<FileSignature size={18} aria-hidden />}>
       Se kontrakt
@@ -194,6 +229,7 @@ function Handlinger({ oppdrag }: { oppdrag: Oppdrag }) {
             <KnappLenke to={`/hjelp/ny/${oppdrag.id}/anbefalt`} variant="aksent" bred className="mt-3">
               Se anbefalte aktører
             </KnappLenke>
+            {redigerSlett}
           </Panel>
         )
       case 'forespurt':
@@ -201,6 +237,7 @@ function Handlinger({ oppdrag }: { oppdrag: Oppdrag }) {
           <Panel>
             <p className="font-semibold text-ink">Venter på svar fra {aktor && fornavn(aktor.navn)}</p>
             <p className="mt-1 text-sm text-ink-3">{aktor?.svartid}</p>
+            {redigerSlett}
             {demoBytte}
           </Panel>
         )

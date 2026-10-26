@@ -2,7 +2,7 @@ import { kanTa } from '../data/kategorier'
 import { fornavn, kr, km } from '../lib/format'
 import { avstandKm } from '../lib/geo'
 import { nyId } from '../lib/id'
-import type { Aktor, DemoState, Hendelse, Kontrakt, Levering, Oppdrag, Rolle, Varsel } from '../types'
+import type { Aktor, DemoState, Hendelse, Kontrakt, Levering, Oppdrag, Rolle, Varsel, VarselType } from '../types'
 import { lagStartState, vilkarFor } from './seed'
 
 export type NyttOppdrag = Pick<
@@ -10,10 +10,16 @@ export type NyttOppdrag = Pick<
   'tittel' | 'kategori' | 'beskrivelse' | 'bilder' | 'hastegrad' | 'sted' | 'adresse' | 'budsjett'
 >
 
+export type OppdragEndring = Pick<Oppdrag, 'tittel' | 'beskrivelse' | 'bilder' | 'hastegrad' | 'adresse' | 'budsjett'>
+
 export type Handling =
   | { type: 'sett-rolle'; rolle: Rolle | null }
   | { type: 'sett-persona'; rolle: Rolle; id: string }
   | { type: 'opprett-oppdrag'; id: string; mottakerId: string; data: NyttOppdrag; vippsRef: string }
+  | { type: 'rediger-oppdrag'; oppdragId: string; endring: OppdragEndring }
+  | { type: 'slett-oppdrag'; oppdragId: string }
+  | { type: 'sett-varselinnstilling'; id: string; push?: boolean; varselType?: VarselType; pa?: boolean }
+  | { type: 'test-varsel'; til: string }
   | { type: 'send-foresporsel'; oppdragId: string; aktorId: string }
   | { type: 'aksepter'; oppdragId: string; aktorId: string }
   | { type: 'avsla'; oppdragId: string; aktorId: string }
@@ -105,6 +111,102 @@ export function reducer(state: DemoState, h: Handling): DemoState {
       })
       return { ...state, oppdrag: [nytt, ...state.oppdrag], varsler: [tilMottaker, ...tilAktorer, ...state.varsler] }
     }
+
+    case 'rediger-oppdrag': {
+      const o = finn(h.oppdragId)
+      if (!o || (o.status !== 'apen' && o.status !== 'forespurt')) return state
+      const e = h.endring
+      const neste = oppdaterOppdrag(
+        state,
+        o.id,
+        (g) => ({ ...e, betaling: { ...g.betaling, belop: e.budsjett } }),
+        undefined,
+      )
+      if (o.status !== 'forespurt' || !o.aktorId) return neste
+      return {
+        ...neste,
+        varsler: [
+          varsel({
+            til: o.aktorId,
+            type: 'oppdatering',
+            tittel: `${navnPa(state, o.mottakerId)} har endret oppdraget`,
+            tekst: `${e.tittel} · ${kr(e.budsjett)} reservert`,
+            lenke: `/oppdrag/${o.id}`,
+            lenketekst: 'Se endringene',
+          }),
+          ...neste.varsler,
+        ],
+      }
+    }
+
+    case 'slett-oppdrag': {
+      const o = finn(h.oppdragId)
+      if (!o || (o.status !== 'apen' && o.status !== 'forespurt')) return state
+      // Varsler som peker på det slettede oppdraget fjernes, så ingen havner på en tom side.
+      const varsler = state.varsler.filter((v) => !v.lenke.includes(o.id))
+      const tilAktor =
+        o.status === 'forespurt' && o.aktorId
+          ? [
+              varsel({
+                til: o.aktorId,
+                type: 'oppdatering',
+                tittel: `${navnPa(state, o.mottakerId)} har trukket oppdraget`,
+                tekst: `«${o.tittel}» er slettet.`,
+                lenke: '/aktor/jobber',
+                lenketekst: 'Se andre jobber',
+              }),
+            ]
+          : []
+      return {
+        ...state,
+        oppdrag: state.oppdrag.filter((x) => x.id !== o.id),
+        meldinger: state.meldinger.filter((m) => m.oppdragId !== o.id),
+        varsler: [
+          varsel({
+            til: o.mottakerId,
+            type: 'betaling',
+            tittel: `${kr(o.betaling.belop)} er frigjort`,
+            tekst: `Vipps-reservasjonen for «${o.tittel}» er avbrutt. Ingenting er trukket.`,
+            lenke: '/mine-oppdrag',
+            lenketekst: 'Mine oppdrag',
+          }),
+          ...tilAktor,
+          ...varsler,
+        ],
+      }
+    }
+
+    case 'sett-varselinnstilling': {
+      const n = state.varselInnstillinger[h.id] ?? { push: true, av: [] }
+      const av =
+        h.varselType === undefined
+          ? n.av
+          : h.pa
+            ? n.av.filter((t) => t !== h.varselType)
+            : n.av.includes(h.varselType)
+              ? n.av
+              : [...n.av, h.varselType]
+      return {
+        ...state,
+        varselInnstillinger: { ...state.varselInnstillinger, [h.id]: { push: h.push ?? n.push, av } },
+      }
+    }
+
+    case 'test-varsel':
+      return {
+        ...state,
+        varsler: [
+          varsel({
+            til: h.til,
+            type: 'oppdatering',
+            tittel: 'Testvarsel',
+            tekst: 'Slik ser et push-varsel ut på telefonen din.',
+            lenke: '/varsler',
+            lenketekst: 'Åpne varsler',
+          }),
+          ...state.varsler,
+        ],
+      }
 
     case 'send-foresporsel': {
       const o = finn(h.oppdragId)

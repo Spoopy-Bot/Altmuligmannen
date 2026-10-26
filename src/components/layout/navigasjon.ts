@@ -1,4 +1,4 @@
-import { Briefcase, ClipboardList, FileSignature, MessageCircle, PlusCircle, Search, UserRound, type LucideIcon } from 'lucide-react'
+import { Briefcase, ClipboardList, FileSignature, MessageCircle, PlusCircle, Search, Settings, UserRound, type LucideIcon } from 'lucide-react'
 import type { Rolle } from '../../types'
 
 export interface NavPunkt {
@@ -22,6 +22,20 @@ export const NAV: Record<Rolle, NavPunkt[]> = {
     { til: '/meldinger', tekst: 'Meldinger', ikon: MessageCircle },
     { til: '/aktor/profil', tekst: 'Profil', ikon: UserRound },
   ],
+}
+
+/** «Mine oppdrag» ligger i toppbaren på mobil, ikke i bunnbaren. */
+export const MINE: Record<Rolle, NavPunkt> = {
+  mottaker: NAV.mottaker[0],
+  aktor: NAV.aktor[1],
+}
+
+export const INNSTILLINGER: NavPunkt = { til: '/innstillinger', tekst: 'Innstillinger', ikon: Settings }
+
+/** Bunnbaren på mobil. */
+export const BUNN: Record<Rolle, NavPunkt[]> = {
+  mottaker: [...NAV.mottaker.filter((p) => p !== MINE.mottaker), INNSTILLINGER],
+  aktor: [...NAV.aktor.filter((p) => p !== MINE.aktor), INNSTILLINGER],
 }
 
 export const HJEM: Record<Rolle, string> = { mottaker: '/mine-oppdrag', aktor: '/aktor/jobber' }

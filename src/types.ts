@@ -170,6 +170,12 @@ export interface Rating {
   dato: string
 }
 
+/** Simulerte varselinnstillinger per person. `av` er typene personen har slått av. */
+export interface VarselInnstillinger {
+  push: boolean
+  av: VarselType[]
+}
+
 export interface DemoState {
   versjon: number
   rolle: Rolle | null
@@ -182,4 +188,5 @@ export interface DemoState {
   meldinger: Melding[]
   varsler: Varsel[]
   ratings: Rating[]
+  varselInnstillinger: Record<string, VarselInnstillinger>
 }

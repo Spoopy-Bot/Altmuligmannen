@@ -33,7 +33,7 @@ export function Start() {
 
   return (
     <div className="min-h-dvh bg-cream">
-      <section data-mork className="relative overflow-hidden bg-navy text-white">
+      <section data-mork className="relative overflow-hidden bg-navy pt-[var(--sikker-topp,0px)] text-white">
         <div className="pointer-events-none absolute -right-24 -bottom-40 size-[34rem] rounded-[var(--radius-ikon)] bg-navy-700/40 rotate-12" aria-hidden />
         <div className="relative mx-auto grid max-w-6xl gap-10 px-4 pt-8 pb-14 sm:px-6 sm:pt-12 md:grid-cols-[1.15fr_1fr] md:items-center md:pb-20">
           <div>

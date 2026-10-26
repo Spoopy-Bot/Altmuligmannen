@@ -46,6 +46,17 @@
   --ease-ut: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
+/* Inne i telefonrammen: plass til statuslinjen med Dynamic Island og hjem-indikatoren. */
+:root.i-telefon {
+  --sikker-topp: 54px;
+  --sikker-bunn: 34px;
+  scrollbar-width: none;
+}
+
+:root.i-telefon::-webkit-scrollbar {
+  display: none;
+}
+
 @layer base {
   html {
     -webkit-text-size-adjust: 100%;

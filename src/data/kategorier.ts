@@ -75,3 +75,6 @@ export const erUngdom = (a: { alder?: number }) => a.alder !== undefined && a.al
 export function kanTa(a: { alder?: number }, k: KategoriId): boolean {
   return !erUngdom(a) || UNGDOM_KATEGORIER.includes(k)
 }
+
+/** Fritt bilde (CC0 / public domain) som illustrerer jobbtypen. Se public/bilder/KILDER.md. */
+export const kategoriBilde = (id: KategoriId) => `/bilder/${id}.jpg`

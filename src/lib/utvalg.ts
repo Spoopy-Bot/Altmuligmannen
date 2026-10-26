@@ -1,4 +1,4 @@
-import type { Aktor, DemoState, Hastegrad, Mottaker, Oppdrag, OppdragStatus } from '../types'
+import type { Aktor, DemoState, Hastegrad, Mottaker, Oppdrag, OppdragStatus, Varsel, VarselInnstillinger } from '../types'
 
 export function finnAktor(state: DemoState, id?: string): Aktor | undefined {
   return id ? state.aktorer.find((a) => a.id === id) : undefined
@@ -12,8 +12,18 @@ export function finnPerson(state: DemoState, id: string): { navn: string; farge:
   return finnAktor(state, id) ?? finnMottaker(state, id) ?? { navn: 'Ukjent', farge: 0 }
 }
 
+export function innstillingerFor(state: DemoState, id: string): VarselInnstillinger {
+  return state.varselInnstillinger[id] ?? { push: true, av: [] }
+}
+
+/** Varslene personen faktisk vil ha, etter innstillingene. */
+export function minevarsler(state: DemoState, id: string): Varsel[] {
+  const { av } = innstillingerFor(state, id)
+  return state.varsler.filter((v) => v.til === id && !av.includes(v.type))
+}
+
 export function uleste(state: DemoState, til: string): number {
-  return state.varsler.filter((v) => v.til === til && !v.lest).length
+  return minevarsler(state, til).filter((v) => !v.lest).length
 }
 
 /** Har personen allerede vurdert motparten for dette oppdraget? */

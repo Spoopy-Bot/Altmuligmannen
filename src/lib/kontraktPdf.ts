@@ -1,5 +1,5 @@
 import type { jsPDF } from 'jspdf'
-import { kategori } from '../data/kategorier'
+import { kategori, kategoriBilde } from '../data/kategorier'
 import { stedNavn } from '../data/steder'
 import type { DemoState, Kontrakt, Oppdrag } from '../types'
 import { datoMedAr, desimal, klokkeslett, kr } from './format'
@@ -28,6 +28,19 @@ function hendelseTid(o: Oppdrag, type: string): string | undefined {
   return o.hendelser.find((h) => h.type === type)?.tid
 }
 
+/** jsPDF trenger data-URL. Bilder fra filer (for eksempel illustrasjonsfotoene) hentes og skaleres først. */
+async function tilDataUrl(src: string): Promise<string> {
+  if (src.startsWith('data:')) return src
+  const blob = await (await fetch(src)).blob()
+  const bitmap = await createImageBitmap(blob)
+  const skala = Math.min(1, 900 / Math.max(bitmap.width, bitmap.height))
+  const lerret = document.createElement('canvas')
+  lerret.width = Math.round(bitmap.width * skala)
+  lerret.height = Math.round(bitmap.height * skala)
+  lerret.getContext('2d')?.drawImage(bitmap, 0, 0, lerret.width, lerret.height)
+  return lerret.toDataURL('image/jpeg', 0.82)
+}
+
 const tidspunkt = (iso?: string) => (iso ? `${datoMedAr(iso)} kl. ${klokkeslett(iso)}` : '–')
 
 /** Lager en ferdig utfylt kontrakt som PDF for oppdraget og laster den ned. */
@@ -41,6 +54,12 @@ export async function lastNedKontraktPdf(state: DemoState, kontrakt: Kontrakt): 
   const mottaker = finnMottaker(state, kontrakt.mottakerId)
   const nr = kontraktNr(kontrakt)
   const lev = oppdrag.levering
+  // Har kunden ikke lagt ved bilde, brukes et illustrasjonsfoto av jobbtypen.
+  const illustrasjon = oppdrag.bilder.length === 0
+  const forBilder = await Promise.all(
+    (illustrasjon ? [kategoriBilde(oppdrag.kategori)] : oppdrag.bilder).slice(0, 3).map((b) => tilDataUrl(b).catch(() => '')),
+  ).then((l) => l.filter(Boolean))
+  const etterBilder = await Promise.all((lev?.bilder ?? []).slice(0, 3).map((b) => tilDataUrl(b).catch(() => ''))).then((l) => l.filter(Boolean))
   const startet = hendelseTid(oppdrag, 'startet')
   const levert = hendelseTid(oppdrag, 'levert')
   const godkjent = hendelseTid(oppdrag, 'godkjent')
@@ -205,7 +224,8 @@ export async function lastNedKontraktPdf(state: DemoState, kontrakt: Kontrakt): 
   if (oppdrag.beskrivelse !== kontrakt.arbeid) avsnitt(`Kundens beskrivelse: «${oppdrag.beskrivelse}»`, 9, 'italic', INK3)
 
   overskrift(2, 'Slik så det ut før')
-  bilder(oppdrag.bilder, 'Kunden la ikke ved bilder')
+  bilder(forBilder, 'Kunden la ikke ved bilder')
+  if (illustrasjon && forBilder.length) avsnitt('Illustrasjonsfoto: kunden la ikke ved bilde.', 8.5, 'italic', INK3)
 
   overskrift(3, 'Hva ble gjort')
   avsnitt(lev ? lev.utfort : 'Ikke rapportert ennå. Fylles ut når aktøren melder jobben ferdig.', 10.5, lev ? 'normal' : 'italic', lev ? INK : INK3)
@@ -218,7 +238,7 @@ export async function lastNedKontraktPdf(state: DemoState, kontrakt: Kontrakt): 
   ])
 
   overskrift(5, 'Slik ble det')
-  bilder(lev?.bilder ?? [], lev ? 'Aktøren la ikke ved bilde' : 'Lastes opp når jobben er ferdig')
+  bilder(etterBilder, lev ? 'Aktøren la ikke ved bilde' : 'Lastes opp når jobben er ferdig')
 
   overskrift(6, 'Pris og betaling')
   const b = oppdrag.betaling

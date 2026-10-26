@@ -1,10 +1,11 @@
-import { BellOff, BriefcaseBusiness, CheckCheck, FileSignature, MessageCircle, RefreshCw, Star, type LucideIcon } from 'lucide-react'
+import { BellOff, BriefcaseBusiness, CheckCheck, FileSignature, MessageCircle, RefreshCw, Settings, Star, type LucideIcon } from 'lucide-react'
 import { Segl } from '../../components/domain/Segl'
 import { useNavigate } from 'react-router'
-import { Knapp } from '../../components/ui/Knapp'
+import { Knapp, KnappLenke } from '../../components/ui/Knapp'
 import { Sidehode } from '../../components/ui/Sidehode'
 import { TomTilstand } from '../../components/ui/TomTilstand'
 import { relativTid } from '../../lib/format'
+import { minevarsler } from '../../lib/utvalg'
 import { useDemo } from '../../store/context'
 import type { Varsel, VarselType } from '../../types'
 
@@ -20,7 +21,7 @@ const IKON: Record<Exclude<VarselType, 'betaling'>, { ikon: LucideIcon; farge: s
 export function Varsler() {
   const { state, dispatch, megId } = useDemo()
   const navigate = useNavigate()
-  const mine = state.varsler.filter((v) => v.til === megId).sort((a, b) => b.tid.localeCompare(a.tid))
+  const mine = minevarsler(state, megId).sort((a, b) => b.tid.localeCompare(a.tid))
   const nye = mine.filter((v) => !v.lest)
   const tidligere = mine.filter((v) => v.lest)
 
@@ -34,11 +35,16 @@ export function Varsler() {
       <Sidehode
         tittel="Varsler"
         handlinger={
-          nye.length > 0 && (
-            <Knapp variant="tekst" storrelse="sm" ikon={<CheckCheck size={16} aria-hidden />} onClick={() => dispatch({ type: 'les-varsler', til: megId })}>
-              Merk alle som lest
-            </Knapp>
-          )
+          <>
+            {nye.length > 0 && (
+              <Knapp variant="tekst" storrelse="sm" ikon={<CheckCheck size={16} aria-hidden />} onClick={() => dispatch({ type: 'les-varsler', til: megId })}>
+                Merk alle som lest
+              </Knapp>
+            )}
+            <KnappLenke to="/innstillinger" variant="sekundar" storrelse="sm" ikon={<Settings size={16} aria-hidden />}>
+              Innstillinger
+            </KnappLenke>
+          </>
         }
       />
       {mine.length === 0 ? (

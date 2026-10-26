@@ -6,7 +6,8 @@ import wordmark from '../../assets/wordmark-lys.png'
 import { uleste } from '../../lib/utvalg'
 import { useDemo } from '../../store/context'
 import { DemoPanel } from './DemoPanel'
-import { NAV } from './navigasjon'
+import { PushVarsel } from './PushVarsel'
+import { BUNN, MINE, NAV } from './navigasjon'
 
 function Varselbjelle() {
   const { state, megId } = useDemo()
@@ -40,6 +41,7 @@ export function AppSkall() {
   const { pathname } = useLocation()
   const rolle = state.rolle ?? 'mottaker'
   const punkter = NAV[rolle]
+  const mine = MINE[rolle]
 
   useEffect(() => {
     window.scrollTo(0, 0)
@@ -53,12 +55,25 @@ export function AppSkall() {
       >
         Hopp til innhold
       </a>
-      <header data-mork className="sticky top-0 z-40 bg-navy text-white shadow-[0_1px_0_rgb(0_0_0/0.2)]">
+      <header data-mork className="sticky top-0 z-40 bg-navy pt-[var(--sikker-topp,0px)] text-white shadow-[0_1px_0_rgb(0_0_0/0.2)]">
         <div className="mx-auto flex h-16 max-w-6xl items-center gap-4 px-4 sm:px-6">
           <Link to="/" className="flex shrink-0 items-center gap-2.5 rounded-lg" aria-label="Altmuligmannen, til startsiden">
             <img src={ikon} alt="" className="size-9 rounded-[22%] ring-1 ring-white/10" />
             <img src={wordmark} alt="" className="h-7 w-auto" />
           </Link>
+
+          <NavLink
+            to={mine.til}
+            aria-label={mine.tekst}
+            title={mine.tekst}
+            className={({ isActive }) =>
+              `ml-auto grid size-10 place-items-center rounded-xl text-white ring-1 transition-colors hover:bg-white/14 md:hidden ${
+                isActive ? 'bg-white/14 ring-white/30' : 'ring-white/15'
+              }`
+            }
+          >
+            <mine.ikon size={20} strokeWidth={1.9} aria-hidden />
+          </NavLink>
 
           <nav aria-label="Hovedmeny" className="ml-4 hidden flex-1 md:block">
             <ul className="flex items-center gap-1">
@@ -82,12 +97,14 @@ export function AppSkall() {
             </ul>
           </nav>
 
-          <div className="ml-auto flex items-center gap-2">
+          <div className="flex items-center gap-2 md:ml-auto">
             <Varselbjelle />
             <DemoPanel />
           </div>
         </div>
       </header>
+
+      <PushVarsel />
 
       <main id="innhold" className="mx-auto max-w-6xl px-4 pt-6 pb-32 sm:px-6 sm:pt-8 md:pb-16">
         <Outlet />
@@ -95,10 +112,10 @@ export function AppSkall() {
 
       <nav
         aria-label="Hovedmeny"
-        className="fixed inset-x-0 bottom-0 z-40 border-t border-line bg-white/95 pb-[env(safe-area-inset-bottom)] backdrop-blur md:hidden"
+        className="fixed inset-x-0 bottom-0 z-40 border-t border-line bg-white/95 pb-[var(--sikker-bunn,env(safe-area-inset-bottom))] backdrop-blur md:hidden"
       >
         <ul className="mx-auto flex max-w-lg">
-          {punkter.map((p) => (
+          {BUNN[rolle].map((p) => (
             <li key={p.til} className="flex-1">
               <NavLink
                 to={p.til}

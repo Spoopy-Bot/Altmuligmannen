@@ -1,4 +1,4 @@
-import { Check, ChevronRight, Presentation, RotateCcw, X } from 'lucide-react'
+import { Check, ChevronRight, Presentation, RotateCcw, Settings, X } from 'lucide-react'
 import { useEffect, useRef, useState } from 'react'
 import { Link, useNavigate } from 'react-router'
 import { useDemo } from '../../store/context'
@@ -174,7 +174,7 @@ export function DemoPanel() {
           id="demo-panel"
           role="dialog"
           aria-label="Profil"
-          className="animer-inn fixed inset-x-3 top-[4.25rem] z-50 max-h-[calc(100dvh-5rem)] overflow-y-auto rounded-2xl bg-white p-5 text-ink shadow-loft ring-1 ring-line sm:absolute sm:inset-x-auto sm:top-12 sm:right-0 sm:w-[23rem]"
+          className="animer-inn fixed inset-x-3 top-[calc(4.25rem+var(--sikker-topp,0px))] z-50 max-h-[calc(100dvh-5rem-var(--sikker-topp,0px))] overflow-y-auto rounded-2xl bg-white p-5 text-ink shadow-loft ring-1 ring-line sm:absolute sm:inset-x-auto sm:top-12 sm:right-0 sm:w-[23rem]"
         >
           <div className="mb-4 flex items-center justify-between gap-3">
             <div className="flex items-center gap-3">
@@ -183,6 +183,14 @@ export function DemoPanel() {
                 <p className="font-display text-lg font-bold text-navy">{meg.navn}</p>
                 <p className="text-sm text-ink-3">{ROLLE_TEKST[rolle].under}</p>
               </div>
+              <Link
+                to="/innstillinger"
+                onClick={() => settApen(false)}
+                className="grid size-9 shrink-0 place-items-center rounded-lg text-navy ring-1 ring-line hover:bg-cream-200"
+                aria-label="Innstillinger"
+              >
+                <Settings size={18} aria-hidden />
+              </Link>
             </div>
             <button
               type="button"

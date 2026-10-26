@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react'
-import { Route, Routes } from 'react-router'
+import { useEffect } from 'react'
+import { Route, Routes, useLocation } from 'react-router'
 import { AppSkall } from './components/layout/AppSkall'
 import { KreverRolle, KreverValgtRolle } from './components/layout/KreverRolle'
 import { Avtaler } from './pages/aktor/Avtaler'
@@ -11,18 +12,31 @@ import { Kontrakt } from './pages/felles/Kontrakt'
 import { Meldinger } from './pages/felles/Meldinger'
 import { OppdragDetalj } from './pages/felles/OppdragDetalj'
 import { Samtale } from './pages/felles/Samtale'
+import { VarselInnstillinger } from './pages/felles/VarselInnstillinger'
 import { Varsler } from './pages/felles/Varsler'
 import { AktorProfil } from './pages/mottaker/AktorProfil'
 import { Aktorer } from './pages/mottaker/Aktorer'
 import { Anbefalte } from './pages/mottaker/Anbefalte'
 import { MineOppdrag } from './pages/mottaker/MineOppdrag'
 import { NyttBehov } from './pages/mottaker/NyttBehov'
+import { RedigerOppdrag } from './pages/mottaker/RedigerOppdrag'
 import { Start } from './pages/Start'
 
 const mottaker = (side: ReactNode) => <KreverRolle rolle="mottaker">{side}</KreverRolle>
 const aktor = (side: ReactNode) => <KreverRolle rolle="aktor">{side}</KreverRolle>
 
 export function App() {
+  const { pathname, search, hash } = useLocation()
+  // I telefonrammen holdes adressefeltet utenfor i takt, så en oppdatering åpner samme side.
+  useEffect(() => {
+    if (window.parent === window) return
+    try {
+      window.parent.history.replaceState(null, '', pathname + search + hash)
+    } catch {
+      // Ulik opprinnelse: ingenting å synkronisere.
+    }
+  }, [pathname, search, hash])
+
   return (
     <Routes>
       <Route index element={<Start />} />
@@ -39,6 +53,7 @@ export function App() {
         <Route path="aktorer" element={<Aktorer />} />
         <Route path="aktorer/:id" element={<AktorProfil />} />
         <Route path="oppdrag/:id" element={<OppdragDetalj />} />
+        <Route path="oppdrag/:id/rediger" element={mottaker(<RedigerOppdrag />)} />
         <Route path="kontrakter/:id" element={<Kontrakt />} />
         <Route path="aktor/jobber" element={aktor(<Jobber />)} />
         <Route path="aktor/oversikt" element={aktor(<Oversikt />)} />
@@ -47,6 +62,7 @@ export function App() {
         <Route path="meldinger" element={<Meldinger />} />
         <Route path="meldinger/:id" element={<Samtale />} />
         <Route path="varsler" element={<Varsler />} />
+        <Route path="innstillinger" element={<VarselInnstillinger />} />
         <Route path="*" element={<IkkeFunnet />} />
       </Route>
     </Routes>
