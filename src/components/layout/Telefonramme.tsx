@@ -11,9 +11,19 @@ function bregnSkala() {
   return Math.min(1, (window.innerWidth - 24) / TOTAL_B, (window.innerHeight - 24) / TOTAL_H)
 }
 
+function useKlokke() {
+  const [na, settNa] = useState(() => new Date())
+  useEffect(() => {
+    const id = setInterval(() => settNa(new Date()), 1000)
+    return () => clearInterval(id)
+  }, [])
+  return na.toLocaleTimeString('nb-NO', { hour: 'numeric', minute: '2-digit', hour12: false }).replace('.', ':')
+}
+
 /** Viser appen inne i en iPhone 15. Appen kjører i en iframe, så den får ekte mobilbredde og -breakpoints. */
 export function Telefonramme() {
   const [skala, settSkala] = useState(bregnSkala)
+  const klokke = useKlokke()
   // Bare første adresse brukes som src. Appen i rammen oppdaterer adressefeltet selv.
   const [src] = useState(() => window.location.pathname + window.location.search + window.location.hash)
 
@@ -43,7 +53,7 @@ export function Telefonramme() {
 
               <div className="pointer-events-none absolute inset-x-0 top-0 z-10 h-[54px] text-white" aria-hidden>
                 <span className="absolute top-0 left-0 flex h-[59px] w-[134px] items-center justify-center pt-[3px] text-[17px] leading-none font-semibold tracking-[-0.01em]">
-                  9:41
+                  {klokke}
                 </span>
                 <span className="absolute top-0 right-0 flex h-[59px] w-[134px] items-center justify-center gap-[6px] pt-[3px]">
                   <svg width="19" height="12" viewBox="0 0 19 12" fill="currentColor">
