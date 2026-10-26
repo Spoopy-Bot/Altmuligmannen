@@ -1,4 +1,3 @@
-import { BatteryFull, Signal, Wifi } from 'lucide-react'
 import { useEffect, useState } from 'react'
 
 /** iPhone 15 i logiske punkter. */
@@ -43,11 +42,26 @@ export function Telefonramme() {
               <iframe src={src} title="Altmuligmannen" className="size-full border-0" />
 
               <div className="pointer-events-none absolute inset-x-0 top-0 z-10 h-[54px] text-white" aria-hidden>
-                <span className="absolute top-[18px] left-[50px] text-[17px] leading-none font-semibold tracking-tight">9:41</span>
-                <span className="absolute top-[17px] right-[44px] flex items-center gap-1.5">
-                  <Signal size={17} strokeWidth={2.4} />
-                  <Wifi size={17} strokeWidth={2.4} />
-                  <BatteryFull size={24} strokeWidth={1.8} />
+                <span className="absolute top-0 left-0 flex h-[59px] w-[134px] items-center justify-center pt-[3px] text-[17px] leading-none font-semibold tracking-[-0.01em]">
+                  9:41
+                </span>
+                <span className="absolute top-0 right-0 flex h-[59px] w-[134px] items-center justify-center gap-[6px] pt-[3px]">
+                  <svg width="19" height="12" viewBox="0 0 19 12" fill="currentColor">
+                    <rect x="0" y="7.5" width="3.2" height="4.5" rx="1" />
+                    <rect x="5" y="5" width="3.2" height="7" rx="1" />
+                    <rect x="10" y="2.5" width="3.2" height="9.5" rx="1" />
+                    <rect x="15" y="0" width="3.2" height="12" rx="1" />
+                  </svg>
+                  <svg width="17" height="12" viewBox="0 0 17 12" fill="currentColor">
+                    <path d="M8.5 2.3c2.3 0 4.4.9 6 2.4.1.1.3.1.4 0l1.1-1.1c.1-.1.1-.3 0-.4C13.9 1.2 11.3 0 8.5 0S3.1 1.2 1 3.2c-.1.1-.1.3 0 .4l1.1 1.1c.1.1.3.1.4 0 1.600-1.500 3.700-2.400 6-2.400Z" />
+                    <path d="M8.5 6.100c1.200 0 2.300.4 3.200 1.200.1.1.3.1.4 0l1.100-1.100c.1-.1.1-.3 0-.4a7.400 7.400 0 0 0-9.400 0c-.1.1-.1.3 0 .4l1.100 1.100c.1.1.3.1.4 0 .9-.8 2-1.200 3.200-1.200Z" />
+                    <path d="M8.500 9.800c.6 0 1.100.2 1.500.6.1.1.1.3 0 .4L8.700 12c-.1.1-.3.1-.4 0L7 10.800c-.1-.1-.1-.3 0-.4.400-.4.900-.6 1.500-.6Z" />
+                  </svg>
+                  <svg width="27" height="13" viewBox="0 0 27 13" fill="none">
+                    <rect x="0.5" y="0.5" width="23" height="12" rx="3.800" stroke="currentColor" opacity="0.4" />
+                    <rect x="2" y="2" width="20" height="9" rx="2.500" fill="currentColor" />
+                    <path d="M25 4.500v4c.800-.3 1.500-1.100 1.500-2s-.7-1.700-1.500-2Z" fill="currentColor" opacity="0.5" />
+                  </svg>
                 </span>
                 <span className="absolute top-[11px] left-1/2 h-[37px] w-[126px] -translate-x-1/2 rounded-full bg-black" />
               </div>
