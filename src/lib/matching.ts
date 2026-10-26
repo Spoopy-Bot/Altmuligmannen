@@ -1,4 +1,4 @@
-import { kategori } from '../data/kategorier'
+import { kanTa, kategori } from '../data/kategorier'
 import type { Aktor, Oppdrag, Rating } from '../types'
 import { kr, km, snitt } from './format'
 import { avstandKm } from './geo'
@@ -110,7 +110,7 @@ export function kuraterJobber(aktor: Aktor, oppdrag: Oppdrag[]): JobbMatch[] {
     .map((o) => {
       const avstand = avstandKm(aktor.sted, o.sted)
       const innenforOmrade = avstand <= aktor.radiusKm
-      const passerKategori = aktor.kategorier.includes(o.kategori)
+      const passerKategori = aktor.kategorier.includes(o.kategori) && kanTa(aktor, o.kategori)
       const grunner: string[] = []
       let score = 0
       if (o.aktorId === aktor.id) {

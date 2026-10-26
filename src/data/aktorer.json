@@ -632,5 +632,53 @@
       }
     ],
     "farge": 6
+  },
+  {
+    "id": "a-sander",
+    "navn": "Sander Lie",
+    "tittel": "Ungdom, 16 år",
+    "alder": 16,
+    "bio": "Jeg går første år på videregående og tar enkle jobber etter skolen og i helgene. Klipper plen, bærer og vasker. Møter alltid presis.",
+    "kategorier": [
+      "hage",
+      "flytting",
+      "vask"
+    ],
+    "ferdigheter": [
+      "Plenklipping",
+      "Raking av løv",
+      "Bæring",
+      "Vindusvask"
+    ],
+    "erfaringAar": 1,
+    "timepris": 200,
+    "sted": {
+      "by": "Fredrikstad",
+      "omrade": "Kråkerøy",
+      "lat": 59.1985,
+      "lng": 10.9585
+    },
+    "radiusKm": 8,
+    "tilgjengelighet": "Hverdager etter kl. 15 og helger",
+    "ledigDenneUken": true,
+    "svartid": "Svarer vanligvis innen 2 timer",
+    "fullforteJobber": 6,
+    "verifisert": {
+      "id": true,
+      "forsikring": false
+    },
+    "tidligereJobber": [
+      {
+        "tittel": "Klippet plen hele sommeren for nabo",
+        "kategori": "hage",
+        "ar": 2026
+      },
+      {
+        "tittel": "Bar esker ved flytting",
+        "kategori": "flytting",
+        "ar": 2026
+      }
+    ],
+    "farge": 4
   }
 ]

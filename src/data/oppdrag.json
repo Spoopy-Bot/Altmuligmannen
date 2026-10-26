@@ -16,6 +16,7 @@
     "avslattAv": [],
     "kontraktId": "k-101",
     "betaling": { "belop": 2400, "status": "frigitt", "reservert": "2026-08-28T18:24:00", "frigitt": "2026-09-02T20:10:00" },
+    "levering": { "utfort": "Montert to garderobeskap, festet begge i vegg med to vinkelbeslag hver og justert skyvedørene til de gikk lett. Tok med emballasje.", "timer": 3.5, "bilder": [] },
     "hendelser": [
       { "type": "opprettet", "tid": "2026-08-28T18:20:00" },
       { "type": "forespurt", "tid": "2026-08-28T18:24:00", "aktorId": "a-kai" },
@@ -105,6 +106,7 @@
     "avslattAv": [],
     "kontraktId": "k-105",
     "betaling": { "belop": 1500, "status": "frigitt", "reservert": "2026-09-05T12:03:00", "frigitt": "2026-09-09T18:30:00" },
+    "levering": { "utfort": "Byttet fem dørhåndtak. Justerte hengslene på to dører og høvlet 2 mm av underkanten på den ene så den ikke subber.", "timer": 2, "bilder": [] },
     "hendelser": [
       { "type": "opprettet", "tid": "2026-09-05T12:00:00" },
       { "type": "forespurt", "tid": "2026-09-05T12:03:00", "aktorId": "a-kai" },
@@ -206,6 +208,7 @@
     "avslattAv": [],
     "kontraktId": "k-110",
     "betaling": { "belop": 2600, "status": "reservert", "reservert": "2026-09-28T10:02:00" },
+    "levering": { "utfort": "Vasket 14 vinduer inne og ute, inkludert karmer og vinduskarmer. Fjernet spindelvev under takskjegget.", "timer": 5.5, "bilder": [] },
     "hendelser": [
       { "type": "opprettet", "tid": "2026-09-28T10:00:00" },
       { "type": "forespurt", "tid": "2026-09-28T10:02:00", "aktorId": "a-runa" },

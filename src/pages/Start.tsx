@@ -1,10 +1,13 @@
-import { ArrowRight, BadgeCheck, ClipboardPen, UsersRound } from 'lucide-react'
+import { ArrowRight, BadgeCheck, ClipboardPen, Sprout, UsersRound } from 'lucide-react'
 import { Segl } from '../components/domain/Segl'
 import { useNavigate } from 'react-router'
 import ikon from '../assets/ikon-160.png'
 import wordmark from '../assets/wordmark-lys.png'
 import { useDemo } from '../store/context'
 import type { Rolle } from '../types'
+
+/** Demo-personen for ungdomsinngangen. */
+const UNGDOM_DEMO = 'a-sander'
 
 const STEG = [
   { ikon: ClipboardPen, tittel: 'Beskriv problemet' },
@@ -20,6 +23,11 @@ export function Start() {
   function velg(rolle: Rolle) {
     dispatch({ type: 'sett-rolle', rolle })
     navigate(rolle === 'mottaker' ? '/hjelp/ny' : '/aktor/jobber')
+  }
+
+  function velgUngdom() {
+    dispatch({ type: 'sett-persona', rolle: 'aktor', id: UNGDOM_DEMO })
+    navigate('/aktor/jobber')
   }
 
   return (
@@ -50,6 +58,18 @@ export function Start() {
               tekst="Finn betalte oppdrag nær deg."
               onVelg={velg}
             />
+            <button
+              type="button"
+              onClick={velgUngdom}
+              className="group flex items-center gap-3 rounded-2xl px-5 py-3.5 text-left text-white ring-1 ring-white/15 transition-colors duration-200 hover:bg-white/6 sm:px-6"
+            >
+              <Sprout size={20} className="shrink-0 text-amber" aria-hidden />
+              <span className="min-w-0 flex-1">
+                <span className="block font-display font-bold">Jeg er 15–17 år</span>
+                <span className="block text-sm text-navy-200">Enkle jobber: hage, flytting og vask.</span>
+              </span>
+              <ArrowRight size={18} className="shrink-0 transition-transform duration-200 group-hover:translate-x-0.5" aria-hidden />
+            </button>
           </div>
         </div>
       </section>

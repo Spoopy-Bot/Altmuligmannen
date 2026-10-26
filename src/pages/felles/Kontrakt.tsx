@@ -1,10 +1,12 @@
 import { Check } from 'lucide-react'
 import { useParams } from 'react-router'
 import { EscrowSegl } from '../../components/domain/EscrowSegl'
+import { KontraktPdfKnapp } from '../../components/domain/KontraktPdfKnapp'
 import { Merke } from '../../components/ui/Merke'
 import { Sidehode } from '../../components/ui/Sidehode'
 import { stedNavn } from '../../data/steder'
 import { datoMedAr, klokkeslett, kr } from '../../lib/format'
+import { kontraktNr } from '../../lib/kontraktPdf'
 import { finnAktor, finnMottaker } from '../../lib/utvalg'
 import { useDemo } from '../../store/context'
 import { IkkeFunnet } from './IkkeFunnet'
@@ -18,11 +20,19 @@ export function Kontrakt() {
 
   const aktor = finnAktor(state, kontrakt.aktorId)
   const mottaker = finnMottaker(state, kontrakt.mottakerId)
-  const nr = kontrakt.id.replace(/\D/g, '').slice(-4).padStart(4, '0')
+  const nr = kontraktNr(kontrakt)
 
   return (
     <div className="max-w-2xl">
-      <Sidehode tilbake={{ til: `/oppdrag/${oppdrag.id}`, tekst: 'Til oppdraget' }} tittel="Kontrakt" />
+      <Sidehode
+        tilbake={{ til: `/oppdrag/${oppdrag.id}`, tekst: 'Til oppdraget' }}
+        tittel="Kontrakt"
+        handlinger={
+          <div className="w-full sm:w-auto">
+            <KontraktPdfKnapp kontrakt={kontrakt} />
+          </div>
+        }
+      />
 
       <article className="rounded-3xl bg-white shadow-kort ring-1 ring-line">
         <header className="flex items-center justify-between gap-3 border-b border-line px-5 py-4 sm:px-7">

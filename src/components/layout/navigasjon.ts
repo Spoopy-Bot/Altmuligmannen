@@ -28,5 +28,5 @@ export const HJEM: Record<Rolle, string> = { mottaker: '/mine-oppdrag', aktor: '
 
 export const DEMO_PERSONER: Record<Rolle, string[]> = {
   mottaker: ['m-emma', 'm-thomas'],
-  aktor: ['a-kai', 'a-ingrid'],
+  aktor: ['a-kai', 'a-ingrid', 'a-sander'],
 }

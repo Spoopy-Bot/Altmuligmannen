@@ -17,7 +17,7 @@ const ROLLE_TEKST: Record<Rolle, { tittel: string; under: string }> = {
   aktor: { tittel: 'Tilbyr hjelp', under: 'Aktør' },
 }
 
-/** Snittvurdering og siste vurderinger for en aktør. */
+/** Snittvurdering og siste vurderinger for innlogget person. */
 function MinVurdering({ id }: { id: string }) {
   const { state } = useDemo()
   const rating = ratingFor(id, state.ratings)
@@ -194,7 +194,8 @@ export function DemoPanel() {
             </button>
           </div>
 
-          {rolle === 'mottaker' ? <MineKontrakter id={megId} lukk={() => settApen(false)} /> : <MinVurdering id={megId} />}
+          <MinVurdering id={megId} />
+          {rolle === 'mottaker' && <MineKontrakter id={megId} lukk={() => settApen(false)} />}
 
           <p className="mb-3 flex items-center gap-2 border-t border-line pt-4 font-display font-bold text-navy">
             <Presentation size={17} aria-hidden /> Demomodus

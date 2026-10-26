@@ -31,7 +31,8 @@ export function EscrowSegl({ betaling, perspektiv }: { betaling: Betaling; persp
         <p className="tall font-display text-[1.75rem] leading-tight font-extrabold text-navy">{kr(betaling.belop)}</p>
         <p className="mt-1 text-sm text-ink-2">{TEKST[betaling.status][perspektiv]}</p>
         <p className="mt-2 text-xs text-ink-3">
-          {frigitt && betaling.frigitt ? `Frigitt ${datoMedAr(betaling.frigitt)}` : `Reservert ${datoMedAr(betaling.reservert)}`}
+          {frigitt && betaling.frigitt ? `Utbetalt med Vipps ${datoMedAr(betaling.frigitt)}` : `Reservert i Vipps ${datoMedAr(betaling.reservert)}`}
+          {betaling.vippsRef && <span className="tall"> · {betaling.vippsRef}</span>}
         </p>
       </div>
     </section>

@@ -41,6 +41,8 @@ export interface Aktor {
   verifisert: { id: boolean; forsikring: boolean; fagbrev?: string }
   tidligereJobber: TidligereJobb[]
   farge: number
+  /** Satt for ungdom 15–17 år, som bare kan ta enkle jobber. */
+  alder?: number
 }
 
 export interface Mottaker {
@@ -68,6 +70,15 @@ export interface Betaling {
   status: BetalingStatus
   reservert: string
   frigitt?: string
+  /** Ordrenummer fra (simulert) Vipps. */
+  vippsRef?: string
+}
+
+/** Det aktøren rapporterer når jobben meldes ferdig. Brukes i kontrakt-PDF-en. */
+export interface Levering {
+  utfort: string
+  timer: number
+  bilder: string[]
 }
 
 export interface Hendelse {
@@ -101,6 +112,7 @@ export interface Oppdrag {
   avslattAv: string[]
   kontraktId?: string
   betaling: Betaling
+  levering?: Levering
   hendelser: Hendelse[]
 }
 

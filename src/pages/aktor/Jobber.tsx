@@ -1,4 +1,4 @@
-import { Inbox, SearchX, SlidersHorizontal } from 'lucide-react'
+import { Inbox, SearchX, SlidersHorizontal, Sprout } from 'lucide-react'
 import { useId, useMemo, useState, type ReactNode } from 'react'
 import { useSearchParams } from 'react-router'
 import { KategoriIkon } from '../../components/domain/KategoriIkon'
@@ -11,6 +11,7 @@ import { Sidehode } from '../../components/ui/Sidehode'
 import { SkjelettListe } from '../../components/ui/Skjelett'
 import { TomTilstand } from '../../components/ui/TomTilstand'
 import { VisningVelger } from '../../components/ui/VisningVelger'
+import { erUngdom } from '../../data/kategorier'
 import { STEDER, stedNavn } from '../../data/steder'
 import { useOmradeSok } from '../../hooks/useOmradeSok'
 import { useSimulertLasting } from '../../hooks/useSimulertLasting'
@@ -75,6 +76,12 @@ export function Jobber() {
           </div>
         }
       />
+      {erUngdom(meg) && (
+        <p className="mb-5 flex items-center gap-2 rounded-xl bg-navy-50 px-4 py-3 text-sm text-ink-2">
+          <Sprout size={17} className="shrink-0 text-navy" aria-hidden />
+          Du ser bare enkle jobber: hage, flytting og vask.
+        </p>
+      )}
       {laster ? (
         <SkjelettListe antall={3} etikett="Finner jobber" />
       ) : visning === 'kart' ? (

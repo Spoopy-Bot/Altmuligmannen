@@ -66,3 +66,12 @@ export function kategori(id: KategoriId): Kategori {
   if (!funnet) throw new Error(`Ukjent kategori: ${id}`)
   return funnet
 }
+
+/** Enkle jobber ungdom (15–17 år) kan ta. Resten krever opplæring eller fagbrev. */
+export const UNGDOM_KATEGORIER: KategoriId[] = ['hage', 'flytting', 'vask']
+
+export const erUngdom = (a: { alder?: number }) => a.alder !== undefined && a.alder < 18
+
+export function kanTa(a: { alder?: number }, k: KategoriId): boolean {
+  return !erUngdom(a) || UNGDOM_KATEGORIER.includes(k)
+}

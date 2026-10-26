@@ -1,13 +1,14 @@
-import { ArrowLeft, ArrowRight, Check, ImagePlus, Info, X } from 'lucide-react'
-import { useEffect, useMemo, useRef, useState, type ReactNode } from 'react'
+import { ArrowLeft, ArrowRight, Check, Info } from 'lucide-react'
+import { useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from 'react'
 import { useNavigate } from 'react-router'
 import { KategoriIkon } from '../../components/domain/KategoriIkon'
+import { BildeOpplasting } from '../../components/domain/BildeOpplasting'
 import { Segl } from '../../components/domain/Segl'
+import { VippsBetaling } from '../../components/domain/VippsBetaling'
 import { Knapp } from '../../components/ui/Knapp'
 import { TekstFelt, TekstOmrade, Velger } from '../../components/ui/Felt'
 import { kategori, KATEGORIER } from '../../data/kategorier'
 import { STEDER, stedNavn } from '../../data/steder'
-import { lagMiniatyr } from '../../lib/bilde'
 import { kr } from '../../lib/format'
 import { finnMottaker, HASTEGRAD_TEKST } from '../../lib/utvalg'
 import { useDemo } from '../../store/context'
@@ -20,8 +21,6 @@ const HASTEGRADER: { id: Hastegrad; tekst: string }[] = [
   { id: 'denne-uken', tekst: 'Innen en uke' },
   { id: 'fleksibel', tekst: 'Når det passer' },
 ]
-
-const MAKS_BILDER = 3
 
 interface Utkast {
   kategori?: KategoriId
@@ -73,6 +72,7 @@ export function NyttBehov() {
   })
   const [feil, settFeil] = useState<Feil>({})
   const [sender, settSender] = useState(false)
+  const [vipps, settVipps] = useState(false)
   const overskrift = useRef<HTMLHeadingElement>(null)
   const forsteRender = useRef(true)
 
@@ -116,24 +116,28 @@ export function NyttBehov() {
     settSteg((s) => Math.min(s + 1, STEG.length - 1))
   }
 
-  function send() {
-    if (!utkast.kategori || !utkast.hastegrad) return
-    settSender(true)
-    const data = {
-      kategori: utkast.kategori,
-      tittel: utkast.tittel.trim(),
-      beskrivelse: utkast.beskrivelse.trim(),
-      bilder: utkast.bilder,
-      hastegrad: utkast.hastegrad,
-      sted: STEDER[utkast.stedIndeks],
-      adresse: utkast.adresse.trim(),
-      budsjett: Number(utkast.budsjett),
-    }
-    window.setTimeout(() => {
-      const id = opprettOppdrag(data)
-      navigate(`/hjelp/ny/${id}/anbefalt`)
-    }, 700)
-  }
+  const send = useCallback(
+    (vippsRef: string) => {
+      if (!utkast.kategori || !utkast.hastegrad) return
+      settVipps(false)
+      settSender(true)
+      const data = {
+        kategori: utkast.kategori,
+        tittel: utkast.tittel.trim(),
+        beskrivelse: utkast.beskrivelse.trim(),
+        bilder: utkast.bilder,
+        hastegrad: utkast.hastegrad,
+        sted: STEDER[utkast.stedIndeks],
+        adresse: utkast.adresse.trim(),
+        budsjett: Number(utkast.budsjett),
+      }
+      window.setTimeout(() => {
+        const id = opprettOppdrag(data, vippsRef)
+        navigate(`/hjelp/ny/${id}/anbefalt`)
+      }, 400)
+    },
+    [utkast, opprettOppdrag, navigate],
+  )
 
   return (
     <div className="max-w-2xl">
@@ -143,7 +147,7 @@ export function NyttBehov() {
         noValidate
         onSubmit={(e) => {
           e.preventDefault()
-          if (steg === STEG.length - 1) send()
+          if (steg === STEG.length - 1) settVipps(true)
           else neste()
         }}
         className="mt-6"
@@ -188,6 +192,7 @@ export function NyttBehov() {
               </div>
             </fieldset>
             {feil.kategori && <FeilTekst id="kat-feil">{feil.kategori}</FeilTekst>}
+            {utkast.kategori === 'ror' && <RorHint className="mt-4" />}
           </Steg>
         )}
 
@@ -198,6 +203,7 @@ export function NyttBehov() {
             refH={overskrift}
           >
             <div className="flex flex-col gap-5">
+              {utkast.kategori === 'ror' && <RorHint />}
               <TekstFelt
                 etikett="Kort overskrift"
                 placeholder="F.eks. Drypper fra kjøkkenkranen"
@@ -337,10 +343,11 @@ export function NyttBehov() {
                 {stedNavn(STEDER[utkast.stedIndeks])} · {utkast.adresse}
               </Rad>
             </dl>
+            {utkast.kategori === 'ror' && <RorHint className="mt-4" />}
             <div className="mt-4 flex gap-4 rounded-2xl bg-amber-50 p-4 ring-1 ring-amber/50 sm:p-5">
               <Segl storrelse={48} />
               <div>
-                <p className="text-sm font-semibold text-amber-ink">Reserveres nå</p>
+                <p className="text-sm font-semibold text-amber-ink">Reserveres nå med Vipps</p>
                 <p className="tall font-display text-2xl font-extrabold text-navy">{kr(Number(utkast.budsjett))}</p>
                 <p className="mt-1 text-sm text-ink-2">
                   Utbetales først når du godkjenner jobben.{' '}
@@ -367,11 +374,18 @@ export function NyttBehov() {
             </Knapp>
           ) : (
             <Knapp type="submit" variant="aksent" storrelse="lg" className="w-full sm:w-auto" laster={sender}>
-              {sender ? 'Reserverer beløpet …' : `Send og reserver ${kr(Number(utkast.budsjett))}`}
+              {sender ? 'Sender …' : `Reserver ${kr(Number(utkast.budsjett))} med Vipps`}
             </Knapp>
           )}
         </div>
       </form>
+      <VippsBetaling
+        apen={vipps}
+        belop={Number(utkast.budsjett)}
+        tekst={utkast.tittel.trim()}
+        onAvbryt={() => settVipps(false)}
+        onReservert={send}
+      />
     </div>
   )
 }
@@ -432,6 +446,18 @@ function Steg({
   )
 }
 
+function RorHint({ className = '' }: { className?: string }) {
+  return (
+    <div className={`${className} flex gap-3 rounded-2xl bg-navy-50 p-4 text-sm text-ink-2`}>
+      <Info size={18} className="mt-0.5 shrink-0 text-navy" aria-hidden />
+      <p>
+        <strong className="text-ink">Kun enkle jobber på rør du ser</strong>, som å bytte kran eller rense sluk. Skjulte rør og våtrom krever
+        autorisert rørlegger, ellers kan husforsikringen ryke. Du får dokumentasjon fra aktøren på jobben.
+      </p>
+    </div>
+  )
+}
+
 function FeilTekst({ id, children }: { id?: string; children: ReactNode }) {
   return (
     <p id={id} role="alert" className="mt-3 text-sm font-medium text-feil">
@@ -450,91 +476,6 @@ function Rad({ etikett, onEndre, children }: { etikett: string; onEndre: () => v
           Endre<span className="sr-only"> {etikett.toLowerCase()}</span>
         </button>
       </dd>
-    </div>
-  )
-}
-
-function BildeOpplasting({
-  bilder,
-  onEndre,
-  feil,
-  settFeil,
-}: {
-  bilder: string[]
-  onEndre: (b: string[]) => void
-  feil?: string
-  settFeil: (m?: string) => void
-}) {
-  const [laster, settLaster] = useState(false)
-  const input = useRef<HTMLInputElement>(null)
-
-  async function velg(filer: FileList | null) {
-    if (!filer?.length) return
-    const plass = MAKS_BILDER - bilder.length
-    if (plass <= 0) {
-      settFeil(`Maks ${MAKS_BILDER} bilder.`)
-      return
-    }
-    settLaster(true)
-    settFeil(undefined)
-    try {
-      const nye = await Promise.all(Array.from(filer).slice(0, plass).map((f) => lagMiniatyr(f)))
-      onEndre([...bilder, ...nye])
-      if (filer.length > plass) settFeil(`Maks ${MAKS_BILDER} bilder.`)
-    } catch (e) {
-      settFeil(e instanceof Error ? `${e.message}.` : 'Bildet kunne ikke leses.')
-    } finally {
-      settLaster(false)
-      if (input.current) input.current.value = ''
-    }
-  }
-
-  return (
-    <div>
-      <p className="text-sm font-semibold text-ink">
-        Bilder <span className="font-normal text-ink-3">(valgfritt, maks {MAKS_BILDER})</span>
-      </p>
-      <div className="mt-2.5 flex flex-wrap gap-2.5">
-        {bilder.map((b, i) => (
-          <div key={i} className="relative">
-            <img src={b} alt={`Vedlagt bilde ${i + 1}`} className="size-24 rounded-xl object-cover ring-1 ring-line" />
-            <button
-              type="button"
-              onClick={() => onEndre(bilder.filter((_, j) => j !== i))}
-              className="absolute -top-2 -right-2 grid size-7 place-items-center rounded-full bg-navy text-white shadow-kort hover:bg-navy-700"
-              aria-label={`Fjern bilde ${i + 1}`}
-            >
-              <X size={14} aria-hidden />
-            </button>
-          </div>
-        ))}
-        {bilder.length < MAKS_BILDER && (
-          <label className="grid size-24 cursor-pointer place-items-center rounded-xl border-2 border-dashed border-line-strong bg-white text-navy transition-colors hover:border-navy-600 hover:bg-navy-50 has-[:focus-visible]:outline-3 has-[:focus-visible]:outline-navy-600">
-            <input
-              ref={input}
-              type="file"
-              accept="image/*"
-              multiple
-              className="sr-only"
-              onChange={(e) => velg(e.target.files)}
-              aria-describedby={feil ? 'bilde-feil' : undefined}
-            />
-            <span className="flex flex-col items-center gap-1 text-xs font-semibold">
-              {laster ? (
-                <span className="size-5 animate-spin rounded-full border-2 border-navy border-r-transparent" aria-hidden />
-              ) : (
-                <ImagePlus size={22} aria-hidden />
-              )}
-              {laster ? 'Laster …' : 'Legg til bilde'}
-            </span>
-          </label>
-        )}
-      </div>
-      {feil && (
-        <p id="bilde-feil" role="alert" className="mt-2 text-sm font-medium text-feil">
-          {feil}
-        </p>
-      )}
     </div>
   )
 }

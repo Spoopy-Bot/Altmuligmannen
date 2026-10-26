@@ -1,9 +1,10 @@
-import { CheckCircle2, FileSignature, Hammer, MapPin, MessageCircle, Play, Repeat, Search, ThumbsUp, X } from 'lucide-react'
+import { CheckCircle2, FileSignature, MapPin, MessageCircle, Play, Repeat, Search, ThumbsUp, X } from 'lucide-react'
 import { useState, type ReactNode } from 'react'
 import { Link, useNavigate, useParams } from 'react-router'
 import { EscrowSegl } from '../../components/domain/EscrowSegl'
 import { Hendelseslogg } from '../../components/domain/Hendelseslogg'
 import { KategoriIkon } from '../../components/domain/KategoriIkon'
+import { LeveringSkjema } from '../../components/domain/LeveringSkjema'
 import { StatusMerke } from '../../components/domain/StatusMerke'
 import { VurderingSkjema } from '../../components/domain/VurderingSkjema'
 import { Avatar } from '../../components/ui/Avatar'
@@ -13,7 +14,7 @@ import { Sidehode } from '../../components/ui/Sidehode'
 import { RatingLinje, Stjerner } from '../../components/ui/Stjerner'
 import { kategori } from '../../data/kategorier'
 import { stedNavn } from '../../data/steder'
-import { fornavn, km, kr } from '../../lib/format'
+import { desimal, fornavn, km, kr } from '../../lib/format'
 import { avstandKm } from '../../lib/geo'
 import { ratingFor } from '../../lib/matching'
 import { finnAktor, finnMottaker, HASTEGRAD_TEKST } from '../../lib/utvalg'
@@ -97,6 +98,25 @@ export function OppdragDetalj() {
                 </div>
               </dl>
             </section>
+
+            {oppdrag.levering && (
+              <section aria-labelledby="utfort" className="rounded-2xl bg-white p-5 ring-1 ring-line sm:p-6">
+                <h2 id="utfort" className="text-lg font-bold text-navy">
+                  Utført arbeid
+                </h2>
+                <p className="mt-2 max-w-prose leading-relaxed text-ink">{oppdrag.levering.utfort}</p>
+                <p className="tall mt-2 text-sm text-ink-3">{desimal(oppdrag.levering.timer)} timer</p>
+                {oppdrag.levering.bilder.length > 0 && (
+                  <ul className="mt-4 flex flex-wrap gap-2.5">
+                    {oppdrag.levering.bilder.map((b, i) => (
+                      <li key={i}>
+                        <img src={b} alt={`Bilde ${i + 1} etter jobben`} className="size-28 rounded-xl object-cover ring-1 ring-line" />
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </section>
+            )}
 
             <section aria-labelledby="historikk" className="rounded-2xl bg-white p-5 ring-1 ring-line sm:p-6">
               <h2 id="historikk" className="mb-4 text-lg font-bold text-navy">
@@ -201,6 +221,9 @@ function Handlinger({ oppdrag }: { oppdrag: Oppdrag }) {
           <Panel tone="navy">
             <p className="font-display text-lg font-bold">Er du fornøyd med jobben?</p>
             <p className="mt-1 text-sm text-navy-200">Når du godkjenner, får {aktor && fornavn(aktor.navn)} {kr(oppdrag.betaling.belop)}.</p>
+            {oppdrag.kategori === 'ror' && (
+              <p className="mt-2 text-sm font-semibold text-amber">Få dokumentasjon på arbeidet før du godkjenner.</p>
+            )}
             {bekreft ? (
               <div className="mt-4 flex flex-col gap-2" role="alert">
                 <Knapp
@@ -224,6 +247,11 @@ function Handlinger({ oppdrag }: { oppdrag: Oppdrag }) {
                 <KnappLenke to={`/meldinger/${oppdrag.id}`} variant="tekstMork" bred>
                   Noe er ikke i orden
                 </KnappLenke>
+                {oppdrag.kontraktId && (
+                  <KnappLenke to={`/kontrakter/${oppdrag.kontraktId}`} variant="tekstMork" bred ikon={<FileSignature size={18} aria-hidden />}>
+                    Se kontrakt
+                  </KnappLenke>
+                )}
               </div>
             )}
           </Panel>
@@ -236,6 +264,7 @@ function Handlinger({ oppdrag }: { oppdrag: Oppdrag }) {
             ) : (
               aktor && <VurderingSkjema oppdragId={oppdrag.id} til={aktor.id} tilNavn={aktor.navn} />
             )}
+            <div className="mt-3">{kontrakt}</div>
             {demoBytte}
           </Panel>
         )
@@ -304,17 +333,12 @@ function Handlinger({ oppdrag }: { oppdrag: Oppdrag }) {
     case 'pagar':
       return (
         <Panel>
-          <p className="font-semibold text-ink">Ferdig med jobben?</p>
-          <div className="mt-3 flex flex-col gap-2">
-            <Knapp
-              variant="aksent"
-              bred
-              laster={laster === 'lever'}
-              ikon={<Hammer size={18} aria-hidden />}
-              onClick={() => utfor('lever', () => dispatch({ type: 'lever', oppdragId: oppdrag.id }))}
-            >
-              Meld jobben ferdig
-            </Knapp>
+          <p className="mb-4 font-semibold text-ink">Ferdig med jobben?</p>
+          <LeveringSkjema
+            laster={laster === 'lever'}
+            onLever={(levering) => utfor('lever', () => dispatch({ type: 'lever', oppdragId: oppdrag.id, levering }))}
+          />
+          <div className="mt-2 flex flex-col gap-2">
             {chat}
             {kontrakt}
           </div>
@@ -325,7 +349,10 @@ function Handlinger({ oppdrag }: { oppdrag: Oppdrag }) {
       return (
         <Panel>
           <p className="font-semibold text-ink">Venter på godkjenning fra {mottaker && fornavn(mottaker.navn)}</p>
-          <div className="mt-3 flex flex-col gap-2">{chat}</div>
+          <div className="mt-3 flex flex-col gap-2">
+            {chat}
+            {kontrakt}
+          </div>
           {demoBytte}
         </Panel>
       )
@@ -337,6 +364,7 @@ function Handlinger({ oppdrag }: { oppdrag: Oppdrag }) {
           ) : (
             mottaker && <VurderingSkjema oppdragId={oppdrag.id} til={mottaker.id} tilNavn={mottaker.navn} />
           )}
+          <div className="mt-3">{kontrakt}</div>
           {demoBytte}
         </Panel>
       )

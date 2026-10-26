@@ -47,9 +47,9 @@ export function DemoProvider({ children }: { children: ReactNode }) {
   const megId = state.rolle === 'aktor' ? state.aktivAktorId : state.aktivMottakerId
 
   const opprettOppdrag = useCallback<DemoApi['opprettOppdrag']>(
-    (data) => {
+    (data, vippsRef) => {
       const id = nyId('o')
-      dispatch({ type: 'opprett-oppdrag', id, mottakerId: state.aktivMottakerId, data })
+      dispatch({ type: 'opprett-oppdrag', id, mottakerId: state.aktivMottakerId, data, vippsRef })
       return id
     },
     [state.aktivMottakerId],

@@ -1,8 +1,9 @@
+import { kanTa } from '../data/kategorier'
 import { fornavn, kr, km } from '../lib/format'
 import { avstandKm } from '../lib/geo'
 import { nyId } from '../lib/id'
-import type { Aktor, DemoState, Hendelse, Kontrakt, Oppdrag, Rolle, Varsel } from '../types'
-import { lagStartState, STANDARD_VILKAR } from './seed'
+import type { Aktor, DemoState, Hendelse, Kontrakt, Levering, Oppdrag, Rolle, Varsel } from '../types'
+import { lagStartState, vilkarFor } from './seed'
 
 export type NyttOppdrag = Pick<
   Oppdrag,
@@ -12,12 +13,12 @@ export type NyttOppdrag = Pick<
 export type Handling =
   | { type: 'sett-rolle'; rolle: Rolle | null }
   | { type: 'sett-persona'; rolle: Rolle; id: string }
-  | { type: 'opprett-oppdrag'; id: string; mottakerId: string; data: NyttOppdrag }
+  | { type: 'opprett-oppdrag'; id: string; mottakerId: string; data: NyttOppdrag; vippsRef: string }
   | { type: 'send-foresporsel'; oppdragId: string; aktorId: string }
   | { type: 'aksepter'; oppdragId: string; aktorId: string }
   | { type: 'avsla'; oppdragId: string; aktorId: string }
   | { type: 'start'; oppdragId: string }
-  | { type: 'lever'; oppdragId: string }
+  | { type: 'lever'; oppdragId: string; levering: Levering }
   | { type: 'godkjenn'; oppdragId: string }
   | { type: 'gi-rating'; oppdragId: string; fra: string; til: string; stjerner: number; kommentar: string }
   | { type: 'send-melding'; oppdragId: string; fra: string; tekst: string }
@@ -77,12 +78,12 @@ export function reducer(state: DemoState, h: Handling): DemoState {
         opprettet: tid,
         status: 'apen',
         avslattAv: [],
-        betaling: { belop: h.data.budsjett, status: 'reservert', reservert: tid },
+        betaling: { belop: h.data.budsjett, status: 'reservert', reservert: tid, vippsRef: h.vippsRef },
         hendelser: [{ type: 'opprettet', tid }],
       }
       // Automatisk varsling til aktører som dekker kategori og område.
       const relevante = state.aktorer.filter(
-        (a) => a.kategorier.includes(nytt.kategori) && avstandKm(a.sted, nytt.sted) <= a.radiusKm,
+        (a) => a.kategorier.includes(nytt.kategori) && kanTa(a, nytt.kategori) && avstandKm(a.sted, nytt.sted) <= a.radiusKm,
       )
       const tilAktorer = relevante.map((a) =>
         varsel({
@@ -97,7 +98,7 @@ export function reducer(state: DemoState, h: Handling): DemoState {
       const tilMottaker = varsel({
         til: h.mottakerId,
         type: 'betaling',
-        tittel: `${kr(nytt.budsjett)} er reservert`,
+        tittel: `${kr(nytt.budsjett)} er reservert i Vipps`,
         tekst: `Pengene for «${nytt.tittel}» holdes trygt til du godkjenner jobben.`,
         lenke: `/oppdrag/${nytt.id}`,
         lenketekst: 'Se oppdrag',
@@ -132,6 +133,8 @@ export function reducer(state: DemoState, h: Handling): DemoState {
     case 'aksepter': {
       const o = finn(h.oppdragId)
       if (!o || (o.status !== 'apen' && o.status !== 'forespurt')) return state
+      const aktor = state.aktorer.find((a) => a.id === h.aktorId)
+      if (!aktor || !kanTa(aktor, o.kategori)) return state
       const kontrakt: Kontrakt = {
         id: nyId('k'),
         oppdragId: o.id,
@@ -140,7 +143,7 @@ export function reducer(state: DemoState, h: Handling): DemoState {
         opprettet: na(),
         pris: o.betaling.belop,
         arbeid: o.beskrivelse,
-        vilkar: STANDARD_VILKAR,
+        vilkar: vilkarFor(o.kategori),
         status: 'aktiv',
       }
       const neste = oppdaterOppdrag(
@@ -230,7 +233,7 @@ export function reducer(state: DemoState, h: Handling): DemoState {
     case 'lever': {
       const o = finn(h.oppdragId)
       if (!o || o.status !== 'pagar' || !o.aktorId) return state
-      const neste = oppdaterOppdrag(state, o.id, () => ({ status: 'levert' }), { type: 'levert' })
+      const neste = oppdaterOppdrag(state, o.id, () => ({ status: 'levert', levering: h.levering }), { type: 'levert' })
       return {
         ...neste,
         varsler: [
@@ -263,7 +266,7 @@ export function reducer(state: DemoState, h: Handling): DemoState {
           varsel({
             til: o.aktorId,
             type: 'betaling',
-            tittel: `${kr(o.betaling.belop)} er frigitt til deg`,
+            tittel: `${kr(o.betaling.belop)} er frigitt til deg via Vipps`,
             tekst: `${navnPa(state, o.mottakerId)} har godkjent «${o.tittel}». Utbetalingen er på vei.`,
             lenke: '/aktor/avtaler',
             lenketekst: 'Se utbetaling',
@@ -300,7 +303,7 @@ export function reducer(state: DemoState, h: Handling): DemoState {
             type: 'vurdering',
             tittel: `${navnPa(state, h.fra)} ga deg ${h.stjerner} ${h.stjerner === 1 ? 'stjerne' : 'stjerner'}`,
             tekst: h.kommentar ? `«${h.kommentar}»` : o.tittel,
-            lenke: fraMottaker ? '/aktor/profil' : `/oppdrag/${o.id}`,
+            lenke: fraMottaker ? '/aktor/profil' : '/mine-oppdrag?fane=vurderinger',
             lenketekst: 'Se vurdering',
           }),
           ...neste.varsler,

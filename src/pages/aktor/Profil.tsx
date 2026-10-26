@@ -1,16 +1,14 @@
 import { Check, ExternalLink, Plus, X } from 'lucide-react'
 import { useState } from 'react'
 import { KategoriIkon } from '../../components/domain/KategoriIkon'
+import { VurderingListe } from '../../components/domain/VurderingListe'
 import { Avatar } from '../../components/ui/Avatar'
 import { TekstFelt, TekstOmrade, Velger } from '../../components/ui/Felt'
 import { Knapp, KnappLenke } from '../../components/ui/Knapp'
 import { Sidehode } from '../../components/ui/Sidehode'
-import { RatingLinje, Stjerner } from '../../components/ui/Stjerner'
-import { KATEGORIER } from '../../data/kategorier'
+import { erUngdom, kanTa, KATEGORIER } from '../../data/kategorier'
 import { STEDER, stedNavn } from '../../data/steder'
-import { dato } from '../../lib/format'
-import { ratingFor } from '../../lib/matching'
-import { finnAktor, finnPerson } from '../../lib/utvalg'
+import { finnAktor } from '../../lib/utvalg'
 import { useDemo } from '../../store/context'
 import type { Aktor, KategoriId } from '../../types'
 
@@ -26,14 +24,12 @@ export function Profil() {
 }
 
 function ProfilSkjema({ aktor }: { aktor: Aktor }) {
-  const { state, dispatch } = useDemo()
+  const { dispatch } = useDemo()
   const [utkast, settUtkast] = useState({ ...aktor, timepris: String(aktor.timepris) })
   const [nyFerdighet, settNyFerdighet] = useState('')
   const [feil, settFeil] = useState<Feil>({})
   const [lagret, settLagret] = useState(false)
   const [lagrer, settLagrer] = useState(false)
-  const rating = ratingFor(aktor.id, state.ratings)
-  const vurderinger = state.ratings.filter((r) => r.til === aktor.id)
   const stedIndeks = Math.max(0, STEDER.findIndex((s) => s.by === utkast.sted.by && s.omrade === utkast.sted.omrade))
   const endret = JSON.stringify({ ...utkast, timepris: Number(utkast.timepris) }) !== JSON.stringify(aktor)
 
@@ -102,7 +98,7 @@ function ProfilSkjema({ aktor }: { aktor: Aktor }) {
           <fieldset aria-describedby={feil.kategorier ? 'kat-feil' : undefined}>
             <legend className="mb-2 text-sm font-semibold text-ink">Kategorier</legend>
             <div className="flex flex-wrap gap-2">
-              {KATEGORIER.map((k) => {
+              {KATEGORIER.filter((k) => kanTa(aktor, k.id)).map((k) => {
                 const valgt = utkast.kategorier.includes(k.id)
                 return (
                   <label
@@ -118,6 +114,7 @@ function ProfilSkjema({ aktor }: { aktor: Aktor }) {
                 )
               })}
             </div>
+            {erUngdom(aktor) && <p className="mt-2 text-sm text-ink-3">Under 18 år: andre jobber krever opplæring.</p>}
             {feil.kategorier && (
               <p id="kat-feil" className="mt-1.5 text-sm font-medium text-feil">
                 {feil.kategorier}
@@ -231,31 +228,9 @@ function ProfilSkjema({ aktor }: { aktor: Aktor }) {
         </form>
       </div>
 
-      <section aria-labelledby="mine-vurderinger" className="lg:sticky lg:top-24">
-        <div data-mork className="rounded-3xl bg-navy p-5 text-white">
-          <h2 id="mine-vurderinger" className="text-lg font-bold">
-            Dine vurderinger
-          </h2>
-          <div className="mt-2 [&_*]:text-white">
-            <RatingLinje snitt={rating.snitt} antall={rating.antall} />
-          </div>
-        </div>
-        <ul className="mt-3 flex flex-col gap-2.5">
-          {vurderinger.length === 0 && <li className="rounded-2xl bg-white p-4 text-sm text-ink-3 ring-1 ring-line">Ingen vurderinger ennå.</li>}
-          {vurderinger.map((r) => (
-            <li key={r.id} className="rounded-2xl bg-white p-4 ring-1 ring-line">
-              <div className="flex items-center justify-between gap-2">
-                <Stjerner verdi={r.stjerner} storrelse={14} />
-                <span className="text-xs text-ink-3">{dato(r.dato)}</span>
-              </div>
-              {r.kommentar && <p className="mt-2 text-sm text-ink">«{r.kommentar}»</p>}
-              <p className="mt-1.5 text-xs text-ink-3">
-                {finnPerson(state, r.fra).navn} · {r.oppdragTittel}
-              </p>
-            </li>
-          ))}
-        </ul>
-      </section>
+      <div className="lg:sticky lg:top-24">
+        <VurderingListe id={aktor.id} />
+      </div>
     </div>
   )
 }

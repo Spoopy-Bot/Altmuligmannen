@@ -7,7 +7,7 @@ export interface DemoApi {
   dispatch: Dispatch<Handling>
   /** Id-en til personen du er nå (mottaker eller aktør). */
   megId: string
-  opprettOppdrag: (data: NyttOppdrag) => string
+  opprettOppdrag: (data: NyttOppdrag, vippsRef: string) => string
   sendMelding: (oppdragId: string, tekst: string) => void
   /** Sant mens motparten «skriver» et automatisk svar. */
   skriver: Record<string, boolean>

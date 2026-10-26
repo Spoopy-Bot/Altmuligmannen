@@ -1,6 +1,7 @@
 import { ClipboardList, PlusCircle } from 'lucide-react'
-import { useState } from 'react'
+import { useSearchParams } from 'react-router'
 import { OppdragKort } from '../../components/domain/OppdragKort'
+import { VurderingListe } from '../../components/domain/VurderingListe'
 import { Avatar } from '../../components/ui/Avatar'
 import { KnappLenke } from '../../components/ui/Knapp'
 import { Sidehode } from '../../components/ui/Sidehode'
@@ -22,12 +23,15 @@ function nesteHandling(state: DemoState, o: Oppdrag): string | undefined {
 export function MineOppdrag() {
   const { state } = useDemo()
   const laster = useSimulertLasting()
-  const [fane, settFane] = useState<'aktive' | 'fullforte'>('aktive')
+  const [sok, settSok] = useSearchParams()
+  const fane = (['fullforte', 'vurderinger'] as const).find((f) => f === sok.get('fane')) ?? 'aktive'
+  const settFane = (f: string) => settSok(f === 'aktive' ? {} : { fane: f }, { replace: true })
   const meg = finnMottaker(state, state.aktivMottakerId)
   const mine = state.oppdrag.filter((o) => o.mottakerId === state.aktivMottakerId)
   const aktive = mine.filter((o) => o.status !== 'godkjent')
   const fullforte = mine.filter((o) => o.status === 'godkjent')
   const liste = fane === 'aktive' ? aktive : fullforte
+  const antallVurderinger = state.ratings.filter((r) => r.til === state.aktivMottakerId).length
 
   return (
     <div className="max-w-3xl">
@@ -45,6 +49,7 @@ export function MineOppdrag() {
           [
             ['aktive', 'Aktive', aktive.length],
             ['fullforte', 'Fullførte', fullforte.length],
+            ['vurderinger', 'Vurderinger', antallVurderinger],
           ] as const
         ).map(([id, tekst, antall]) => (
           <button
@@ -63,7 +68,9 @@ export function MineOppdrag() {
       </div>
 
       <div>
-        {laster ? (
+        {fane === 'vurderinger' ? (
+          <VurderingListe id={state.aktivMottakerId} />
+        ) : laster ? (
           <SkjelettListe antall={3} etikett="Laster oppdrag" />
         ) : liste.length === 0 ? (
           <TomTilstand
