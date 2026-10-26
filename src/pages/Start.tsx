@@ -35,7 +35,7 @@ export function Start() {
     <div className="flex h-dvh flex-col overflow-hidden bg-cream">
       <section data-mork className="relative min-h-0 flex-1 overflow-hidden bg-navy pt-[var(--sikker-topp,0px)] text-white">
         <div className="pointer-events-none absolute -right-24 -bottom-40 size-[34rem] rounded-[var(--radius-ikon)] bg-navy-700/40 rotate-12" aria-hidden />
-        <div className="relative mx-auto flex h-full max-w-6xl flex-col justify-center gap-6 px-4 py-4 sm:px-6">
+        <div className="relative mx-auto flex h-full max-w-6xl flex-col justify-center gap-7 px-4 pt-2 pb-6 sm:px-6">
           <div>
             <div className="flex items-center gap-4">
               <img src={ikon} alt="" className="size-14 rounded-[22%] shadow-loft sm:size-20" />
@@ -46,7 +46,7 @@ export function Start() {
             </h1>
           </div>
 
-          <div className="flex flex-col gap-3" role="group" aria-label="Velg hvordan du vil bruke Altmuligmannen">
+          <div className="flex flex-col gap-4" role="group" aria-label="Velg hvordan du vil bruke Altmuligmannen">
             <RolleDor
               rolle="mottaker"
               tittel="Jeg trenger hjelp"
@@ -62,14 +62,21 @@ export function Start() {
             <button
               type="button"
               onClick={velgUngdom}
-              className="group flex items-center gap-3 rounded-2xl px-5 py-3.5 text-left text-white ring-1 ring-white/15 transition-colors duration-200 hover:bg-white/6 sm:px-6"
+              className="group flex items-center gap-3 rounded-2xl px-5 py-3.5 text-left text-white ring-1 ring-white/25 transition-colors duration-200 hover:bg-white/6 sm:px-6"
             >
-              <Sprout size={20} className="shrink-0 text-amber" aria-hidden />
+              <span className="grid size-11 shrink-0 place-items-center rounded-xl bg-amber/15 text-amber" aria-hidden>
+                <Sprout size={20} />
+              </span>
               <span className="min-w-0 flex-1">
                 <span className="block font-display font-bold">Jeg er 15–17 år</span>
-                <span className="block text-sm text-navy-200">Enkle jobber: hage, flytting og vask.</span>
+                <span className="block text-sm text-white/80">Hage, flytting og vask.</span>
               </span>
-              <ArrowRight size={18} className="shrink-0 transition-transform duration-200 group-hover:translate-x-0.5" aria-hidden />
+              <span
+                className="grid size-11 shrink-0 place-items-center rounded-xl bg-white/10 text-white transition-transform duration-200 group-hover:translate-x-0.5"
+                aria-hidden
+              >
+                <ArrowRight size={20} strokeWidth={2.2} />
+              </span>
             </button>
           </div>
         </div>
@@ -80,20 +87,20 @@ export function Start() {
           <h2 id="slik-tittel" className="text-lg font-extrabold text-navy sm:text-2xl">
             Slik holdes pengene trygge
           </h2>
-          <ol className="relative mt-4 grid grid-cols-4 gap-2">
-            <span className="absolute top-5 right-[12.5%] left-[12.5%] h-0.5 bg-navy" aria-hidden />
+          <ol className="relative mt-4 grid grid-cols-4 gap-3">
+            <span className="absolute top-6 right-[12.5%] left-[12.5%] h-0.5 bg-navy" aria-hidden />
             {STEG.map((s) => (
               <li key={s.tittel} className="relative flex flex-col items-center gap-2 text-center">
                 {s.ikon ? (
-                  <span className="grid size-10 shrink-0 place-items-center rounded-[var(--radius-ikon)] bg-navy text-white ring-4 ring-cream" aria-hidden>
-                    <s.ikon size={19} strokeWidth={1.9} />
+                  <span className="grid size-12 shrink-0 place-items-center rounded-[var(--radius-ikon)] bg-navy text-white ring-4 ring-cream" aria-hidden>
+                    <s.ikon size={22} strokeWidth={1.9} />
                   </span>
                 ) : (
                   <span className="animer-stempel rounded-[var(--radius-ikon)] ring-4 ring-cream">
-                    <Segl storrelse={40} />
+                    <Segl storrelse={48} />
                   </span>
                 )}
-                <h3 className="font-display text-xs leading-tight font-bold text-navy sm:text-base">{s.tittel}</h3>
+                <h3 className="font-display text-[0.8125rem] leading-tight font-bold text-navy sm:text-base">{s.tittel}</h3>
               </li>
             ))}
           </ol>
@@ -123,12 +130,12 @@ function RolleDor({
       className={`group flex items-center gap-4 rounded-2xl p-5 text-left transition-[transform,background-color,box-shadow] duration-200 ease-out hover:-translate-y-0.5 sm:p-6 ${
         hoved
           ? 'bg-amber text-navy-950 shadow-loft hover:bg-amber-600'
-          : 'bg-white/6 text-white ring-1 ring-white/20 hover:bg-white/10'
+          : 'bg-white/6 text-white ring-1 ring-white/25 hover:bg-white/10'
       }`}
     >
       <span className="min-w-0 flex-1">
         <span className="block font-display text-xl font-extrabold tracking-tight sm:text-2xl">{tittel}</span>
-        <span className={`mt-1 block text-[0.9375rem] ${hoved ? 'text-navy-900' : 'text-navy-200'}`}>{tekst}</span>
+        <span className={`mt-1 block text-[0.9375rem] ${hoved ? 'text-navy-900' : 'text-white/80'}`}>{tekst}</span>
       </span>
       <span
         className={`grid size-11 shrink-0 place-items-center rounded-xl transition-transform duration-200 group-hover:translate-x-0.5 ${
