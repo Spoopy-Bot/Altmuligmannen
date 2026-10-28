@@ -1,4 +1,5 @@
 import type { jsPDF } from 'jspdf'
+import wordmark from '../assets/wordmark-lys.png'
 import { kategori, kategoriBilde } from '../data/kategorier'
 import { stedNavn } from '../data/steder'
 import type { DemoState, Kontrakt, Oppdrag } from '../types'
@@ -29,16 +30,16 @@ function hendelseTid(o: Oppdrag, type: string): string | undefined {
 }
 
 /** jsPDF trenger data-URL. Bilder fra filer (for eksempel illustrasjonsfotoene) hentes og skaleres først. */
-async function tilDataUrl(src: string): Promise<string> {
+async function tilDataUrl(src: string, png = false): Promise<string> {
   if (src.startsWith('data:')) return src
   const blob = await (await fetch(src)).blob()
   const bitmap = await createImageBitmap(blob)
-  const skala = Math.min(1, 900 / Math.max(bitmap.width, bitmap.height))
+  const skala = png ? 1 : Math.min(1, 900 / Math.max(bitmap.width, bitmap.height))
   const lerret = document.createElement('canvas')
   lerret.width = Math.round(bitmap.width * skala)
   lerret.height = Math.round(bitmap.height * skala)
   lerret.getContext('2d')?.drawImage(bitmap, 0, 0, lerret.width, lerret.height)
-  return lerret.toDataURL('image/jpeg', 0.82)
+  return png ? lerret.toDataURL('image/png') : lerret.toDataURL('image/jpeg', 0.82)
 }
 
 const tidspunkt = (iso?: string) => (iso ? `${datoMedAr(iso)} kl. ${klokkeslett(iso)}` : '–')
@@ -159,19 +160,15 @@ export async function lastNedKontraktPdf(state: DemoState, kontrakt: Kontrakt): 
   // Topp
   doc.setFillColor(...NAVY)
   doc.rect(0, 0, A4_B, 34, 'F')
-  doc.setFillColor(...AMBER)
-  doc.roundedRect(MARG, 10, 14, 14, 3.2, 3.2, 'F')
-  doc.setFont('helvetica', 'bold')
-  doc.setFontSize(13)
-  farge(NAVY)
-  tekst('A', MARG + 7, 19.4, { align: 'center' })
-  doc.setFontSize(17)
-  doc.setTextColor(255, 255, 255)
-  tekst('Altmuligmannen', MARG + 19, 17.5)
+  const merke = await tilDataUrl(wordmark, true).catch(() => '')
+  if (merke) {
+    const { width, height } = doc.getImageProperties(merke)
+    doc.addImage(merke, 'PNG', MARG - 2, 4, 20 * (width / height), 20)
+  }
   doc.setFont('helvetica', 'normal')
   doc.setFontSize(9)
   doc.setTextColor(199, 212, 225)
-  tekst('Avtale om utførelse av oppdrag', MARG + 19, 23)
+  tekst('Avtale om utførelse av oppdrag', MARG, 29)
   doc.setFont('helvetica', 'bold')
   doc.setFontSize(11)
   doc.setTextColor(255, 255, 255)
