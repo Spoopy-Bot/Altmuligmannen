@@ -150,6 +150,7 @@ function Handlinger({ oppdrag }: { oppdrag: Oppdrag }) {
   const [laster, settLaster] = useState<string | null>(null)
   const [bekreft, settBekreft] = useState(false)
   const [slettBekreft, settSlettBekreft] = useState(false)
+  const [avbrytBekreft, settAvbrytBekreft] = useState(false)
   const rolle = state.rolle ?? 'mottaker'
   const aktor = finnAktor(state, oppdrag.aktorId)
   const mottaker = finnMottaker(state, oppdrag.mottakerId)
@@ -211,6 +212,43 @@ function Handlinger({ oppdrag }: { oppdrag: Oppdrag }) {
           </KnappLenke>
           <Knapp variant="fare" storrelse="sm" className="flex-1" ikon={<Trash2 size={16} aria-hidden />} onClick={() => settSlettBekreft(true)}>
             Slett
+          </Knapp>
+        </div>
+      )
+    ) : null
+  const mork = oppdrag.status === 'levert'
+  const avbrytAvtale =
+    oppdrag.aktorId &&
+    (oppdrag.status === 'akseptert' || oppdrag.status === 'pagar' || (oppdrag.status === 'levert' && rolle === 'mottaker')) ? (
+      avbrytBekreft ? (
+        <div className={`mt-4 flex flex-col gap-2 border-t pt-4 ${mork ? 'border-white/15' : 'border-line'}`} role="alert">
+          <p className={`text-sm ${mork ? 'text-navy-200' : 'text-ink-2'}`}>
+            {rolle === 'mottaker'
+              ? `Avbryte avtalen? ${kr(oppdrag.betaling.belop)} er fortsatt reservert, og du kan velge en ny aktør eller slette oppdraget.`
+              : 'Avbryte avtalen? Oppdraget går tilbake til kunden.'}
+          </p>
+          <Knapp
+            variant="fare"
+            bred
+            laster={laster === 'avbryt'}
+            ikon={<X size={18} aria-hidden />}
+            onClick={() =>
+              utfor('avbryt', () => {
+                dispatch({ type: 'avbryt-avtale', oppdragId: oppdrag.id, personId: megId })
+                navigate(rolle === 'aktor' ? '/aktor/jobber' : `/oppdrag/${oppdrag.id}`)
+              })
+            }
+          >
+            Ja, avbryt avtalen
+          </Knapp>
+          <Knapp variant={mork ? 'tekstMork' : 'tekst'} bred onClick={() => settAvbrytBekreft(false)}>
+            Behold avtalen
+          </Knapp>
+        </div>
+      ) : (
+        <div className={`mt-4 border-t pt-4 ${mork ? 'border-white/15' : 'border-line'}`}>
+          <Knapp variant={mork ? 'tekstMork' : 'fare'} storrelse="sm" bred ikon={<X size={16} aria-hidden />} onClick={() => settAvbrytBekreft(true)}>
+            Avbryt avtalen
           </Knapp>
         </div>
       )
@@ -289,6 +327,7 @@ function Handlinger({ oppdrag }: { oppdrag: Oppdrag }) {
               {chat}
               {kontrakt}
             </div>
+            {avbrytAvtale}
             {demoBytte}
           </Panel>
         )
@@ -330,6 +369,7 @@ function Handlinger({ oppdrag }: { oppdrag: Oppdrag }) {
                 )}
               </div>
             )}
+            {!bekreft && avbrytAvtale}
           </Panel>
         )
       case 'godkjent':
@@ -404,6 +444,7 @@ function Handlinger({ oppdrag }: { oppdrag: Oppdrag }) {
             {chat}
             {kontrakt}
           </div>
+          {avbrytAvtale}
           {demoBytte}
         </Panel>
       )
@@ -419,6 +460,7 @@ function Handlinger({ oppdrag }: { oppdrag: Oppdrag }) {
             {chat}
             {kontrakt}
           </div>
+          {avbrytAvtale}
           {demoBytte}
         </Panel>
       )

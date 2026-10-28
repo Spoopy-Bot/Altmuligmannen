@@ -26,6 +26,7 @@ export function Hendelseslogg({ oppdrag }: { oppdrag: Oppdrag }) {
     levert: erAktor ? 'Du melder jobben ferdig' : `${navn(oppdrag.aktorId)} melder jobben ferdig`,
     godkjent: erAktor ? `${navn(oppdrag.mottakerId)} godkjenner, og du får ${belop}` : `Du godkjenner, og ${belop} frigis`,
     vurdert: 'Dere vurderer hverandre',
+    avbrutt: '',
   }
 
   function tekst(h: Hendelse): string {
@@ -46,18 +47,22 @@ export function Hendelseslogg({ oppdrag }: { oppdrag: Oppdrag }) {
         return `Godkjent, ${belop} frigitt`
       case 'vurdert':
         return 'Vurdering gitt'
+      case 'avbrutt':
+        return 'Avtalen ble avbrutt'
     }
   }
 
-  const utfort = new Set(oppdrag.hendelser.map((h) => h.type))
+  // Etter en avbrutt avtale starter løypa på nytt.
+  const sisteAvbrudd = oppdrag.hendelser.map((h) => h.type).lastIndexOf('avbrutt')
+  const utfort = new Set(oppdrag.hendelser.slice(sisteAvbrudd + 1).map((h) => h.type))
   const gjenstar = REKKEFOLGE.filter(
-    (t) => !utfort.has(t) && !(t === 'forespurt' && (utfort.has('akseptert') || oppdrag.status === 'apen')),
+    (t) => t !== 'opprettet' && !utfort.has(t) && !(t === 'forespurt' && (utfort.has('akseptert') || oppdrag.status === 'apen')),
   )
 
   return (
     <ol className="relative flex flex-col" aria-label="Oppdragets historikk">
       {oppdrag.hendelser.map((h, i) => {
-        const avslatt = h.type === 'avslatt'
+        const avslatt = h.type === 'avslatt' || h.type === 'avbrutt'
         return (
           <li key={`${h.type}-${i}`} className="relative flex gap-3 pb-5 last:pb-0">
             <Strek />

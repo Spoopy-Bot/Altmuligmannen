@@ -94,6 +94,7 @@ export interface Hendelse {
     | 'levert'
     | 'godkjent'
     | 'vurdert'
+    | 'avbrutt'
   tid: string
   aktorId?: string
 }

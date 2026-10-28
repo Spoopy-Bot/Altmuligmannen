@@ -27,6 +27,7 @@ export type Handling =
   | { type: 'start'; oppdragId: string }
   | { type: 'lever'; oppdragId: string; levering: Levering }
   | { type: 'godkjenn'; oppdragId: string }
+  | { type: 'avbryt-avtale'; oppdragId: string; personId: string }
   | { type: 'gi-rating'; oppdragId: string; fra: string; til: string; stjerner: number; kommentar: string }
   | { type: 'send-melding'; oppdragId: string; fra: string; tekst: string }
   | { type: 'les-varsel'; id: string }
@@ -395,6 +396,54 @@ export function reducer(state: DemoState, h: Handling): DemoState {
             lenke: '/aktor/avtaler',
             lenketekst: 'Se utbetaling',
           }),
+          ...neste.varsler,
+        ],
+      }
+    }
+
+    case 'avbryt-avtale': {
+      const o = finn(h.oppdragId)
+      if (!o || !o.aktorId) return state
+      const aktorId = o.aktorId
+      const erMottaker = h.personId === o.mottakerId
+      const kanAvbryte =
+        o.status === 'akseptert' || o.status === 'pagar' || (o.status === 'levert' && erMottaker)
+      if (!kanAvbryte || (!erMottaker && h.personId !== aktorId)) return state
+      // Oppdraget åpnes igjen med pengene fortsatt reservert. Kunden velger ny aktør eller sletter og får pengene tilbake.
+      const neste = oppdaterOppdrag(
+        state,
+        o.id,
+        (g) => ({
+          status: 'apen' as const,
+          aktorId: undefined,
+          kontraktId: undefined,
+          levering: undefined,
+          avslattAv: [...new Set([...g.avslattAv, aktorId])],
+        }),
+        { type: 'avbrutt', aktorId },
+      )
+      return {
+        ...neste,
+        kontrakter: neste.kontrakter.filter((k) => k.id !== o.kontraktId),
+        meldinger: neste.meldinger.filter((m) => m.oppdragId !== o.id),
+        varsler: [
+          erMottaker
+            ? varsel({
+                til: aktorId,
+                type: 'oppdatering',
+                tittel: `${navnPa(state, o.mottakerId)} har avbrutt avtalen`,
+                tekst: `«${o.tittel}» er ikke lenger din jobb.`,
+                lenke: '/aktor/jobber',
+                lenketekst: 'Se andre jobber',
+              })
+            : varsel({
+                til: o.mottakerId,
+                type: 'oppdatering',
+                tittel: `${navnPa(state, aktorId)} har avbrutt avtalen`,
+                tekst: `Pengene er fortsatt reservert. Velg en annen aktør for «${o.tittel}».`,
+                lenke: `/hjelp/ny/${o.id}/anbefalt`,
+                lenketekst: 'Velg ny aktør',
+              }),
           ...neste.varsler,
         ],
       }
