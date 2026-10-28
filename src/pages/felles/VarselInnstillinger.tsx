@@ -1,5 +1,6 @@
-import { BellRing } from 'lucide-react'
-import { useId } from 'react'
+import { BellRing, RotateCcw } from 'lucide-react'
+import { useId, useState } from 'react'
+import { useNavigate } from 'react-router'
 import { Knapp } from '../../components/ui/Knapp'
 import { Sidehode } from '../../components/ui/Sidehode'
 import { innstillingerFor } from '../../lib/utvalg'
@@ -20,6 +21,8 @@ export function VarselInnstillinger() {
   const { state, dispatch, megId } = useDemo()
   const rolle = state.rolle ?? 'mottaker'
   const inn = innstillingerFor(state, megId)
+  const navigate = useNavigate()
+  const [bekreft, settBekreft] = useState(false)
 
   return (
     <div className="max-w-2xl">
@@ -58,6 +61,41 @@ export function VarselInnstillinger() {
               </li>
             ))}
           </ul>
+        </section>
+        <section aria-labelledby="demo-tittel" className="rounded-2xl bg-white p-5 ring-1 ring-line">
+          <h2 id="demo-tittel" className="text-lg font-bold text-navy">
+            Demo
+          </h2>
+          {bekreft ? (
+            <div role="alert" className="mt-3">
+              <p className="text-sm font-semibold text-ink">Tilbakestille all demo-data?</p>
+              <div className="mt-3 flex gap-2">
+                <Knapp
+                  variant="fare"
+                  storrelse="sm"
+                  onClick={() => {
+                    dispatch({ type: 'nullstill' })
+                    navigate('/')
+                  }}
+                >
+                  Ja, nullstill
+                </Knapp>
+                <Knapp variant="tekst" storrelse="sm" onClick={() => settBekreft(false)}>
+                  Avbryt
+                </Knapp>
+              </div>
+            </div>
+          ) : (
+            <Knapp
+              variant="sekundar"
+              storrelse="sm"
+              className="mt-3"
+              ikon={<RotateCcw size={16} aria-hidden />}
+              onClick={() => settBekreft(true)}
+            >
+              Nullstill demo
+            </Knapp>
+          )}
         </section>
         <p className="text-sm text-ink-3">Prototype: innstillingene lagres i nettleseren, og push-varslene er simulert.</p>
       </div>

@@ -1,4 +1,4 @@
-import { Check, ChevronRight, Presentation, RotateCcw, Settings, X } from 'lucide-react'
+import { Check, ChevronRight, Presentation, Settings, X } from 'lucide-react'
 import { useEffect, useRef, useState } from 'react'
 import { Link, useNavigate } from 'react-router'
 import { useDemo } from '../../store/context'
@@ -7,7 +7,6 @@ import { ratingFor } from '../../lib/matching'
 import { erSkjult, finnPerson } from '../../lib/utvalg'
 import type { Rolle } from '../../types'
 import { Avatar } from '../ui/Avatar'
-import { Knapp } from '../ui/Knapp'
 import { Merke } from '../ui/Merke'
 import { Stjerner } from '../ui/Stjerner'
 import { DEMO_PERSONER, HJEM } from './navigasjon'
@@ -106,7 +105,6 @@ export function DemoPanel() {
   const { state, dispatch } = useDemo()
   const navigate = useNavigate()
   const [apen, settApen] = useState(false)
-  const [bekreft, settBekreft] = useState(false)
   const panel = useRef<HTMLDivElement>(null)
   const knapp = useRef<HTMLButtonElement>(null)
   const rolle = state.rolle ?? 'mottaker'
@@ -141,13 +139,6 @@ export function DemoPanel() {
     if (byttetRolle) navigate(HJEM[r])
   }
 
-  function nullstill() {
-    dispatch({ type: 'nullstill' })
-    settBekreft(false)
-    settApen(false)
-    navigate('/')
-  }
-
   return (
     <div className="relative">
       <button
@@ -156,10 +147,7 @@ export function DemoPanel() {
         aria-expanded={apen}
         aria-controls="demo-panel"
         aria-label={`Profil: ${meg.navn}`}
-        onClick={() => {
-          settApen((a) => !a)
-          settBekreft(false)
-        }}
+        onClick={() => settApen((a) => !a)}
         className="flex h-10 items-center gap-2 rounded-xl bg-white/8 py-1 pr-3 pl-1 text-left ring-1 ring-white/15 transition-colors hover:bg-white/14"
       >
         <Avatar navn={meg.navn} farge={meg.farge} storrelse="xs" />
@@ -240,25 +228,6 @@ export function DemoPanel() {
             </fieldset>
           ))}
 
-          <div className="border-t border-line pt-4">
-            {bekreft ? (
-              <div role="alert">
-                <p className="text-sm font-semibold text-ink">Tilbakestille all demo-data?</p>
-                                <div className="mt-3 flex gap-2">
-                  <Knapp variant="fare" storrelse="sm" onClick={nullstill}>
-                    Ja, nullstill
-                  </Knapp>
-                  <Knapp variant="tekst" storrelse="sm" onClick={() => settBekreft(false)}>
-                    Avbryt
-                  </Knapp>
-                </div>
-              </div>
-            ) : (
-              <Knapp variant="sekundar" storrelse="sm" bred ikon={<RotateCcw size={16} aria-hidden />} onClick={() => settBekreft(true)}>
-                Nullstill demo
-              </Knapp>
-            )}
-          </div>
         </div>
       )}
     </div>
