@@ -59,7 +59,7 @@ export function AppSkall() {
       >
         Hopp til innhold
       </a>
-      <header data-mork className="sticky top-0 z-40 bg-navy pt-[var(--sikker-topp,0px)] text-white shadow-[0_1px_0_rgb(0_0_0/0.2)]">
+      <header data-mork className="sticky top-0 z-50 bg-navy pt-[var(--sikker-topp,0px)] text-white shadow-[0_1px_0_rgb(0_0_0/0.2)]">
         <div className="mx-auto flex h-16 max-w-6xl items-center gap-2 px-4 sm:gap-4 sm:px-6">
           <button
             type="button"
