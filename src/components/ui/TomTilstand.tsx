@@ -22,13 +22,3 @@ export function TomTilstand({
     </div>
   )
 }
-
-export function FeilMelding({ tittel, children, handling }: { tittel: string; children: ReactNode; handling?: ReactNode }) {
-  return (
-    <div role="alert" className="rounded-2xl border border-feil/25 bg-feil-50 px-5 py-4">
-      <p className="font-semibold text-feil">{tittel}</p>
-      <div className="mt-1 text-sm text-ink-2">{children}</div>
-      {handling && <div className="mt-3">{handling}</div>}
-    </div>
-  )
-}
