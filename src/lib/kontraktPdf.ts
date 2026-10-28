@@ -1,4 +1,5 @@
 import type { jsPDF } from 'jspdf'
+import ikon from '../assets/ikon-160.png'
 import wordmark from '../assets/wordmark-lys.png'
 import { kategori, kategoriBilde } from '../data/kategorier'
 import { stedNavn } from '../data/steder'
@@ -30,7 +31,7 @@ function hendelseTid(o: Oppdrag, type: string): string | undefined {
 }
 
 /** jsPDF trenger data-URL. Bilder fra filer (for eksempel illustrasjonsfotoene) hentes og skaleres først. */
-async function tilDataUrl(src: string, png = false): Promise<string> {
+async function tilDataUrl(src: string, png = false, rund = 0): Promise<string> {
   if (src.startsWith('data:')) return src
   const blob = await (await fetch(src)).blob()
   const bitmap = await createImageBitmap(blob)
@@ -38,7 +39,13 @@ async function tilDataUrl(src: string, png = false): Promise<string> {
   const lerret = document.createElement('canvas')
   lerret.width = Math.round(bitmap.width * skala)
   lerret.height = Math.round(bitmap.height * skala)
-  lerret.getContext('2d')?.drawImage(bitmap, 0, 0, lerret.width, lerret.height)
+  const ctx = lerret.getContext('2d')
+  if (rund) {
+    ctx?.beginPath()
+    ctx?.roundRect(0, 0, lerret.width, lerret.height, lerret.width * rund)
+    ctx?.clip()
+  }
+  ctx?.drawImage(bitmap, 0, 0, lerret.width, lerret.height)
   return png ? lerret.toDataURL('image/png') : lerret.toDataURL('image/jpeg', 0.82)
 }
 
@@ -161,16 +168,22 @@ export async function lastNedKontraktPdf(state: DemoState, kontrakt: Kontrakt): 
   doc.setFillColor(...NAVY)
   doc.rect(0, 0, A4_B, 34, 'F')
   try {
-    const merke = await tilDataUrl(wordmark, true)
-    const { width, height } = doc.getImageProperties(merke)
-    doc.addImage(merke, 'PNG', MARG - 2, 4, 20 * (width / height), 20)
+    const figur = await tilDataUrl(ikon, true, 0.22)
+    doc.addImage(figur, 'PNG', MARG, 9, 16, 16)
   } catch {
     // Uten logo er kontrakten fortsatt gyldig.
+  }
+  try {
+    const merke = await tilDataUrl(wordmark, true)
+    const { width, height } = doc.getImageProperties(merke)
+    doc.addImage(merke, 'PNG', MARG + 20, 9.5, 11 * (width / height), 11)
+  } catch {
+    // Uten wordmark er kontrakten fortsatt gyldig.
   }
   doc.setFont('helvetica', 'normal')
   doc.setFontSize(9)
   doc.setTextColor(199, 212, 225)
-  tekst('Avtale om utførelse av oppdrag', MARG, 29)
+  tekst('Avtale om utførelse av oppdrag', MARG + 20, 24)
   doc.setFont('helvetica', 'bold')
   doc.setFontSize(11)
   doc.setTextColor(255, 255, 255)
