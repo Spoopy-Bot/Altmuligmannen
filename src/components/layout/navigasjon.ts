@@ -14,6 +14,7 @@ export const NAV: Record<Rolle, NavPunkt[]> = {
     { til: '/aktorer', tekst: 'Finn hjelp', ikon: Search },
     { til: '/hjelp/ny', tekst: 'Beskriv problem', ikon: PlusCircle, fremhevet: true },
     { til: '/meldinger', tekst: 'Meldinger', ikon: MessageCircle },
+    { til: '/profil', tekst: 'Profil', ikon: UserRound },
   ],
   aktor: [
     { til: '/aktor/jobber', tekst: 'Jobber', ikon: Search },
@@ -42,5 +43,5 @@ export const HJEM: Record<Rolle, string> = { mottaker: '/mine-oppdrag', aktor: '
 
 export const DEMO_PERSONER: Record<Rolle, string[]> = {
   mottaker: ['m-emma', 'm-thomas'],
-  aktor: ['a-kai', 'a-ingrid', 'a-sander'],
+  aktor: ['a-kai', 'a-ingrid', 'a-mikael', 'a-sander'],
 }

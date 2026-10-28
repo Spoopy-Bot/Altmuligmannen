@@ -8,5 +8,7 @@
   { "id": "msg-7", "oppdragId": "o-113", "fra": "m-thomas", "tekst": "Hei Kai, døra er den mot vest. Kan du ta med lister, eller skal jeg kjøpe?", "tid": "2026-09-30T18:15:00" },
   { "id": "msg-8", "oppdragId": "o-113", "fra": "a-kai", "tekst": "Jeg tar med lister, det er inkludert i prisen. Passer mandag kl. 16?", "tid": "2026-09-30T18:40:00" },
   { "id": "msg-9", "oppdragId": "o-110", "fra": "a-runa", "tekst": "Ferdig med alle vinduene! Har lagt igjen en lapp om et vindu med sprukket list.", "tid": "2026-10-02T13:32:00" },
-  { "id": "msg-10", "oppdragId": "o-108", "fra": "a-marte", "tekst": "Hei Solveig, jeg kan komme tirsdag morgen. Passer det?", "tid": "2026-09-27T12:25:00" }
+  { "id": "msg-10", "oppdragId": "o-108", "fra": "a-marte", "tekst": "Hei Solveig, jeg kan komme tirsdag morgen. Passer det?", "tid": "2026-09-27T12:25:00" },
+  {"id": "msg-11", "oppdragId": "o-115", "fra": "m-thomas", "tekst": "Hei Mikael, dekkplatene ligger i gangen. Passer tirsdag kl. 16?", "tid": "2026-10-20T19:15:00"},
+  {"id": "msg-12", "oppdragId": "o-115", "fra": "a-mikael", "tekst": "Tirsdag kl. 16 passer fint. Jeg tar med skrutrekker og tester at alt fungerer etterpå.", "tid": "2026-10-20T19:40:00"}
 ]

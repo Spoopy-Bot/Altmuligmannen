@@ -1,7 +1,7 @@
-import { BellOff, BriefcaseBusiness, CheckCheck, FileSignature, MessageCircle, RefreshCw, Settings, Star, type LucideIcon } from 'lucide-react'
+import { BellOff, BriefcaseBusiness, CheckCheck, FileSignature, MessageCircle, RefreshCw, Star, type LucideIcon } from 'lucide-react'
 import { Segl } from '../../components/domain/Segl'
 import { useNavigate } from 'react-router'
-import { Knapp, KnappLenke } from '../../components/ui/Knapp'
+import { Knapp } from '../../components/ui/Knapp'
 import { Sidehode } from '../../components/ui/Sidehode'
 import { TomTilstand } from '../../components/ui/TomTilstand'
 import { relativTid } from '../../lib/format'
@@ -41,9 +41,6 @@ export function Varsler() {
                 Merk alle som lest
               </Knapp>
             )}
-            <KnappLenke to="/innstillinger" variant="sekundar" storrelse="sm" ikon={<Settings size={16} aria-hidden />}>
-              Innstillinger
-            </KnappLenke>
           </>
         }
       />

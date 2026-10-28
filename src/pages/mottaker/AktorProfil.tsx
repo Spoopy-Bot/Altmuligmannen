@@ -41,7 +41,10 @@ export function AktorProfil() {
                 {aktor.firma && ` · ${aktor.firma}`}
               </p>
               <div className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-ink-2">
-                <RatingLinje snitt={rating.snitt} antall={rating.antall} />
+                <a href="#vurderinger" className="rounded underline-offset-2 hover:underline focus-visible:underline">
+                  <RatingLinje snitt={rating.snitt} antall={rating.antall} />
+                </a>
+                {aktor.alder !== undefined && <span>{aktor.alder} år</span>}
                 <span className="inline-flex items-center gap-1">
                   <MapPin size={15} className="text-ink-3" aria-hidden />
                   {stedNavn(aktor.sted)}
@@ -128,7 +131,7 @@ export function AktorProfil() {
         </section>
 
         <section aria-labelledby="vurderinger" className="px-1">
-          <h2 id="vurderinger" className="text-lg font-bold text-navy">
+          <h2 id="vurderinger" className="scroll-mt-24 text-lg font-bold text-navy">
             Vurderinger <span className="tall font-sans text-base font-medium text-ink-3">({vurderinger.length})</span>
           </h2>
           {vurderinger.length === 0 ? (

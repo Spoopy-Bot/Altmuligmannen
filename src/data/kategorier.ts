@@ -18,6 +18,13 @@ export const KATEGORIER: Kategori[] = [
     nokkelord: ['lekk', 'drypp', 'kran', 'avløp', 'vask', 'toalett', 'rør', 'vann', 'sluk'],
   },
   {
+    id: 'el',
+    navn: 'Elektrisk',
+    eksempler: 'Lamper, støpsler, skjøteledninger, dekkplater',
+    typiskeTimer: 3,
+    nokkelord: ['lampe', 'lys', 'pære', 'støpsel', 'stikkontakt', 'dekkplate', 'bryter', 'skjøteledning', 'varmeovn', 'strøm'],
+  },
+  {
     id: 'maling',
     navn: 'Maling',
     eksempler: 'Vegger, tak, gjerde, listverk',

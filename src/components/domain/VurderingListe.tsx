@@ -12,7 +12,7 @@ export function VurderingListe({ id }: { id: string }) {
   return (
     <section aria-labelledby="mine-vurderinger">
       <div data-mork className="rounded-3xl bg-navy p-5 text-white">
-        <h2 id="mine-vurderinger" className="text-lg font-bold">
+        <h2 id="mine-vurderinger" className="scroll-mt-24 text-lg font-bold">
           Dine vurderinger
         </h2>
         <div className="mt-2 [&_*]:text-white">

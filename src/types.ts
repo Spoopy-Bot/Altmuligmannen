@@ -2,6 +2,7 @@ export type Rolle = 'mottaker' | 'aktor'
 
 export type KategoriId =
   | 'ror'
+  | 'el'
   | 'maling'
   | 'montering'
   | 'hage'
@@ -41,7 +42,7 @@ export interface Aktor {
   verifisert: { id: boolean; forsikring: boolean; fagbrev?: string }
   tidligereJobber: TidligereJobb[]
   farge: number
-  /** Satt for ungdom 15–17 år, som bare kan ta enkle jobber. */
+  /** Under 18 er ungdom (15–17 år), som bare kan ta enkle jobber. */
   alder?: number
 }
 
@@ -51,6 +52,8 @@ export interface Mottaker {
   sted: Sted
   medlemSiden: string
   farge: number
+  alder?: number
+  bio?: string
 }
 
 export type Hastegrad = 'snarest' | 'denne-uken' | 'fleksibel'

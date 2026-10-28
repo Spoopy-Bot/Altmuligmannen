@@ -1,6 +1,6 @@
-import { Bell } from 'lucide-react'
+import { ArrowLeft, Bell } from 'lucide-react'
 import { useEffect } from 'react'
-import { Link, NavLink, Outlet, useLocation } from 'react-router'
+import { Link, NavLink, Outlet, useLocation, useNavigate } from 'react-router'
 import ikon from '../../assets/ikon-160.png'
 import wordmark from '../../assets/wordmark-lys.png'
 import { uleste } from '../../lib/utvalg'
@@ -38,14 +38,18 @@ function Varselbjelle() {
 
 export function AppSkall() {
   const { state } = useDemo()
-  const { pathname } = useLocation()
+  const { pathname, hash, key } = useLocation()
+  const navigate = useNavigate()
+  const tilbake = () => (key === 'default' ? navigate('/') : navigate(-1))
   const rolle = state.rolle ?? 'mottaker'
   const punkter = NAV[rolle]
   const mine = MINE[rolle]
 
   useEffect(() => {
-    window.scrollTo(0, 0)
-  }, [pathname])
+    const mal = hash ? document.getElementById(hash.slice(1)) : null
+    if (mal) mal.scrollIntoView()
+    else window.scrollTo(0, 0)
+  }, [pathname, hash])
 
   return (
     <div className="min-h-dvh">
@@ -56,7 +60,15 @@ export function AppSkall() {
         Hopp til innhold
       </a>
       <header data-mork className="sticky top-0 z-40 bg-navy pt-[var(--sikker-topp,0px)] text-white shadow-[0_1px_0_rgb(0_0_0/0.2)]">
-        <div className="mx-auto flex h-16 max-w-6xl items-center gap-4 px-4 sm:px-6">
+        <div className="mx-auto flex h-16 max-w-6xl items-center gap-2 px-4 sm:gap-4 sm:px-6">
+          <button
+            type="button"
+            onClick={tilbake}
+            aria-label="Tilbake"
+            className="-ml-2 grid size-10 shrink-0 place-items-center rounded-xl text-white transition-colors hover:bg-white/14"
+          >
+            <ArrowLeft size={22} strokeWidth={2} aria-hidden />
+          </button>
           <Link to="/" className="flex shrink-0 items-center gap-2.5 rounded-lg" aria-label="Altmuligmannen, til startsiden">
             <img src={ikon} alt="" className="size-9 rounded-[22%] ring-1 ring-white/10" />
             <img src={wordmark} alt="" className="h-7 w-auto" />
@@ -116,7 +128,7 @@ export function AppSkall() {
       >
         <ul className="mx-auto flex max-w-lg">
           {BUNN[rolle].map((p) => (
-            <li key={p.til} className="flex-1">
+            <li key={p.til} className={p.fremhevet ? 'flex-[1.7]' : 'flex-1'}>
               <NavLink
                 to={p.til}
                 className={({ isActive }) =>
@@ -134,7 +146,7 @@ export function AppSkall() {
                     >
                       <p.ikon size={20} strokeWidth={isActive ? 2.2 : 1.8} aria-hidden />
                     </span>
-                    <span className="leading-none">{p.tekst}</span>
+                    <span className="leading-none whitespace-nowrap" >{p.tekst}</span>
                   </>
                 )}
               </NavLink>

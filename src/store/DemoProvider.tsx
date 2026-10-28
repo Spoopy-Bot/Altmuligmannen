@@ -33,6 +33,11 @@ export function DemoProvider({ children }: { children: ReactNode }) {
   const [skriver, settSkriver] = useState<Record<string, boolean>>({})
   const tidtakere = useRef<number[]>([])
   const ventende = useRef<Record<string, number[]>>({})
+  const siste = useRef(state)
+
+  useEffect(() => {
+    siste.current = state
+  }, [state])
 
   useEffect(() => {
     try {
@@ -57,21 +62,22 @@ export function DemoProvider({ children }: { children: ReactNode }) {
 
   const sendMelding = useCallback<DemoApi['sendMelding']>(
     (oppdragId, tekst) => {
-      const oppdrag = state.oppdrag.find((o) => o.id === oppdragId)
+      const nå = siste.current
+      const oppdrag = nå.oppdrag.find((o) => o.id === oppdragId)
       if (!oppdrag?.aktorId) return
       dispatch({ type: 'send-melding', oppdragId, fra: megId, tekst })
       const motpartId = megId === oppdrag.mottakerId ? oppdrag.aktorId : oppdrag.mottakerId
-      const aktor = finnAktor(state, oppdrag.aktorId)
-      const mottaker = finnMottaker(state, oppdrag.mottakerId)
+      const aktor = finnAktor(nå, oppdrag.aktorId)
+      const mottaker = finnMottaker(nå, oppdrag.mottakerId)
       if (!aktor || !mottaker) return
 
       // Ubesvarte meldinger fra meg slås sammen, så motparten svarer på alt jeg har skrevet.
-      const trad = state.meldinger.filter((m) => m.oppdragId === oppdragId)
+      const trad = nå.meldinger.filter((m) => m.oppdragId === oppdragId)
       const sisteSvar = trad.map((m) => m.fra).lastIndexOf(motpartId)
       const ubesvarte = [...trad.slice(sisteSvar + 1).filter((m) => m.fra === megId).map((m) => m.tekst), tekst]
       const bobler = lagSvar({
         oppdrag,
-        kontrakt: state.kontrakter.find((k) => k.oppdragId === oppdragId),
+        kontrakt: nå.kontrakter.find((k) => k.oppdragId === oppdragId),
         aktor,
         mottaker,
         svarerErAktor: motpartId === oppdrag.aktorId,
@@ -92,7 +98,7 @@ export function DemoProvider({ children }: { children: ReactNode }) {
         return t
       })
     },
-    [megId, state.oppdrag, state.meldinger],
+    [megId],
   )
 
   const api = useMemo<DemoApi>(

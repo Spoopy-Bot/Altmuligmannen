@@ -41,6 +41,25 @@ export const FAG: Record<KategoriId, Fag> = {
     ],
     standardDiagnose: 'Det høres ut som en lekkasje ved en kobling. Jeg finner kilden først, så sier jeg hva det blir.',
   },
+  el: {
+    materialer: 'Jeg tar med skrutrekkere, spenningsprøver og noen ekstra dekkplater. Lamper og andre ting som skal henges opp må du ha kjøpt selv.',
+    forberede: 'Legg frem lampene og sørg for at jeg kommer til stikkontakten eller takkroken.',
+    praktisk: 'Jeg tar bare det som kobles med støpsel eller kroneklemme, så strømmen trenger sjelden å være av.',
+    selv: 'Dekkplater, støpsler og lamper med ledning kan du lovlig bytte selv. Alt som er koblet fast i veggen krever registrert elektroforetak.',
+    sporsmal: [
+      'Henger lampen i en takkrok, eller er den koblet rett i taket?',
+      'Har lampen støpsel, eller må den kobles til faste ledninger?',
+      'Hvor mange lamper eller dekkplater gjelder det?',
+    ],
+    hvor: 'Lampene ligger i gangen, ved siden av stigen.',
+    harSelv: 'Ja, lampene er kjøpt og ligger klare.',
+    diagnoser: [
+      [/dekkplate|deksel|brytere?/, 'Å bytte dekkplate er en enkel jobb. Selve bryteren eller stikkontakten i veggen rører jeg ikke.'],
+      [/takkrok|krok|støpsel|stikkontakt/, 'Lamper i takkrok med støpsel er greit å henge opp selv, og det tar sjelden lang tid.'],
+      [/fast|skjult|i veggen|sikring|varmekabel/, 'Det er arbeid på fast installasjon, og det må en registrert elektroforetak ta.'],
+    ],
+    standardDiagnose: 'Det høres ut som en enkel jobb med støpsel eller dekkplate. Jeg ser på det når jeg kommer.',
+  },
   maling: {
     materialer: 'Jeg tar med pensler, ruller, teip, dekkplast og sparkel. Malingen kjøper du selv, ellers sier jeg fra hva den koster.',
     forberede: 'Tøm rommet for småting og dra større møbler til midten. Jeg dekker til resten.',

@@ -4,5 +4,7 @@
   { "id": "k-105", "oppdragId": "o-105", "aktorId": "a-kai", "mottakerId": "m-thomas", "opprettet": "2026-09-05T13:15:00", "pris": 1500, "arbeid": "Bytte fem dørhåndtak og justere to dører som subber.", "status": "fullfort" },
   { "id": "k-108", "oppdragId": "o-108", "aktorId": "a-marte", "mottakerId": "m-solveig", "opprettet": "2026-09-27T12:20:00", "pris": 2200, "arbeid": "Fjerne gamle lister, tette med fugeskum og montere nye innvendige lister rundt soveromsvindu.", "status": "aktiv" },
   { "id": "k-110", "oppdragId": "o-110", "aktorId": "a-runa", "mottakerId": "m-arne", "opprettet": "2026-09-28T10:40:00", "pris": 2600, "arbeid": "Vask av 14 vinduer inne og ute, inkludert karmer.", "status": "aktiv" },
-  { "id": "k-113", "oppdragId": "o-113", "aktorId": "a-kai", "mottakerId": "m-thomas", "opprettet": "2026-09-30T18:10:00", "pris": 1400, "arbeid": "Fjerne gamle tetningslister og montere nye på ytterdør.", "status": "aktiv" }
+  { "id": "k-113", "oppdragId": "o-113", "aktorId": "a-kai", "mottakerId": "m-thomas", "opprettet": "2026-09-30T18:10:00", "pris": 1400, "arbeid": "Fjerne gamle tetningslister og montere nye på ytterdør.", "status": "aktiv" },
+  {"id": "k-114", "oppdragId": "o-114", "aktorId": "a-mikael", "mottakerId": "m-kari", "opprettet": "2026-09-14T17:20:00", "pris": 2900, "arbeid": "Henge opp tre taklamper med støpsel i eksisterende takkroker.", "status": "fullfort"},
+  {"id": "k-115", "oppdragId": "o-115", "aktorId": "a-mikael", "mottakerId": "m-thomas", "opprettet": "2026-10-20T19:10:00", "pris": 2400, "arbeid": "Bytte fem dekkplater på brytere og stikkontakter, og henge opp to vegglamper med støpsel.", "status": "aktiv"}
 ]

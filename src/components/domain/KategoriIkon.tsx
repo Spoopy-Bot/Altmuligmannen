@@ -1,8 +1,9 @@
-import { Brush, Droplets, Hammer, Leaf, Package, Sparkles, Wrench, type LucideProps } from 'lucide-react'
+import { Brush, Droplets, Hammer, Leaf, Package, Sparkles, Wrench, Zap, type LucideProps } from 'lucide-react'
 import type { KategoriId } from '../../types'
 
 const IKONER = {
   ror: Droplets,
+  el: Zap,
   maling: Brush,
   montering: Wrench,
   hage: Leaf,

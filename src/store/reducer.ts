@@ -2,7 +2,7 @@ import { kanTa } from '../data/kategorier'
 import { fornavn, kr, km } from '../lib/format'
 import { avstandKm } from '../lib/geo'
 import { nyId } from '../lib/id'
-import type { Aktor, DemoState, Hendelse, Kontrakt, Levering, Oppdrag, Rolle, Varsel, VarselType } from '../types'
+import type { Aktor, DemoState, Hendelse, Kontrakt, Levering, Mottaker, Oppdrag, Rolle, Varsel, VarselType } from '../types'
 import { lagStartState, vilkarFor } from './seed'
 
 export type NyttOppdrag = Pick<
@@ -32,6 +32,7 @@ export type Handling =
   | { type: 'les-varsel'; id: string }
   | { type: 'les-varsler'; til: string; lenke?: string }
   | { type: 'oppdater-profil'; aktor: Aktor }
+  | { type: 'oppdater-mottaker'; mottaker: Mottaker }
   | { type: 'nullstill' }
 
 const na = () => new Date().toISOString()
@@ -379,6 +380,14 @@ export function reducer(state: DemoState, h: Handling): DemoState {
         kontrakter: neste.kontrakter.map((k) => (k.id === o.kontraktId ? { ...k, status: 'fullfort' } : k)),
         varsler: [
           varsel({
+            til: o.mottakerId,
+            type: 'betaling',
+            tittel: `Betalingen på ${kr(o.betaling.belop)} er fullført`,
+            tekst: `${navnPa(state, o.aktorId)} har fått utbetalt for «${o.tittel}».`,
+            lenke: `/oppdrag/${o.id}`,
+            lenketekst: 'Se oppdrag',
+          }),
+          varsel({
             til: o.aktorId,
             type: 'betaling',
             tittel: `${kr(o.betaling.belop)} er frigitt til deg via Vipps`,
@@ -460,6 +469,9 @@ export function reducer(state: DemoState, h: Handling): DemoState {
 
     case 'oppdater-profil':
       return { ...state, aktorer: state.aktorer.map((a) => (a.id === h.aktor.id ? h.aktor : a)) }
+
+    case 'oppdater-mottaker':
+      return { ...state, mottakere: state.mottakere.map((m) => (m.id === h.mottaker.id ? h.mottaker : m)) }
 
     case 'nullstill':
       return lagStartState()

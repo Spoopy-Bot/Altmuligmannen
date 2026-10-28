@@ -1,5 +1,5 @@
 import { ArrowLeft, ArrowRight, Check, Info } from 'lucide-react'
-import { useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from 'react'
+import { Fragment, useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from 'react'
 import { useNavigate } from 'react-router'
 import { KategoriIkon } from '../../components/domain/KategoriIkon'
 import { BildeOpplasting } from '../../components/domain/BildeOpplasting'
@@ -160,39 +160,41 @@ export function NyttBehov() {
                 {KATEGORIER.map((k) => {
                   const valgt = utkast.kategori === k.id
                   return (
-                    <label
-                      key={k.id}
-                      className={`flex cursor-pointer items-center gap-3.5 rounded-2xl bg-white p-3.5 ring-1 transition-[box-shadow,background-color] has-[:focus-visible]:ring-3 has-[:focus-visible]:ring-navy-600 ${
-                        valgt ? 'ring-2 ring-navy' : 'ring-line hover:ring-line-strong'
-                      }`}
-                    >
-                      <input
-                        type="radio"
-                        name="kategori"
-                        value={k.id}
-                        checked={valgt}
-                        onChange={() => oppdater({ kategori: k.id })}
-                        className="sr-only"
-                      />
-                      <span
-                        className={`grid size-11 shrink-0 place-items-center rounded-[var(--radius-ikon)] transition-colors ${
-                          valgt ? 'bg-navy text-amber' : 'bg-navy-50 text-navy'
+                    <Fragment key={k.id}>
+                      <label
+                        className={`flex cursor-pointer items-center gap-3.5 rounded-2xl bg-white p-3.5 ring-1 transition-[box-shadow,background-color] has-[:focus-visible]:ring-3 has-[:focus-visible]:ring-navy-600 ${
+                          valgt ? 'ring-2 ring-navy' : 'ring-line hover:ring-line-strong'
                         }`}
                       >
-                        <KategoriIkon kategori={k.id} size={21} />
-                      </span>
-                      <span className="min-w-0 flex-1">
-                        <span className="block font-semibold text-ink">{k.navn}</span>
-                        <span className="block text-sm text-ink-3">{k.eksempler}</span>
-                      </span>
-                      {valgt && <Check size={18} className="text-navy" aria-hidden />}
-                    </label>
+                        <input
+                          type="radio"
+                          name="kategori"
+                          value={k.id}
+                          checked={valgt}
+                          onChange={() => oppdater({ kategori: k.id })}
+                          onClick={() => valgt && oppdater({ kategori: undefined })}
+                          className="sr-only"
+                        />
+                        <span
+                          className={`grid size-11 shrink-0 place-items-center rounded-[var(--radius-ikon)] transition-colors ${
+                            valgt ? 'bg-navy text-amber' : 'bg-navy-50 text-navy'
+                          }`}
+                        >
+                          <KategoriIkon kategori={k.id} size={21} />
+                        </span>
+                        <span className="min-w-0 flex-1">
+                          <span className="block font-semibold text-ink">{k.navn}</span>
+                          <span className="block text-sm text-ink-3">{k.eksempler}</span>
+                        </span>
+                        {valgt && <Check size={18} className="text-navy" aria-hidden />}
+                      </label>
+                      {valgt && <KategoriHint id={k.id} className="sm:col-span-2" />}
+                    </Fragment>
                   )
                 })}
               </div>
             </fieldset>
             {feil.kategori && <FeilTekst id="kat-feil">{feil.kategori}</FeilTekst>}
-            {utkast.kategori === 'ror' && <RorHint className="mt-4" />}
           </Steg>
         )}
 
@@ -203,7 +205,7 @@ export function NyttBehov() {
             refH={overskrift}
           >
             <div className="flex flex-col gap-5">
-              {utkast.kategori === 'ror' && <RorHint />}
+              {utkast.kategori && <KategoriHint id={utkast.kategori} />}
               <TekstFelt
                 etikett="Kort overskrift"
                 placeholder="F.eks. Drypper fra kjøkkenkranen"
@@ -310,7 +312,7 @@ export function NyttBehov() {
                   <p>
                     Vanlig pris:{' '}
                     <strong className="tall text-ink">
-                      {kr(prisintervall.min)}–{kr(prisintervall.maks)}
+                      {prisintervall.min === prisintervall.maks ? `ca. ${kr(prisintervall.min)}` : `${kr(prisintervall.min)}–${kr(prisintervall.maks)}`}
                     </strong>
                   </p>
                 </div>
@@ -343,7 +345,7 @@ export function NyttBehov() {
                 {stedNavn(STEDER[utkast.stedIndeks])} · {utkast.adresse}
               </Rad>
             </dl>
-            {utkast.kategori === 'ror' && <RorHint className="mt-4" />}
+            {utkast.kategori && <KategoriHint id={utkast.kategori} className="mt-4" />}
             <div className="mt-4 flex gap-4 rounded-2xl bg-amber-50 p-4 ring-1 ring-amber/50 sm:p-5">
               <Segl storrelse={48} />
               <div>
@@ -360,20 +362,20 @@ export function NyttBehov() {
           </Steg>
         )}
 
-        <div className="mt-8 flex flex-col-reverse gap-3 border-t border-line pt-5 sm:flex-row sm:items-center sm:justify-between">
+        <div className={`${steg === 0 && !utkast.kategori ? 'hidden' : 'flex'} sticky bottom-[calc(4rem+var(--sikker-bunn,env(safe-area-inset-bottom)))] z-30 -mx-4 mt-8 items-center justify-between gap-3 border-t border-line bg-cream/95 px-4 py-3 backdrop-blur sm:-mx-6 sm:px-6 md:bottom-0`}>
           {steg > 0 ? (
             <Knapp variant="tekst" onClick={() => settSteg((s) => s - 1)} ikon={<ArrowLeft size={18} aria-hidden />} disabled={sender}>
               Tilbake
             </Knapp>
           ) : (
-            <span className="hidden sm:block" />
+            <span />
           )}
           {steg < STEG.length - 1 ? (
-            <Knapp type="submit" storrelse="lg" className="w-full sm:w-auto">
+            <Knapp type="submit" storrelse="lg" className="flex-1 sm:flex-none">
               Neste <ArrowRight size={18} aria-hidden />
             </Knapp>
           ) : (
-            <Knapp type="submit" variant="aksent" storrelse="lg" className="w-full sm:w-auto" laster={sender}>
+            <Knapp type="submit" variant="aksent" storrelse="lg" className="flex-1 sm:flex-none" laster={sender}>
               {sender ? 'Sender …' : `Reserver ${kr(Number(utkast.budsjett))} med Vipps`}
             </Knapp>
           )}
@@ -446,14 +448,22 @@ function Steg({
   )
 }
 
-function RorHint({ className = '' }: { className?: string }) {
+function KategoriHint({ id, className = '' }: { id: KategoriId; className?: string }) {
+  if (id !== 'ror' && id !== 'el') return null
   return (
     <div className={`${className} flex gap-3 rounded-2xl bg-navy-50 p-4 text-sm text-ink-2`}>
       <Info size={18} className="mt-0.5 shrink-0 text-navy" aria-hidden />
-      <p>
-        <strong className="text-ink">Kun enkle jobber på rør du ser</strong>, som å bytte kran eller rense sluk. Skjulte rør og våtrom krever
-        autorisert rørlegger, ellers kan husforsikringen ryke. Du får dokumentasjon fra aktøren på jobben.
-      </p>
+      {id === 'ror' ? (
+        <p>
+          <strong className="text-ink">Kun enkle jobber på rør du ser</strong>, som å bytte kran eller rense sluk. Skjulte rør og våtrom krever
+          autorisert rørlegger, ellers kan husforsikringen ryke. Du får dokumentasjon fra aktøren på jobben.
+        </p>
+      ) : (
+        <p>
+          <strong className="text-ink">Kun enkle jobber du selv har lov til</strong>, som å henge opp lamper med støpsel, bytte dekkplater eller
+          koble skjøteledninger. Fast installasjon, sikringsskap og varmekabler krever registrert elektroforetak.
+        </p>
+      )}
     </div>
   )
 }

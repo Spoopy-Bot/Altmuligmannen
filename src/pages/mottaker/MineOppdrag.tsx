@@ -57,7 +57,7 @@ export function MineOppdrag() {
             type="button"
             aria-pressed={fane === id}
             onClick={() => settFane(id)}
-            className={`-mb-px flex items-center gap-2 border-b-2 px-3 py-2.5 text-sm font-semibold transition-colors ${
+            className={`-mb-px flex items-center gap-1.5 border-b-2 px-2 py-2.5 sm:gap-2 sm:px-3 text-sm font-semibold transition-colors ${
               fane === id ? 'border-navy text-navy' : 'border-transparent text-ink-3 hover:text-navy'
             }`}
           >

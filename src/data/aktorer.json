@@ -2,6 +2,7 @@
   {
     "id": "a-kai",
     "navn": "Kai Fredriksen",
+    "alder": 38,
     "tittel": "Selvstendig altmuligmann",
     "bio": "Jeg har snekret, skrudd og malt i Fredrikstad-området i over ti år. Jeg liker jobber der folk har prøvd selv og står fast – da forklarer jeg gjerne hva jeg gjør, så du vet hva du betaler for. Rydder alltid etter meg.",
     "kategorier": [
@@ -62,6 +63,7 @@
   {
     "id": "a-ingrid",
     "navn": "Ingrid Solberg",
+    "alder": 44,
     "tittel": "Driftsleder, rørlegger",
     "firma": "Elvebredden Rør AS",
     "bio": "Driftsleder i et rørleggerfirma med seks ansatte. Jeg tar selv de fleste småoppdragene i Sarpsborg og Fredrikstad, og sender en av våre svenner når jobben er større. Alt arbeid dokumenteres og meldes etter forskriftene.",
@@ -116,6 +118,7 @@
   {
     "id": "a-sindre",
     "navn": "Sindre Mathisen",
+    "alder": 41,
     "tittel": "Malermester",
     "firma": "Mathisen Farge & Flate",
     "bio": "Malermester fra Moss. Jeg er nøye med underarbeidet – sparkling, sliping og dekking – fordi det er det som gjør at malingen holder. Gir alltid fast pris etter befaring.",
@@ -164,6 +167,7 @@
   {
     "id": "a-leila",
     "navn": "Leila Haddad",
+    "alder": 29,
     "tittel": "Montering og flyttehjelp",
     "bio": "Jeg har varebil og verktøy, og hjelper med alt fra å skru sammen flatpakkede møbler til å bære tunge ting opp trapper. Rask, presis og alltid avtalt tid.",
     "kategorier": [
@@ -211,6 +215,7 @@
   {
     "id": "a-jonas",
     "navn": "Jonas Berntsen",
+    "alder": 33,
     "tittel": "Hage og uteområder",
     "bio": "Utdannet anleggsgartner. Jeg tar hekk, plen, beskjæring av frukttrær og høstrydding. Tar med hageavfallet selv, så du slipper turen til gjenvinningsstasjonen.",
     "kategorier": [
@@ -260,6 +265,7 @@
   {
     "id": "a-marte",
     "navn": "Marte Kvisler",
+    "alder": 36,
     "tittel": "Tømrer og småreparasjoner",
     "bio": "Tømrer med egen bil og verksted i Halden. Jeg fikser det som har blitt stående: dører som ikke lukker, lister som har løsnet, trekk rundt vinduer. Små jobber er velkomne.",
     "kategorier": [
@@ -308,6 +314,7 @@
   {
     "id": "a-aleksander",
     "navn": "Aleksander Nygård",
+    "alder": 22,
     "tittel": "Student, hjelper med montering og bæring",
     "bio": "Student ved høgskolen i Fredrikstad. Jeg er sterk, ryddig og god med skrutrekker. Passer for deg som trenger en ekstra hånd til montering, bæring eller hagearbeid til en hyggelig pris.",
     "kategorier": [
@@ -355,6 +362,7 @@
   {
     "id": "a-runa",
     "navn": "Runa Tveter",
+    "alder": 31,
     "tittel": "Vask og rengjøring",
     "bio": "Jeg driver enkeltpersonforetak innen rengjøring i Moss og Rygge. Vindusvask, flyttevask og storrengjøring – med egne miljøvennlige midler.",
     "kategorier": [
@@ -400,6 +408,7 @@
   {
     "id": "a-henrik",
     "navn": "Henrik Aas",
+    "alder": 58,
     "tittel": "Pensjonert snekker",
     "bio": "Snekker i 35 år, nå pensjonist med god tid. Jeg tar gjerne småjobber i Indre Østfold – helst for folk som setter pris på at ting gjøres skikkelig, og at det er tid til en kaffe.",
     "kategorier": [
@@ -449,6 +458,7 @@
   {
     "id": "a-fatima",
     "navn": "Fatima Rahimi",
+    "alder": 34,
     "tittel": "Maler og småreparasjoner",
     "bio": "Jeg maler innvendig og fikser småting underveis – sparkler hull, bytter lister og fuger. Bor på Kråkerøy og jobber helst i Fredrikstad og Hvaler.",
     "kategorier": [
@@ -496,6 +506,7 @@
   {
     "id": "a-bjorn",
     "navn": "Bjørn Halvorsen",
+    "alder": 40,
     "tittel": "Rørlegger, enkeltpersonforetak",
     "bio": "Selvstendig rørlegger i Moss og Råde. Tar småjobber som lekkasjer, kraner og tette avløp, og gir pris før jeg starter.",
     "kategorier": [
@@ -543,6 +554,7 @@
   {
     "id": "a-emil",
     "navn": "Emil Strand",
+    "alder": 24,
     "tittel": "Rørleggersvenn",
     "bio": "Ferdig utdannet rørleggersvenn som tar kveldsoppdrag i Fredrikstad. Rask med enkle jobber som drypp, vannlås og bytte av kran.",
     "kategorier": [
@@ -589,6 +601,7 @@
   {
     "id": "a-sara",
     "navn": "Sara Lie",
+    "alder": 27,
     "tittel": "Vask og flyttehjelp",
     "bio": "Driver et lite firma med vask og flyttehjelp i Sarpsborg og Fredrikstad. Vi er alltid to på jobb.",
     "firma": "Lie Rent & Flytt",
@@ -636,7 +649,7 @@
   {
     "id": "a-sander",
     "navn": "Sander Lie",
-    "tittel": "Ungdom, 16 år",
+    "tittel": "Ungdom",
     "alder": 16,
     "bio": "Jeg går første år på videregående og tar enkle jobber etter skolen og i helgene. Klipper plen, bærer og vasker. Møter alltid presis.",
     "kategorier": [
@@ -680,5 +693,49 @@
       }
     ],
     "farge": 4
+  },
+  {
+    "id": "a-mikael",
+    "navn": "Mikael Rønning",
+    "alder": 36,
+    "tittel": "Elektriker",
+    "firma": "Rønning Elektro",
+    "bio": "Elektriker med fagbrev. Jeg tar de enkle elektrojobbene du har lov til å gjøre selv, som lamper, støpsler og skjøteledninger. Alt over det overlater jeg til registrert elektroforetak.",
+    "kategorier": [
+      "el"
+    ],
+    "ferdigheter": [
+      "Lamper i takkrok",
+      "Støpsler og skjøteledninger",
+      "Dekkplater på brytere og stikk",
+      "Varmeovner med støpsel",
+      "Enkel feilsøking"
+    ],
+    "erfaringAar": 12,
+    "timepris": 950,
+    "sted": {
+      "by": "Sarpsborg",
+      "omrade": "Sentrum",
+      "lat": 59.283,
+      "lng": 11.109
+    },
+    "radiusKm": 30,
+    "tilgjengelighet": "Hverdager etter kl. 15, lørdager",
+    "ledigDenneUken": true,
+    "svartid": "Svarer vanligvis innen 3 timer",
+    "fullforteJobber": 1,
+    "verifisert": {
+      "id": true,
+      "forsikring": true,
+      "fagbrev": "Fagbrev i elektrikerfaget"
+    },
+    "tidligereJobber": [
+      {
+        "tittel": "Hengt opp tre taklamper i stue",
+        "kategori": "el",
+        "ar": 2026
+      }
+    ],
+    "farge": 7
   }
 ]

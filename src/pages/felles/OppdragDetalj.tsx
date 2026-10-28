@@ -482,7 +482,7 @@ function Motpart({ oppdrag }: { oppdrag: Oppdrag }) {
     const r = ratingFor(aktor.id, state.ratings)
     return (
       <Link
-        to={`/aktorer/${aktor.id}`}
+        to={`/aktorer/${aktor.id}#vurderinger`}
         className="flex items-center gap-3 rounded-2xl bg-white p-4 ring-1 ring-line transition-shadow hover:shadow-kort"
       >
         <Avatar navn={aktor.navn} farge={aktor.farge} storrelse="md" />

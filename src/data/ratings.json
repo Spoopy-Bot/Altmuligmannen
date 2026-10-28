@@ -245,5 +245,25 @@
     "stjerner": 4,
     "kommentar": "Greit samarbeid. Noen deler manglet, men det ble ordnet raskt.",
     "dato": "2026-05-09T19:00:00"
+  },
+  {
+    "id": "r-26",
+    "oppdragId": "o-114",
+    "oppdragTittel": "Henge opp tre taklamper i stua",
+    "fra": "m-kari",
+    "til": "a-mikael",
+    "stjerner": 5,
+    "kommentar": "Presis og ryddig. Forklarte tydelig hva som er greit å gjøre selv og hva som krever elektroforetak.",
+    "dato": "2026-09-20T19:45:00"
+  },
+  {
+    "id": "r-27",
+    "oppdragId": "o-114",
+    "oppdragTittel": "Henge opp tre taklamper i stua",
+    "fra": "a-mikael",
+    "til": "m-kari",
+    "stjerner": 5,
+    "kommentar": "Klar beskrivelse og lampene lå klare.",
+    "dato": "2026-09-20T20:10:00"
   }
 ]

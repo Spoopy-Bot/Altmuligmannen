@@ -2,6 +2,8 @@
   {
     "id": "m-emma",
     "navn": "Emma Haugen",
+    "alder": 34,
+    "bio": "Bor i enebolig på Gressvik sammen med to barn. Det er alltid noe som skal gjøres i hus og hage, og jeg rekker ikke alt selv ved siden av jobb. Jeg er hjemme på ettermiddager og i helger, og det går fint å komme innom da. Jeg er opptatt av ryddige avtaler og at folk gir beskjed hvis noe endrer seg.",
     "sted": { "by": "Fredrikstad", "omrade": "Gressvik", "lat": 59.2190, "lng": 10.8900 },
     "medlemSiden": "2026-03-14",
     "farge": 2
@@ -9,6 +11,8 @@
   {
     "id": "m-thomas",
     "navn": "Thomas Bakke",
+    "alder": 41,
+    "bio": "Har overtatt et eldre hus på Greåker og pusser det opp litt etter litt. Jeg kan en del selv, men trenger hjelp til det som krever riktig verktøy eller fagkunnskap. Jeg setter pris på tydelig pris på forhånd og at alt avtales skriftlig. Jeg jobber hjemmefra på tirsdager og torsdager.",
     "sted": { "by": "Sarpsborg", "omrade": "Greåker", "lat": 59.2690, "lng": 11.0320 },
     "medlemSiden": "2025-11-02",
     "farge": 4
@@ -16,6 +20,8 @@
   {
     "id": "m-solveig",
     "navn": "Solveig Lund",
+    "alder": 67,
+    "bio": "Pensjonist i Halden og bor i rekkehus med liten hage. Jeg trenger hjelp til tyngre ting jeg ikke lenger klarer selv, som å bære, løfte og skru høyt oppe. Jeg er hjemme de fleste dager og setter kaffen på. Det er fint om dere ringer før dere kommer.",
     "sted": { "by": "Halden", "omrade": "Sentrum", "lat": 59.1210, "lng": 11.3920 },
     "medlemSiden": "2026-01-20",
     "farge": 7
@@ -23,6 +29,8 @@
   {
     "id": "m-arne",
     "navn": "Arne Pettersen",
+    "alder": 52,
+    "bio": "Skal selge boligen i Moss og vil ha de siste jobbene gjort før visning. Jeg rydder og forbereder selv så godt jeg kan, så det er klart når dere kommer. Jeg har god oversikt over hva som må gjøres og sier ifra tydelig om hva jeg ønsker. Tidsfrister er viktige for meg.",
     "sted": { "by": "Moss", "omrade": "Sentrum", "lat": 59.4320, "lng": 10.6600 },
     "medlemSiden": "2025-09-08",
     "farge": 1
@@ -30,6 +38,8 @@
   {
     "id": "m-kari",
     "navn": "Kari Strand",
+    "alder": 29,
+    "bio": "Bor sentralt i Fredrikstad, i leilighet i andre etasje. Jeg liker å ha det ryddig og er alltid hjemme etter kl. 16. Jeg har ikke bil, så det er greit at dere tar med det dere trenger. Jeg gir gjerne en god omtale når jobben er gjort ordentlig.",
     "sted": { "by": "Fredrikstad", "omrade": "Sentrum", "lat": 59.2160, "lng": 10.9310 },
     "medlemSiden": "2025-06-30",
     "farge": 5
@@ -37,6 +47,8 @@
   {
     "id": "m-ole",
     "navn": "Ole Vik",
+    "alder": 58,
+    "bio": "Bor på Hvaler hele året og trenger lokale folk som kjenner øya og værforholdene her. Hytta ligger like ved boligen, så jeg har ofte flere småjobber på gang samtidig. Jeg er fleksibel på tidspunkt, bare jeg får beskjed dagen i forveien. Jeg betaler alltid raskt.",
     "sted": { "by": "Hvaler", "omrade": "Skjærhalden", "lat": 59.0300, "lng": 11.0350 },
     "medlemSiden": "2025-08-11",
     "farge": 3

@@ -7,7 +7,7 @@ import ratings from '../data/ratings.json'
 import varsler from '../data/varsler.json'
 import type { Aktor, DemoState, KategoriId, Kontrakt, Melding, Mottaker, Oppdrag, Rating, Varsel } from '../types'
 
-export const STATE_VERSJON = 5
+export const STATE_VERSJON = 11
 
 export const STANDARD_VILKAR = [
   'Beløpet er reservert hos Altmuligmannen og utbetales til aktøren først når kunden har godkjent jobben.',
@@ -19,8 +19,13 @@ export const STANDARD_VILKAR = [
 /** Ekstra vilkår for rørleggerjobber, så husforsikringen ikke ryker. */
 export const ROR_VILKAR = 'Kun enkle jobber på synlige rør. Aktøren leverer dokumentasjon på utført arbeid.'
 
+/** Elektrisk arbeid er begrenset til det privatpersoner selv har lov til å gjøre. */
+export const EL_VILKAR = 'Kun enkle jobber du selv har lov til, som lamper med støpsel og dekkplater. Ingen arbeid på fast installasjon.'
+
 export function vilkarFor(kategori: KategoriId): string[] {
-  return kategori === 'ror' ? [...STANDARD_VILKAR, ROR_VILKAR] : STANDARD_VILKAR
+  if (kategori === 'ror') return [...STANDARD_VILKAR, ROR_VILKAR]
+  if (kategori === 'el') return [...STANDARD_VILKAR, EL_VILKAR]
+  return STANDARD_VILKAR
 }
 
 export function lagStartState(): DemoState {

@@ -7,6 +7,8 @@ import { Avtaler } from './pages/aktor/Avtaler'
 import { Jobber } from './pages/aktor/Jobber'
 import { Oversikt } from './pages/aktor/Oversikt'
 import { Profil } from './pages/aktor/Profil'
+import { MinProfil } from './pages/mottaker/MinProfil'
+import { Vurderinger } from './pages/aktor/Vurderinger'
 import { IkkeFunnet } from './pages/felles/IkkeFunnet'
 import { Kontrakt } from './pages/felles/Kontrakt'
 import { Meldinger } from './pages/felles/Meldinger'
@@ -49,6 +51,7 @@ export function App() {
       >
         <Route path="hjelp/ny" element={mottaker(<NyttBehov />)} />
         <Route path="hjelp/ny/:id/anbefalt" element={mottaker(<Anbefalte />)} />
+        <Route path="profil" element={mottaker(<MinProfil />)} />
         <Route path="mine-oppdrag" element={mottaker(<MineOppdrag />)} />
         <Route path="aktorer" element={<Aktorer />} />
         <Route path="aktorer/:id" element={<AktorProfil />} />
@@ -59,6 +62,7 @@ export function App() {
         <Route path="aktor/oversikt" element={aktor(<Oversikt />)} />
         <Route path="aktor/avtaler" element={aktor(<Avtaler />)} />
         <Route path="aktor/profil" element={aktor(<Profil />)} />
+        <Route path="aktor/vurderinger" element={aktor(<Vurderinger />)} />
         <Route path="meldinger" element={<Meldinger />} />
         <Route path="meldinger/:id" element={<Samtale />} />
         <Route path="varsler" element={<Varsler />} />

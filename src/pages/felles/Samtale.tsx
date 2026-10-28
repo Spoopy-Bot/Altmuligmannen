@@ -16,7 +16,7 @@ export function Samtale() {
   const { state, dispatch, megId, sendMelding, skriver } = useDemo()
   const [tekst, settTekst] = useState('')
   const [feil, settFeil] = useState<string>()
-  const bunn = useRef<HTMLDivElement>(null)
+  const felt = useRef<HTMLTextAreaElement>(null)
   const oppdrag = finnOppdrag(state, id, megId)
   const meldinger = state.meldinger.filter((m) => m.oppdragId === id)
   const lenke = `/meldinger/${id}`
@@ -27,8 +27,28 @@ export function Samtale() {
   }, [harUlest, dispatch, megId, lenke])
 
   useEffect(() => {
-    bunn.current?.scrollIntoView({ block: 'end' })
+    window.scrollTo({ top: document.documentElement.scrollHeight })
   }, [meldinger.length, skriver])
+
+  const send = () => {
+    const t = tekst.trim()
+    if (!oppdrag) return
+    if (!t) {
+      settFeil('Skriv en melding først.')
+      felt.current?.focus({ preventScroll: true })
+      return
+    }
+    sendMelding(oppdrag.id, t)
+    settTekst('')
+    settFeil(undefined)
+    felt.current?.focus({ preventScroll: true })
+  }
+
+  const velgForslag = (forslag: string) => {
+    settTekst(forslag)
+    settFeil(undefined)
+    felt.current?.focus({ preventScroll: true })
+  }
 
   if (!oppdrag || !oppdrag.aktorId || (oppdrag.mottakerId !== megId && oppdrag.aktorId !== megId)) return <IkkeFunnet hva="Samtalen" />
 
@@ -87,21 +107,13 @@ export function Samtale() {
           </li>
         )}
       </ol>
-      <div ref={bunn} />
 
       <form
         noValidate
-        className="sticky bottom-[4.5rem] -mx-4 mt-2 border-t border-line bg-cream/95 px-4 pt-3 pb-3 backdrop-blur sm:static sm:mx-0 sm:border-0 sm:bg-transparent sm:px-0 md:bottom-0"
+        className="sticky bottom-[calc(4rem+var(--sikker-bunn,env(safe-area-inset-bottom)))] -mx-4 mt-2 border-t border-line bg-cream/95 px-4 pt-3 pb-3 backdrop-blur sm:static sm:mx-0 sm:border-0 sm:bg-transparent sm:px-0 md:bottom-0"
         onSubmit={(e) => {
           e.preventDefault()
-          const t = tekst.trim()
-          if (!t) {
-            settFeil('Skriv en melding først.')
-            return
-          }
-          sendMelding(oppdrag.id, t)
-          settTekst('')
-          settFeil(undefined)
+          send()
         }}
       >
         {!skriver[oppdrag.id] && (
@@ -110,7 +122,7 @@ export function Samtale() {
               <li key={forslag} className="shrink-0">
                 <button
                   type="button"
-                  onClick={() => sendMelding(oppdrag.id, forslag)}
+                  onClick={() => velgForslag(forslag)}
                   className="rounded-full bg-white px-3.5 py-1.5 text-sm font-medium text-navy ring-1 ring-navy-200 transition-colors hover:bg-navy-50"
                 >
                   {forslag}
@@ -125,6 +137,7 @@ export function Samtale() {
         <div className="flex items-end gap-2">
           <textarea
             id="ny-melding"
+            ref={felt}
             rows={1}
             value={tekst}
             maxLength={MAKS}
@@ -136,7 +149,7 @@ export function Samtale() {
               if (feil) settFeil(undefined)
             }}
             onKeyDown={(e) => {
-              if (e.key === 'Enter' && !e.shiftKey) {
+              if (e.key === 'Enter' && !e.shiftKey && !e.nativeEvent.isComposing) {
                 e.preventDefault()
                 e.currentTarget.form?.requestSubmit()
               }

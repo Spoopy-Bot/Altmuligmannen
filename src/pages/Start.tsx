@@ -32,10 +32,10 @@ export function Start() {
   }
 
   return (
-    <div className="flex h-dvh flex-col overflow-hidden bg-cream">
-      <section data-mork className="relative min-h-0 flex-1 overflow-hidden bg-navy pt-[var(--sikker-topp,0px)] text-white">
+    <div className="flex min-h-dvh flex-col bg-cream">
+      <section data-mork className="relative flex-1 overflow-hidden bg-navy pt-[var(--sikker-topp,0px)] text-white">
         <div className="pointer-events-none absolute -right-24 -bottom-40 size-[34rem] rounded-[var(--radius-ikon)] bg-navy-700/40 rotate-12" aria-hidden />
-        <div className="relative mx-auto flex h-full max-w-6xl flex-col justify-center gap-7 px-4 pt-2 pb-6 sm:px-6">
+        <div className="relative mx-auto flex h-full max-w-6xl flex-col justify-center gap-7 px-4 pt-2 pb-10 sm:px-6">
           <div>
             <div className="flex items-center gap-4">
               <img src={ikon} alt="" className="size-14 rounded-[22%] shadow-loft sm:size-20" />
@@ -82,7 +82,7 @@ export function Start() {
         </div>
       </section>
 
-      <footer aria-labelledby="slik-tittel" className="shrink-0 px-4 pt-5 pb-[calc(var(--sikker-bunn,0px)+0.75rem)] sm:px-6">
+      <footer aria-labelledby="slik-tittel" className="shrink-0 px-4 pt-8 pb-[calc(var(--sikker-bunn,0px)+1rem)] sm:px-6">
         <div className="mx-auto max-w-6xl">
           <h2 id="slik-tittel" className="text-lg font-extrabold text-navy sm:text-2xl">
             Slik holdes pengene trygge

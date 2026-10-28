@@ -1,10 +1,10 @@
-import { Check, ExternalLink, Plus, X } from 'lucide-react'
+import { Check, ExternalLink, IdCard, Plus, ShieldCheck, X } from 'lucide-react'
 import { useState } from 'react'
 import { KategoriIkon } from '../../components/domain/KategoriIkon'
-import { VurderingListe } from '../../components/domain/VurderingListe'
 import { Avatar } from '../../components/ui/Avatar'
 import { TekstFelt, TekstOmrade, Velger } from '../../components/ui/Felt'
 import { Knapp, KnappLenke } from '../../components/ui/Knapp'
+import { Merke } from '../../components/ui/Merke'
 import { Sidehode } from '../../components/ui/Sidehode'
 import { erUngdom, kanTa, KATEGORIER } from '../../data/kategorier'
 import { STEDER, stedNavn } from '../../data/steder'
@@ -67,8 +67,7 @@ function ProfilSkjema({ aktor }: { aktor: Aktor }) {
   }
 
   return (
-    <div className="grid gap-6 lg:grid-cols-[1fr_22rem] lg:items-start">
-      <div>
+    <div className="max-w-3xl">
         <Sidehode
           tittel="Din profil"
           handlinger={
@@ -89,7 +88,22 @@ function ProfilSkjema({ aktor }: { aktor: Aktor }) {
             <Avatar navn={aktor.navn} farge={aktor.farge} storrelse="lg" />
             <div>
               <p className="font-display text-xl font-bold text-navy">{aktor.navn}</p>
-              <p className="text-sm text-ink-2">{aktor.tittel}</p>
+              <p className="text-sm text-ink-2">
+                {aktor.tittel}
+                {aktor.alder !== undefined && ` · ${aktor.alder} år`}
+              </p>
+              <ul className="mt-2 flex flex-wrap gap-1.5" aria-label="Verifisering">
+                <li>
+                  <Merke tone={aktor.verifisert.id ? 'lys' : 'noytral'} ikon={<IdCard size={14} aria-hidden />}>
+                    {aktor.verifisert.id ? 'ID-verifisert' : 'Ikke ID-verifisert'}
+                  </Merke>
+                </li>
+                <li>
+                  <Merke tone={aktor.verifisert.forsikring ? 'lys' : 'noytral'} ikon={<ShieldCheck size={14} aria-hidden />}>
+                    {aktor.verifisert.forsikring ? 'Forsikret' : 'Ikke forsikret'}
+                  </Merke>
+                </li>
+              </ul>
             </div>
           </div>
 
@@ -226,11 +240,6 @@ function ProfilSkjema({ aktor }: { aktor: Aktor }) {
             </p>
           </div>
         </form>
-      </div>
-
-      <div className="lg:sticky lg:top-24">
-        <VurderingListe id={aktor.id} />
-      </div>
     </div>
   )
 }

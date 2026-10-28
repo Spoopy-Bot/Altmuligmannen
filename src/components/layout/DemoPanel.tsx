@@ -16,11 +16,11 @@ const ROLLE_TEKST: Record<Rolle, { tittel: string; under: string }> = {
   aktor: { tittel: 'Tilbyr hjelp', under: 'Aktør' },
 }
 
-/** Snittvurdering og siste vurderinger for innlogget person. */
-function MinVurdering({ id }: { id: string }) {
+/** Snittvurdering for innlogget person. Pilen åpner alle vurderingene. */
+function MinVurdering({ id, lukk }: { id: string; lukk: () => void }) {
   const { state } = useDemo()
   const rating = ratingFor(id, state.ratings)
-  const siste = state.ratings.filter((r) => r.til === id).slice(0, 3)
+  const til = state.rolle === 'aktor' ? '/aktor/vurderinger' : '/mine-oppdrag?fane=vurderinger'
   return (
     <section aria-labelledby="min-vurdering" className="mb-4">
       <h2 id="min-vurdering" className="mb-2 text-sm font-semibold text-ink-3">
@@ -29,28 +29,20 @@ function MinVurdering({ id }: { id: string }) {
       {rating.antall === 0 ? (
         <p className="text-sm text-ink-3">Ingen vurderinger ennå.</p>
       ) : (
-        <>
-          <div className="flex items-center gap-3 rounded-xl bg-white p-3 ring-1 ring-line">
-            <span className="tall font-display text-3xl font-extrabold text-navy">{desimal(rating.snitt)}</span>
-            <span className="flex flex-col gap-0.5">
-              <Stjerner verdi={rating.snitt} />
-              <span className="text-xs text-ink-3">
-                Snitt av {rating.antall} {rating.antall === 1 ? 'vurdering' : 'vurderinger'}
-              </span>
+        <Link
+          to={til}
+          onClick={lukk}
+          className="flex items-center gap-3 rounded-xl bg-white p-3 ring-1 ring-line transition-colors hover:bg-cream"
+        >
+          <span className="tall font-display text-3xl font-extrabold text-navy">{desimal(rating.snitt)}</span>
+          <span className="flex min-w-0 flex-1 flex-col gap-0.5">
+            <Stjerner verdi={rating.snitt} />
+            <span className="text-xs text-ink-3">
+              Se {rating.antall === 1 ? 'vurderingen' : `alle ${rating.antall} vurderingene`}
             </span>
-          </div>
-          <ul className="mt-2 flex flex-col gap-2">
-            {siste.map((r) => (
-              <li key={r.id} className="rounded-xl p-3 ring-1 ring-line">
-                <div className="flex items-center justify-between gap-2">
-                  <Stjerner verdi={r.stjerner} storrelse={13} />
-                  <span className="truncate text-xs text-ink-3">{finnPerson(state, r.fra).navn}</span>
-                </div>
-                {r.kommentar && <p className="mt-1.5 text-sm text-ink">«{r.kommentar}»</p>}
-              </li>
-            ))}
-          </ul>
-        </>
+          </span>
+          <ChevronRight size={18} className="shrink-0 text-ink-3" aria-hidden />
+        </Link>
       )}
     </section>
   )
@@ -155,7 +147,7 @@ export function DemoPanel() {
           <span className="block text-sm font-semibold text-white">{meg.navn.split(' ')[0]}</span>
           <span className="block text-[0.6875rem] text-navy-200">{ROLLE_TEKST[rolle].under}</span>
         </span>
-        <span className="rounded-md bg-white px-1.5 py-0.5 text-[0.6875rem] font-bold text-navy">Demo</span>
+        <span className="rounded-md bg-white max-[380px]:hidden px-1.5 py-0.5 text-[0.6875rem] font-bold text-navy">Demo</span>
       </button>
 
       {apen && (
@@ -192,7 +184,7 @@ export function DemoPanel() {
             </button>
           </div>
 
-          <MinVurdering id={megId} />
+          <MinVurdering id={megId} lukk={() => settApen(false)} />
           {rolle === 'mottaker' && <MineKontrakter id={megId} lukk={() => settApen(false)} />}
 
           <p className="mb-3 flex items-center gap-2 border-t border-line pt-4 font-display font-bold text-navy">
