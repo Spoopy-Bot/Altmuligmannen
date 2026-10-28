@@ -160,10 +160,12 @@ export async function lastNedKontraktPdf(state: DemoState, kontrakt: Kontrakt): 
   // Topp
   doc.setFillColor(...NAVY)
   doc.rect(0, 0, A4_B, 34, 'F')
-  const merke = await tilDataUrl(wordmark, true).catch(() => '')
-  if (merke) {
+  try {
+    const merke = await tilDataUrl(wordmark, true)
     const { width, height } = doc.getImageProperties(merke)
     doc.addImage(merke, 'PNG', MARG - 2, 4, 20 * (width / height), 20)
+  } catch {
+    // Uten logo er kontrakten fortsatt gyldig.
   }
   doc.setFont('helvetica', 'normal')
   doc.setFontSize(9)

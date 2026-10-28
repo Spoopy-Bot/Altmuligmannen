@@ -15,7 +15,8 @@ export function KontraktPdfKnapp({ kontrakt, variant = 'sekundar' }: { kontrakt:
     settFeil(false)
     try {
       await lastNedKontraktPdf(state, kontrakt)
-    } catch {
+    } catch (e) {
+      console.error('Kontrakt-PDF feilet', e)
       settFeil(true)
     } finally {
       settLaster(false)
