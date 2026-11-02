@@ -96,7 +96,7 @@ export function Start() {
                     <s.ikon size={22} strokeWidth={1.9} />
                   </span>
                 ) : (
-                  <span className="animer-stempel rounded-[var(--radius-ikon)] ring-4 ring-cream">
+                  <span className="rounded-[var(--radius-ikon)] ring-4 ring-cream">
                     <Segl storrelse={48} />
                   </span>
                 )}
