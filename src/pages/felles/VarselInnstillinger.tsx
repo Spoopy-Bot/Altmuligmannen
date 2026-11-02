@@ -1,4 +1,4 @@
-import { BellRing, RotateCcw } from 'lucide-react'
+import { BellRing, RotateCcw, Trash2 } from 'lucide-react'
 import { useId, useState } from 'react'
 import { useNavigate } from 'react-router'
 import { Knapp } from '../../components/ui/Knapp'
@@ -23,6 +23,7 @@ export function VarselInnstillinger() {
   const inn = innstillingerFor(state, megId)
   const navigate = useNavigate()
   const [bekreft, settBekreft] = useState(false)
+  const [slettKonto, settSlettKonto] = useState<'ingen' | 'bekreft' | 'sendt'>('ingen')
 
   return (
     <div className="max-w-2xl">
@@ -61,6 +62,39 @@ export function VarselInnstillinger() {
               </li>
             ))}
           </ul>
+        </section>
+        <section aria-labelledby="konto-tittel" className="rounded-2xl bg-white p-5 ring-1 ring-line">
+          <h2 id="konto-tittel" className="text-lg font-bold text-navy">
+            Konto
+          </h2>
+          {slettKonto === 'bekreft' ? (
+            <div role="alert" className="mt-3">
+              <p className="text-sm font-semibold text-ink">Slette kontoen din?</p>
+              <div className="mt-3 flex gap-2">
+                <Knapp variant="fare" storrelse="sm" onClick={() => settSlettKonto('sendt')}>
+                  Ja, slett konto
+                </Knapp>
+                <Knapp variant="tekst" storrelse="sm" onClick={() => settSlettKonto('ingen')}>
+                  Avbryt
+                </Knapp>
+              </div>
+            </div>
+          ) : (
+            <Knapp
+              variant="sekundar"
+              storrelse="sm"
+              className="mt-3"
+              ikon={<Trash2 size={16} aria-hidden />}
+              onClick={() => settSlettKonto('bekreft')}
+            >
+              Slett konto
+            </Knapp>
+          )}
+          {slettKonto === 'sendt' && (
+            <p role="status" className="mt-3 text-sm text-ink-3">
+              Prototype: kontoen slettes ikke.
+            </p>
+          )}
         </section>
         <section aria-labelledby="demo-tittel" className="rounded-2xl bg-white p-5 ring-1 ring-line">
           <h2 id="demo-tittel" className="text-lg font-bold text-navy">
