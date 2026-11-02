@@ -77,10 +77,19 @@ export function Jobber() {
         }
       />
       {erUngdom(meg) && (
-        <p className="mb-5 flex items-center gap-2 rounded-xl bg-navy-50 px-4 py-3 text-sm text-ink-2">
-          <Sprout size={17} className="shrink-0 text-navy" aria-hidden />
-          Du ser bare enkle jobber: hage, flytting og vask.
-        </p>
+        <details className="group mb-5 rounded-xl bg-navy-50 px-4 py-3 text-sm text-ink-2">
+          <summary className="flex cursor-pointer list-none items-center gap-2 font-medium text-ink">
+            <Sprout size={17} className="shrink-0 text-navy" aria-hidden />
+            Du ser bare enkle jobber: hage, flytting og vask.
+            <span className="ml-auto shrink-0 font-semibold text-navy underline underline-offset-2 group-open:hidden">Trykk her for info</span>
+          </summary>
+          <ul className="mt-3 flex list-disc flex-col gap-1.5 pl-6">
+            <li>Arbeidsmiljøloven: fra 15 år kan du ta lett arbeid som ikke er farlig eller skadelig.</li>
+            <li>Maks 8 timer per dag og 40 per uke, og ikke arbeid mellom 23 og 06.</li>
+            <li>Rør, elektrisk og tunge løft krever opplæring eller fagbrev, så de ligger ikke her.</li>
+            <li>Under 18 år trenger du samtykke fra foresatte.</li>
+          </ul>
+        </details>
       )}
       {laster ? (
         <SkjelettListe antall={3} etikett="Finner jobber" />

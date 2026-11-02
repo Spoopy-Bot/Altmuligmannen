@@ -3,6 +3,7 @@ import { Fragment, useCallback, useEffect, useMemo, useRef, useState, type React
 import { useNavigate } from 'react-router'
 import { KategoriIkon } from '../../components/domain/KategoriIkon'
 import { BildeOpplasting } from '../../components/domain/BildeOpplasting'
+import { KategoriHint } from '../../components/domain/KategoriHint'
 import { Segl } from '../../components/domain/Segl'
 import { VippsBetaling } from '../../components/domain/VippsBetaling'
 import { Knapp } from '../../components/ui/Knapp'
@@ -73,6 +74,7 @@ export function NyttBehov() {
   const [feil, settFeil] = useState<Feil>({})
   const [sender, settSender] = useState(false)
   const [vipps, settVipps] = useState(false)
+  const valgtKat = utkast.kategori ? kategori(utkast.kategori) : undefined
   const overskrift = useRef<HTMLHeadingElement>(null)
   const forsteRender = useRef(true)
 
@@ -206,9 +208,18 @@ export function NyttBehov() {
           >
             <div className="flex flex-col gap-5">
               {utkast.kategori && <KategoriHint id={utkast.kategori} />}
+              {valgtKat && (
+                <div className="rounded-2xl bg-navy-50 p-4 text-sm text-ink-2">
+                  <p className="font-semibold text-ink">{valgtKat.navn}</p>
+                  <p className="mt-0.5">{valgtKat.oversikt}</p>
+                  <p className="mt-2">
+                    <strong className="text-ink">Ta med:</strong> {valgtKat.tips}
+                  </p>
+                </div>
+              )}
               <TekstFelt
                 etikett="Kort overskrift"
-                placeholder="F.eks. Drypper fra kjøkkenkranen"
+                placeholder={`F.eks. ${valgtKat?.eksempelTittel ?? 'Drypper fra kjøkkenkranen'}`}
                 value={utkast.tittel}
                 maxLength={70}
                 onChange={(e) => oppdater({ tittel: e.target.value })}
@@ -216,7 +227,7 @@ export function NyttBehov() {
               />
               <TekstOmrade
                 etikett="Beskrivelse"
-                placeholder="Det drypper fra kranen selv om den er skrudd helt igjen. Det startet i går …"
+                placeholder={valgtKat?.eksempelBeskrivelse ?? 'Det drypper fra kranen selv om den er skrudd helt igjen. Det startet i går …'}
                 value={utkast.beskrivelse}
                 maxLength={800}
                 onChange={(e) => oppdater({ beskrivelse: e.target.value })}
@@ -365,7 +376,7 @@ export function NyttBehov() {
         <div className={`${steg === 0 && !utkast.kategori ? 'hidden' : 'flex'} sticky bottom-[calc(4rem+var(--sikker-bunn,env(safe-area-inset-bottom)))] z-30 -mx-4 mt-8 items-center justify-between gap-3 border-t border-line bg-cream/95 px-4 py-3 backdrop-blur sm:-mx-6 sm:px-6 md:bottom-0`}>
           {steg > 0 ? (
             <Knapp variant="tekst" onClick={() => settSteg((s) => s - 1)} ikon={<ArrowLeft size={18} aria-hidden />} disabled={sender}>
-              Tilbake
+              <span className="max-sm:sr-only">Tilbake</span>
             </Knapp>
           ) : (
             <span />
@@ -375,7 +386,7 @@ export function NyttBehov() {
               Neste <ArrowRight size={18} aria-hidden />
             </Knapp>
           ) : (
-            <Knapp type="submit" variant="aksent" storrelse="lg" className="flex-1 sm:flex-none" laster={sender}>
+            <Knapp type="submit" variant="aksent" storrelse="lg" className="min-w-0 flex-1 sm:flex-none" laster={sender}>
               {sender ? 'Sender …' : `Reserver ${kr(Number(utkast.budsjett))} med Vipps`}
             </Knapp>
           )}
@@ -445,26 +456,6 @@ function Steg({
       {!undertekst && <div className="mb-6" />}
       {children}
     </section>
-  )
-}
-
-function KategoriHint({ id, className = '' }: { id: KategoriId; className?: string }) {
-  if (id !== 'ror' && id !== 'el') return null
-  return (
-    <div className={`${className} flex gap-3 rounded-2xl bg-navy-50 p-4 text-sm text-ink-2`}>
-      <Info size={18} className="mt-0.5 shrink-0 text-navy" aria-hidden />
-      {id === 'ror' ? (
-        <p>
-          <strong className="text-ink">Kun enkle jobber på rør du ser</strong>, som å bytte kran eller rense sluk. Skjulte rør og våtrom krever
-          autorisert rørlegger, ellers kan husforsikringen ryke. Du får dokumentasjon fra aktøren på jobben.
-        </p>
-      ) : (
-        <p>
-          <strong className="text-ink">Kun enkle jobber du selv har lov til</strong>, som å henge opp lamper med støpsel, bytte dekkplater eller
-          koble skjøteledninger. Fast installasjon, sikringsskap og varmekabler krever registrert elektroforetak.
-        </p>
-      )}
-    </div>
   )
 }
 

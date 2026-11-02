@@ -182,7 +182,7 @@ const INTENSJONER: Intensjon[] = [
   {
     id: 'naarKommer',
     re: /når kommer du|når er du her|når sees vi|hva (var|ble) avtalt|hva avtalte vi|når var det|hvilken dag (var det|kommer du)|står avtalen|gjelder avtalen|er vi fortsatt|husker du (når|tid)|når (skal|starter) (du|vi)|når passer det/,
-    unntar: ['tid', 'status'],
+    unntar: ['status'],
     aktor: (c) => {
       const a = c.minne.avtale
       if (a?.bekreftet) return `Som avtalt kommer jeg ${naar(a.dagNavn, a.tid)}. Jeg gir beskjed her når jeg er på vei.`
@@ -193,7 +193,7 @@ const INTENSJONER: Intensjon[] = [
       const a = c.minne.avtale
       if (a?.bekreftet) return `Vi sa ${naar(a.dagNavn, a.tid)}. Det står fortsatt.`
       if (a) return `Du nevnte ${naar(a.dagNavn, a.tid)}. Det passer meg fint.`
-      return 'Vi har ikke avtalt noe ennå. Når passer det for deg?'
+      return `Jeg er hjemme, så det passer det meste. Hva med ${forslag(c)}?`
     },
   },
   {
@@ -224,6 +224,7 @@ const INTENSJONER: Intensjon[] = [
   },
   {
     id: 'tid',
+    unntar: ['naarKommer'],
     finn: (c) => {
       const d = c.dag ? c.t.indexOf(c.dag.navn) : -1
       const t = finnTid(c.t)?.pos ?? -1
@@ -621,6 +622,7 @@ export function hurtigsvar(oppdrag: Oppdrag, erMottaker: boolean, historikk: Mel
     if (avtalt) return ['Når kommer du?', 'Hva må jeg gjøre før du kommer?', 'Kan du komme litt tidligere?']
     return ['Passer det i morgen kl. 16?', 'Hva tror du problemet er?', 'Hva blir totalprisen?']
   }
+  if (oppdrag.status === 'forespurt') return ['Når passer det å komme?', 'Kan du sende et bilde?', 'Hva er det som må gjøres?']
   if (oppdrag.status === 'levert') return ['Ferdig! Kan du godkjenne?']
   if (oppdrag.status === 'godkjent') return ['Takk for oppdraget!']
   if (avtalt) return ['Jeg blir 10 min forsinket', 'Hvor står utstyret?', 'Fant mer som må fikses']

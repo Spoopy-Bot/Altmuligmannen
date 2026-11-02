@@ -3,6 +3,7 @@ import { useState, type ReactNode } from 'react'
 import { Link, useNavigate, useParams } from 'react-router'
 import { EscrowSegl } from '../../components/domain/EscrowSegl'
 import { Hendelseslogg } from '../../components/domain/Hendelseslogg'
+import { KategoriHint } from '../../components/domain/KategoriHint'
 import { KategoriIkon } from '../../components/domain/KategoriIkon'
 import { KontraktPdfKnapp } from '../../components/domain/KontraktPdfKnapp'
 import { LeveringSkjema } from '../../components/domain/LeveringSkjema'
@@ -78,6 +79,7 @@ export function OppdragDetalj() {
           </aside>
 
           <div className="flex flex-col gap-6 lg:col-start-1 lg:row-start-1">
+            <KategoriHint id={oppdrag.kategori} />
             <section aria-labelledby="beskrivelse" className="rounded-2xl bg-white p-5 ring-1 ring-line sm:p-6">
               <h2 id="beskrivelse" className="text-lg font-bold text-navy">
                 Beskrivelse
@@ -177,9 +179,9 @@ function Handlinger({ oppdrag }: { oppdrag: Oppdrag }) {
       <DemoBytte navn={mottaker.navn} onClick={() => visSom('mottaker', mottaker.id)} />
     ) : null
 
-  const chat = oppdrag.aktorId && ['akseptert', 'pagar', 'levert', 'godkjent'].includes(oppdrag.status) && (
-    <KnappLenke to={`/meldinger/${oppdrag.id}`} variant="sekundar" bred ikon={<MessageCircle size={18} aria-hidden />}>
-      Melding
+  const chat = oppdrag.aktorId && ['forespurt', 'akseptert', 'pagar', 'levert', 'godkjent'].includes(oppdrag.status) && (
+    <KnappLenke to={`/meldinger/${oppdrag.id}`} variant={oppdrag.status === 'forespurt' && rolle === 'aktor' ? 'tekstMork' : 'sekundar'} bred ikon={<MessageCircle size={18} aria-hidden />}>
+      {oppdrag.status === 'forespurt' && rolle === 'aktor' ? 'Still et spørsmål' : 'Melding'}
     </KnappLenke>
   )
   const redigerSlett =
@@ -314,6 +316,7 @@ function Handlinger({ oppdrag }: { oppdrag: Oppdrag }) {
           <Panel>
             <p className="font-semibold text-ink">Venter på svar fra {aktor && fornavn(aktor.navn)}</p>
             <p className="mt-1 text-sm text-ink-3">{aktor?.svartid}</p>
+            <div className="mt-3 flex flex-col gap-2">{chat}</div>
             {redigerSlett}
             {demoBytte}
           </Panel>
@@ -425,6 +428,7 @@ function Handlinger({ oppdrag }: { oppdrag: Oppdrag }) {
             >
               Ikke aktuelt
             </Knapp>
+            {oppdrag.status === 'forespurt' && oppdrag.aktorId === megId && chat}
           </div>
         </Panel>
       )
