@@ -1,4 +1,5 @@
-import { ArrowRight, BadgeCheck, ClipboardPen, Sprout, UsersRound } from 'lucide-react'
+import { ArrowRight, BadgeCheck, ClipboardPen, ChevronDown, CircleHelp, Sprout, UsersRound, X } from 'lucide-react'
+import { useRef } from 'react'
 import { Segl } from '../components/domain/Segl'
 import { useNavigate } from 'react-router'
 import ikon from '../assets/ikon-160.png'
@@ -16,9 +17,23 @@ const STEG = [
   { ikon: BadgeCheck, tittel: 'Frigis når du godkjenner' },
 ]
 
+const FAQ = [
+  ['Når trekkes pengene fra meg?', 'Beløpet reserveres når du sender inn behovet. Det er satt av, men ikke utbetalt.'],
+  ['Hva betyr «Betaling reservert»?', 'Pengene er satt av til jobben. Aktøren ser det før hen takker ja.'],
+  ['Når får aktøren pengene?', 'Først når du har godkjent at jobben er gjort.'],
+  ['Hva skjer hvis aktøren sier nei?', 'Oppdraget blir åpent igjen, og pengene står fortsatt reservert.'],
+  ['Hva om jobben ikke blir gjort?', 'Da godkjenner du den ikke, og pengene frigis ikke.'],
+  ['Hvordan velges de tre anbefalte aktørene?', 'Aktøren må jobbe med riktig kategori. Så gir vi poeng for ferdigheter, erfaring, vurderinger, avstand, pris og ledig tid. Hver anbefaling har en begrunnelse.'],
+  ['Hva om prisen er over budsjettet mitt?', 'Da sier vi det rett ut i stedet for å skjule aktøren.'],
+  ['Kan jeg avbryte en avtale?', 'Ja, begge parter kan avbryte fra oppdragssiden.'],
+  ['Kan jeg være aktør som 15–17-åring?', 'Ja, for enkle jobber som hage, flytting og vask.'],
+  ['Hvordan gir jeg vurdering?', 'Når jobben er godkjent, gir begge parter hverandre stjerner og en kommentar.'],
+]
+
 export function Start() {
   const { dispatch } = useDemo()
   const navigate = useNavigate()
+  const faq = useRef<HTMLDialogElement>(null)
 
   function velg(rolle: Rolle) {
     // Aktørdøren går alltid til Kai, også etter at ungdomsinngangen er brukt.
@@ -35,6 +50,51 @@ export function Start() {
     <div className="flex min-h-dvh flex-col bg-cream">
       <section data-mork className="relative flex-1 overflow-hidden bg-navy pt-[var(--sikker-topp,0px)] text-white">
         <div className="pointer-events-none absolute -right-24 -bottom-40 size-[34rem] rounded-[var(--radius-ikon)] bg-navy-700/40 rotate-12" aria-hidden />
+        <button
+          type="button"
+          onClick={() => faq.current?.showModal()}
+          aria-label="Vanlige spørsmål"
+          className="absolute top-[calc(var(--sikker-topp,0px)+0.75rem)] right-4 z-10 grid size-10 place-items-center rounded-xl text-white ring-1 ring-white/25 transition-colors hover:bg-white/14 sm:right-6"
+        >
+          <CircleHelp size={20} strokeWidth={1.9} aria-hidden />
+        </button>
+        <dialog
+          ref={faq}
+          aria-labelledby="faq-tittel"
+          className="m-auto w-[min(26rem,calc(100%-2rem))] rounded-2xl bg-white p-6 text-ink shadow-loft backdrop:bg-navy-950/60"
+        >
+          <div className="flex items-start justify-between gap-4">
+            <h2 id="faq-tittel" className="font-display text-xl font-extrabold text-navy">
+              Vanlige spørsmål
+            </h2>
+            <button
+              type="button"
+              onClick={() => faq.current?.close()}
+              aria-label="Lukk"
+              className="-m-2 grid size-10 place-items-center rounded-xl text-ink-2 hover:bg-navy-100"
+            >
+              <X size={20} aria-hidden />
+            </button>
+          </div>
+          <ul className="mt-4 flex max-h-[60dvh] flex-col gap-2 overflow-y-auto pr-1 [scrollbar-color:var(--color-navy-200)_transparent] [scrollbar-width:thin]">
+            {FAQ.map(([sporsmal, svar]) => (
+              <li key={sporsmal}>
+                <details
+                  className="group rounded-xl bg-navy-100/60"
+                  onToggle={(e) => {
+                    if (e.currentTarget.open) e.currentTarget.scrollIntoView({ block: 'nearest', behavior: 'smooth' })
+                  }}
+                >
+                  <summary className="flex cursor-pointer list-none items-center justify-between gap-3 rounded-xl px-4 py-3 text-sm font-semibold text-navy [&::-webkit-details-marker]:hidden">
+                    {sporsmal}
+                    <ChevronDown size={18} className="shrink-0 transition-transform group-open:rotate-180" aria-hidden />
+                  </summary>
+                  <p className="px-4 pb-3 text-sm text-ink-2">{svar}</p>
+                </details>
+              </li>
+            ))}
+          </ul>
+        </dialog>
         <div className="relative mx-auto flex h-full max-w-6xl flex-col justify-center gap-7 px-4 pt-2 pb-10 sm:px-6">
           <div>
             <div className="flex items-center gap-4">
