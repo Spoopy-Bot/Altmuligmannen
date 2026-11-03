@@ -76,7 +76,7 @@ export function Start() {
               <X size={20} aria-hidden />
             </button>
           </div>
-          <ul className="mt-4 flex max-h-[60dvh] flex-col gap-2 overflow-y-auto pr-1 [scrollbar-color:var(--color-navy-200)_transparent] [scrollbar-width:thin]">
+          <ul className="mt-4 flex max-h-[60dvh] flex-col gap-2 overflow-y-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
             {FAQ.map(([sporsmal, svar]) => (
               <li key={sporsmal}>
                 <details
