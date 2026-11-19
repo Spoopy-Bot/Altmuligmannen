@@ -36,10 +36,7 @@ export function AktorProfil() {
             <Avatar navn={aktor.navn} farge={aktor.farge} storrelse="xl" />
             <div className="min-w-0">
               <h1 className="text-[1.75rem] leading-tight font-extrabold sm:text-[2.125rem] text-navy">{aktor.navn}</h1>
-              <p className="text-ink-2">
-                {aktor.tittel}
-                {aktor.firma && ` · ${aktor.firma}`}
-              </p>
+              <p className="text-ink-2">{aktor.tittel}</p>
               <div className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-ink-2">
                 <a href="#vurderinger" className="rounded underline-offset-2 hover:underline focus-visible:underline">
                   <RatingLinje snitt={rating.snitt} antall={rating.antall} />

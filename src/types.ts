@@ -27,7 +27,6 @@ export interface Aktor {
   id: string
   navn: string
   tittel: string
-  firma?: string
   bio: string
   kategorier: KategoriId[]
   ferdigheter: string[]

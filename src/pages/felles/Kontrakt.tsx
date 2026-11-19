@@ -51,7 +51,7 @@ export function Kontrakt() {
             <div>
               <dt className="text-sm text-ink-3">Aktør</dt>
               <dd className="font-semibold text-ink">{aktor?.navn}</dd>
-              <dd className="text-sm text-ink-2">{aktor?.firma ?? aktor?.tittel}</dd>
+              <dd className="text-sm text-ink-2">{aktor?.tittel}</dd>
             </div>
           </dl>
 

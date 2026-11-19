@@ -212,7 +212,7 @@ export async function lastNedKontraktPdf(state: DemoState, kontrakt: Kontrakt): 
   doc.roundedRect(MARG, y, BREDDE, 26, 3, 3, 'D')
   const parter: [string, string, string][] = [
     ['Kunde', mottaker?.navn ?? '–', `${oppdrag.adresse}, ${stedNavn(oppdrag.sted)}`],
-    ['Aktør', aktor?.navn ?? '–', [aktor?.firma ?? aktor?.tittel, aktor?.verifisert.id ? 'ID verifisert' : ''].filter(Boolean).join(' · ')],
+    ['Aktør', aktor?.navn ?? '–', [aktor?.tittel, aktor?.verifisert.id ? 'ID verifisert' : ''].filter(Boolean).join(' · ')],
   ]
   parter.forEach(([rolle, navn, linje], i) => {
     const x = MARG + 6 + i * (BREDDE / 2)

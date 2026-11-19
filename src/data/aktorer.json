@@ -3,7 +3,7 @@
     "id": "a-kai",
     "navn": "Kai Fredriksen",
     "alder": 38,
-    "tittel": "Selvstendig altmuligmann",
+    "tittel": "Altmuligmann",
     "bio": "Jeg har snekret, skrudd og malt i Fredrikstad-området i over ti år. Jeg liker jobber der folk har prøvd selv og står fast – da forklarer jeg gjerne hva jeg gjør, så du vet hva du betaler for. Rydder alltid etter meg.",
     "kategorier": [
       "reparasjon",
@@ -64,9 +64,8 @@
     "id": "a-ingrid",
     "navn": "Ingrid Solberg",
     "alder": 44,
-    "tittel": "Driftsleder, rørlegger",
-    "firma": "Elvebredden Rør AS",
-    "bio": "Driftsleder i et rørleggerfirma med seks ansatte. Jeg tar selv de fleste småoppdragene i Sarpsborg og Fredrikstad, og sender en av våre svenner når jobben er større. Alt arbeid dokumenteres og meldes etter forskriftene.",
+    "tittel": "Rør og vann",
+    "bio": "Jeg har fagbrev og mange år bak meg med rør. Nå tar jeg småjobber på kveldstid i Sarpsborg og Fredrikstad: lekkasjer, kraner og tette avløp. Du får dokumentasjon på det jeg har gjort.",
     "kategorier": [
       "ror"
     ],
@@ -119,9 +118,8 @@
     "id": "a-sindre",
     "navn": "Sindre Mathisen",
     "alder": 41,
-    "tittel": "Malermester",
-    "firma": "Mathisen Farge & Flate",
-    "bio": "Malermester fra Moss. Jeg er nøye med underarbeidet – sparkling, sliping og dekking – fordi det er det som gjør at malingen holder. Gir alltid fast pris etter befaring.",
+    "tittel": "Maling inne og ute",
+    "bio": "Jeg har mesterbrev og bor i Moss. Jeg er nøye med underarbeidet – sparkling, sliping og dekking – fordi det er det som gjør at malingen holder. Gir alltid fast pris etter befaring.",
     "kategorier": [
       "maling"
     ],
@@ -266,8 +264,8 @@
     "id": "a-marte",
     "navn": "Marte Kvisler",
     "alder": 36,
-    "tittel": "Tømrer og småreparasjoner",
-    "bio": "Tømrer med egen bil og verksted i Halden. Jeg fikser det som har blitt stående: dører som ikke lukker, lister som har løsnet, trekk rundt vinduer. Små jobber er velkomne.",
+    "tittel": "Snekring og småreparasjoner",
+    "bio": "Jeg har fagbrev som tømrer, egen bil og verksted i Halden. Jeg fikser det som har blitt stående: dører som ikke lukker, lister som har løsnet, trekk rundt vinduer. Små jobber er velkomne.",
     "kategorier": [
       "reparasjon",
       "montering"
@@ -364,7 +362,7 @@
     "navn": "Runa Tveter",
     "alder": 31,
     "tittel": "Vask og rengjøring",
-    "bio": "Jeg driver enkeltpersonforetak innen rengjøring i Moss og Rygge. Vindusvask, flyttevask og storrengjøring – med egne miljøvennlige midler.",
+    "bio": "Jeg tar vaskejobber ved siden av jobben i Moss og Rygge. Vindusvask, flyttevask og storrengjøring – med egne miljøvennlige midler.",
     "kategorier": [
       "vask"
     ],
@@ -507,8 +505,8 @@
     "id": "a-bjorn",
     "navn": "Bjørn Halvorsen",
     "alder": 40,
-    "tittel": "Rørlegger, enkeltpersonforetak",
-    "bio": "Selvstendig rørlegger i Moss og Råde. Tar småjobber som lekkasjer, kraner og tette avløp, og gir pris før jeg starter.",
+    "tittel": "Kraner, avløp og lekkasjer",
+    "bio": "Jeg tar småjobber i Moss og Råde, som lekkasjer, kraner og tette avløp, og gir pris før jeg starter.",
     "kategorier": [
       "ror"
     ],
@@ -555,8 +553,8 @@
     "id": "a-emil",
     "navn": "Emil Strand",
     "alder": 24,
-    "tittel": "Rørleggersvenn",
-    "bio": "Ferdig utdannet rørleggersvenn som tar kveldsoppdrag i Fredrikstad. Rask med enkle jobber som drypp, vannlås og bytte av kran.",
+    "tittel": "Kveldsjobber med rør",
+    "bio": "Har svennebrev og tar kveldsoppdrag i Fredrikstad. Rask med enkle jobber som drypp, vannlås og bytte av kran.",
     "kategorier": [
       "ror"
     ],
@@ -603,8 +601,7 @@
     "navn": "Sara Lie",
     "alder": 27,
     "tittel": "Vask og flyttehjelp",
-    "bio": "Driver et lite firma med vask og flyttehjelp i Sarpsborg og Fredrikstad. Vi er alltid to på jobb.",
-    "firma": "Lie Rent & Flytt",
+    "bio": "Jeg hjelper med vask og flytting i Sarpsborg og Fredrikstad. På store jobber tar jeg med en venn, så vi er to.",
     "kategorier": [
       "vask",
       "flytting"
@@ -698,9 +695,8 @@
     "id": "a-mikael",
     "navn": "Mikael Rønning",
     "alder": 36,
-    "tittel": "Elektriker",
-    "firma": "Rønning Elektro",
-    "bio": "Elektriker med fagbrev. Jeg tar de enkle elektrojobbene du har lov til å gjøre selv, som lamper, støpsler og skjøteledninger. Alt over det overlater jeg til registrert elektroforetak.",
+    "tittel": "Lamper og småelektrisk",
+    "bio": "Jeg har fagbrev som elektriker, men tar bare de enkle elektrojobbene du har lov til å gjøre selv, som lamper, støpsler og skjøteledninger. Alt over det overlater jeg til registrert elektroforetak.",
     "kategorier": [
       "el"
     ],

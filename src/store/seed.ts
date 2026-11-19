@@ -7,7 +7,7 @@ import ratings from '../data/ratings.json'
 import varsler from '../data/varsler.json'
 import type { Aktor, DemoState, KategoriId, Kontrakt, Melding, Mottaker, Oppdrag, Rating, Varsel } from '../types'
 
-export const STATE_VERSJON = 11
+export const STATE_VERSJON = 12
 
 export const STANDARD_VILKAR = [
   'Beløpet er reservert hos Altmuligmannen og utbetales til aktøren først når kunden har godkjent jobben.',
@@ -16,7 +16,7 @@ export const STANDARD_VILKAR = [
   'Kunden kan melde fra om mangler før godkjenning. Da holdes betalingen tilbake til saken er løst.',
 ]
 
-/** Ekstra vilkår for rørleggerjobber, så husforsikringen ikke ryker. */
+/** Ekstra vilkår for rørjobber, så husforsikringen ikke ryker. */
 export const ROR_VILKAR = 'Kun enkle jobber på synlige rør. Aktøren leverer dokumentasjon på utført arbeid.'
 
 /** Elektrisk arbeid er begrenset til det privatpersoner selv har lov til å gjøre. */

@@ -18,7 +18,7 @@ export interface Kategori {
 export const KATEGORIER: Kategori[] = [
   {
     id: 'ror',
-    navn: 'Rørlegger',
+    navn: 'Rør og vann',
     eksempler: 'Lekkasje, tett avløp, bytte kran',
     oversikt: 'Lekkasje, tett avløp, bytte kran. Kun synlige rør.',
     tips: 'Si hvor det lekker eller er tett, og om du har stengt vannet.',

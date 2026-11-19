@@ -13,7 +13,7 @@ Vite, React, TypeScript, Tailwind og React Router. Ingen backend. Demodata ligge
 ## Brukere
 
 - **Mottaker** er en privatperson med et praktisk problem hjemme, som en lekkasje, maling, møbelmontering, hagearbeid eller en liten reparasjon. Hen har ikke kunnskapen eller tiden selv, synes det er vanskelig å finne hjelp og er redd for å velge feil eller betale for mye. Det hen egentlig vil, er å få problemet løst og føle seg trygg på valget.
-- **Aktør** er en altmuligmann eller håndverker i nærområdet, enten selvstendig eller i en liten bedrift. Aktøren vil ha betalte jobber i nærheten, bli kjent som pålitelig, ha litt fleksibilitet og slippe rot i rutinene. Det viktigste er å være sikker på å få betalt.
+- **Aktør** er en privatperson i nærområdet som tar småjobber, ikke en bedrift. Aktøren vil ha betalte jobber i nærheten, bli kjent som pålitelig, ha litt fleksibilitet og slippe rot i rutinene. Det viktigste er å være sikker på å få betalt.
 
 Personene i demoen er oppdiktede: aktørene Kai Fredriksen og Ingrid Solberg, og mottakerne Emma Haugen og Thomas Bakke.
 
