@@ -15,7 +15,7 @@ npm run dev
 
 ## Prøve den
 
-Velg **Jeg trenger hjelp** på forsiden, så er du Emma Haugen. Med **Demo**-knappen oppe til høyre kan du bytte rolle og person når som helst, og **Nullstill demo** tar deg tilbake til start.
+Velg **Jeg trenger hjelp** på forsiden, så er du Emma Bergli. Med **Demo**-knappen oppe til høyre kan du bytte rolle og person når som helst, og **Nullstill demo** tar deg tilbake til start.
 
 Hva appen kan, og hvordan en jobb går fra start til slutt, står i [DOKUMENTASJON.md](DOKUMENTASJON.md). Koden ligger i `src/`.
 

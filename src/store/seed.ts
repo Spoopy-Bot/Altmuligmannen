@@ -7,7 +7,7 @@ import ratings from '../data/ratings.json'
 import varsler from '../data/varsler.json'
 import type { Aktor, DemoState, KategoriId, Kontrakt, Melding, Mottaker, Oppdrag, Rating, Varsel } from '../types'
 
-export const STATE_VERSJON = 12
+export const STATE_VERSJON = 13
 
 export const STANDARD_VILKAR = [
   'Beløpet er reservert hos Altmuligmannen og utbetales til aktøren først når kunden har godkjent jobben.',
